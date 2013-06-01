@@ -6,7 +6,7 @@ define(['app', 'mix', 'track', 'region', 'tracks', 'metronome', 'downloader'], f
       , mix = new App.Models.Mix({context: ac})
       , downloader = new Downloader(function(){
           drawMix();
-          mix.play();
+          // mix.play();
         });
 
     // grab some JSON
