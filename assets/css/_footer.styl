@@ -31,6 +31,7 @@ footer
 
   .time
     blue-bg()
+    margin-right: 3px
 
   .tempo
     blue-bg()
@@ -101,7 +102,8 @@ footer
 #playback-volume
   float: right
   size: 150 30
-  background: #131719
+  background: #131719 url('/img/ui/vol_faded_row@2x.png') center center no-repeat
+  background-size: 122px 25px
   rounded()
   position: relative
   box-shadow: inset 0 1px 4px rgba(#000,.6)
@@ -115,3 +117,10 @@ footer
     margin-left: -15px
     rounded()
     box-shadow: 0 3px 5px rgba(#000,.5)
+
+  .alt
+    height: 30px
+    width: 65%
+    background: url('/img/ui/vol_color_row@2x.png') no-repeat
+    background-size: 122px 25px
+    absolute: top 3px left 14px

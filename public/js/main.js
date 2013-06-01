@@ -18,6 +18,13 @@ function init() {
   });
 
   // volume slider
-  $('#playback-volume').slider()
+  $('#playback-volume').slider({
+    slide: function(e, ui){
+      $('#playback-volume .alt').css({ width: ui.value + "%" })
+      ui.value
+    },
+    value: 65
+  })
+
 
 }
