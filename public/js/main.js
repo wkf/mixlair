@@ -19,17 +19,17 @@ function init() {
 
   // volume slider
   $('#playback-volume').slider({
+    value: 65,
     slide: function(e, ui){
       $('#playback-volume .alt').css({ width: ui.value + "%" })
-    },
-    value: 65
+    }
   });
 
   // tempo slider
-  $('.tempo').on('dragstart', function(){
-    $('body').css('cursor', 'ew-resize')
-  }).on('dragend', function(){
-    $('body').css('cursor', 'auto')
+  $('.tempo').on('dragstart', function(e){
+    $('body').css('cursor', 'ew-resize');
+  }).on('dragend', function(e){
+    $('body').css('cursor', 'auto');
   });
 
 }
