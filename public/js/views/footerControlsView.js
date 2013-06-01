@@ -9,7 +9,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'record': '.record',
       'ffwd': '.ffwd',
       'end': '.end',
-      'time': '.time .count'
+      'time': '.time .count',
+      'tempo': '.tempo .count'
     },
     events: {
       'click .beginning': 'beginning',
@@ -19,7 +20,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'click .end': 'end',
     },
     initialize: function(){
-      this.listenTo(mix, 'timeUpdate', this.timeupdate);
+      this.listenTo(mix, 'timeUpdate', this.timeUpdate);
+      this.listenTo(mix, 'bpmUpdate', this.bpmUpdate);
     },
     // jump to 0
     beginning: function(){
@@ -51,7 +53,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         this.ui.play.addClass('playing');
       }
     },
-    timeupdate: function(){
+    timeUpdate: function(){
       var pos = mix.get('position')
         , ms = Math.floor( ( pos * 1000 ) % 1000 )
         , s = Math.floor( pos % 60 )
@@ -64,6 +66,10 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       strFormat = strFormat.replace(/SS/, s);
       strFormat = strFormat.replace(/XX/, ms.toString().slice(0,2));
       this.ui.time.text(strFormat);
+    },
+    bpmUpdate: function(){
+      var bpm = mix.get('bpm');
+      this.ui.tempo.text(bpm);
     }
   });
 });

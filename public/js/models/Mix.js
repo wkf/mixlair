@@ -3,6 +3,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     url: 'mix.json',
     // default params
     defaults: {
+      bpm: 120,
       position: 0,
       startTime: 0,
       playing: false,
@@ -34,6 +35,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       });
       this.on('change:volume', function(){
         this.get('input').gain.value = this.get('volume');
+      });
+      this.on('change:bpm', function(){
+        this.trigger('bpmUpdate');
       });
     },
 
