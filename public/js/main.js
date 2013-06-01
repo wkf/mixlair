@@ -17,19 +17,4 @@ function init() {
     appendTo: document.querySelector('header .timeline')
   });
 
-  // volume slider
-  $('#playback-volume').slider({
-    value: 65,
-    slide: function(e, ui){
-      $('#playback-volume .alt').css({ width: ui.value + "%" })
-    }
-  });
-
-  // tempo slider
-  $('.tempo').on('dragstart', function(e){
-    $('body').css('cursor', 'ew-resize');
-  }).on('dragend', function(e){
-    $('body').css('cursor', 'auto');
-  });
-
 }

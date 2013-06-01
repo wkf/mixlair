@@ -7,6 +7,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       position: 0,
       startTime: 0,
       playing: false,
+      clicking: false,
       maxTime: Infinity,
       volume: 1
     },
@@ -39,6 +40,13 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.on('change:bpm', function(){
         this.trigger('bpmUpdate');
       });
+      this.on('change:bpm', _.debounce(function(){
+        var clicking = !!this.get('clicking')
+          , bpm = this.get('bpm');
+        if ( clicking ){
+          this.startClick();
+        }
+      }, 150));
     },
 
     connect: function(){

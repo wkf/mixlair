@@ -9,8 +9,12 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'record': '.record',
       'ffwd': '.ffwd',
       'end': '.end',
-      'time': '.time .count',
-      'tempo': '.tempo .count'
+      'time_count': '.time .count',
+      'tempo_count': '.tempo .count',
+      'volume': '#playback-volume',
+      'volume_alt': '#playback-volume .alt',
+      'tempo': '.tempo',
+      'body': 'body'
     },
     events: {
       'click .beginning': 'beginning',
@@ -23,6 +27,32 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(mix, 'timeUpdate', this.timeUpdate);
       this.listenTo(mix, 'bpmUpdate', this.bpmUpdate);
       this.listenTo(mix, 'ready', this.bindSpace);
+    },
+    onShow: function(){
+      var alt = this.ui.volume_alt
+        , body = this.ui.body
+        , dragPos
+        , bpm;
+      // volume slider
+      this.ui.volume.slider({
+        slide: function(e, ui){
+          alt.css({ width: ui.value + "%" });
+          mix.set('volume', ui.value / 100);
+        },
+        value: 65
+      });
+      // tempo slider
+      this.ui.tempo.on('dragstart', function( e ){
+        dragPos = e.pageX;
+        bpm = mix.get('bpm');
+        body.css('cursor', 'ew-resize');
+      }).on('dragend', function(){
+        body.css('cursor', 'auto');
+      }).on('drag', function( e ){
+        var delta = e.pageX - dragPos
+          , newBpm = Math.round( bpm + ( delta / 5 ) );
+        mix.set('bpm', newBpm);
+      });
     },
     // jump to 0
     beginning: function(){
@@ -66,11 +96,11 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       strFormat = strFormat.replace(/MM/, m);
       strFormat = strFormat.replace(/SS/, s);
       strFormat = strFormat.replace(/XX/, ms.toString().slice(0,2));
-      this.ui.time.text(strFormat);
+      this.ui.time_count.text(strFormat);
     },
     bpmUpdate: function(){
       var bpm = mix.get('bpm');
-      this.ui.tempo.text(bpm);
+      this.ui.tempo_count.text(bpm);
     },
     bindSpace: function(){
       var self = this;
