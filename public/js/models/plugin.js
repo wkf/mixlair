@@ -1,4 +1,4 @@
-define(['app'], function(App){
+define(['app', 'tuna'], function(App, Tuna){
 
   App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     Models.Plugin = Backbone.Model.extend({

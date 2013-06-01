@@ -1,6 +1,7 @@
 require.config
   shims:
     jquery: { exports: '$' }
+    underscore: { exports: '_' }
     backbone: { deps: ['underscore', 'jquery'], exports: 'Backbone' }
     marionette: { deps: ['jquery', 'underscore', 'backbone'], exports: 'Marionette' }
     meter: { exports: 'Meter' }
@@ -15,6 +16,7 @@ require.config
 
     # app
     app: 'app'
+    init: 'init'
     mix: 'models/mix'
     region: 'models/region'
     track: 'models/track'
@@ -32,7 +34,7 @@ require.config
     downloader: 'Downloader'
     meter: 'Meter'
 
-require ['app'], (App) ->
+require ['app', 'init'], (App) ->
 
   # workaround for a bug with facebook's oauth implementation
   if window.location.hash and window.location.hash is '#_=_'

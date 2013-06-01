@@ -1,4 +1,4 @@
-define(['app', 'tuna', 'meter'], function(App, Tuna, Meter){
+define(['app', 'tuna', 'meter', 'regions', 'plugins', 'meter'], function(App, Tuna, Meter, Regions, Plugins, Meter){
 
   App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     Models.Track = Backbone.Model.extend({

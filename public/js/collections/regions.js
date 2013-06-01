@@ -1,4 +1,4 @@
-define(['app'], function(App){
+define(['app', 'region'], function(App, Region){
 
   App.module("Collections", function(Collections, App, Backbone, Marionette, $, _) {
     Collections.Regions = Backbone.Collection.extend({

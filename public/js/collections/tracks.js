@@ -1,4 +1,4 @@
-define(['app'], function(App){
+define(['app', 'track'], function(App, Track){
 
   App.module("Collections", function(Collections, App, Backbone, Marionette, $, _) {
     Collections.Tracks = Backbone.Collection.extend({

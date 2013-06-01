@@ -40,5 +40,6 @@ define('meter', function(){
 
   }());
 
+  return Meter
 
 });
