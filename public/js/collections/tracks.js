@@ -1,14 +1,11 @@
 App.module("Collections", function(Collections, App, Backbone, Marionette, $, _) {
   Collections.Tracks = Backbone.Collection.extend({
-    model: App.Track,
+    model: App.Models.Track,
 
     // begin playback of all tracks
-    //
-    // @param {Number} now [schedule time... usually AudioContext.currentTime]
-    // @param {Number} mixOffset [mix playback position]
-    play: function(now, offset){
+    play: function(){
       return this.forEach(function(track){
-        track.play(now, offset);
+        track.play();
       });
     },
 
@@ -32,6 +29,14 @@ App.module("Collections", function(Collections, App, Backbone, Marionette, $, _)
         track.set('output', track.get('mix').get('input'));
         track.connect();
       });
+    },
+
+    toJSON: function(){
+      var result = [];
+      this.forEach(function( track ){
+        result.push(track.toJSON());
+      });
+      return result;
     }
 
   });

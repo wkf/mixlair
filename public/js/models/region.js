@@ -127,16 +127,17 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       return this;
     },
 
-    // begin playback of the region
-    //
-    // @param {Number} now [schedule time... usually AudioContext.currentTime]
-    // @param {Number} mixOffset [mix playback position]
-    play: function( now, mixOffset ){
-      var now, regionStart, playbackStart, offset, duration;
+    // begin playback of the region at the current mix position
+    play: function(){
+      var mix, now, mixOffset, regionStart, playbackStart, offset, duration;
       // just in case
       this.pause();
       // create a new bufferSource
       this.createBufferSource();
+      // get timing info
+      mix = this.get('mix');
+      now = mix.acTime();
+      mixOffset = mix.getPosition();
       // calculate start time, offset, and duration
       regionStart = this.get('start');
       playbackStart = Math.max(0, regionStart - mixOffset);
@@ -181,6 +182,46 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       }
       this.set('buffer', ab);
       return this.sliceBuffer();
+    },
+
+    // copy the entire region
+    copy: function(){
+      return this.clone();
+    },
+
+    // slice a region in half.
+    // modifies the original region's stopOffset and the cloned
+    // region's startOffset. also remove fades along the
+    // split edge
+    // 
+    // seconds param is relative to the region's start attribute
+    slice: function( seconds ){
+      var clone = this.copy()
+        , start = this.get('start')
+        , stopOffset = this.get('stopOffset')
+        , startOffset = this.get('startOffset')
+        , duration = this.get('activeBuffer').duration;
+      this.set({
+        stopOffset: stopOffset + ( duration - seconds ),
+        fadeOut: 0
+      });
+      clone.set({
+        startOffset: startOffset + seconds,
+        fadeIn: 0
+      });
+      this.get('track').paste(clone);
+
+    },
+
+    toJSON: function(){
+      return {
+        url: this.get('url'),
+        start: this.get('start'),
+        startOffset: this.get('startOffset'),
+        stopOffset: this.get('stopOffset'),
+        fadeIn: this.get('fadeIn'),
+        fadeOut: this.get('fadeOut')
+      }
     }
 
   });

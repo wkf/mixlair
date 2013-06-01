@@ -3,13 +3,17 @@ App = new Backbone.Marionette.Application();
 App.on("start", function(options) {
   var mixURL = options.mixURL
     , ac = new webkitAudioContext()
-    , mix = new App.Models.Mix({context: ac, bpm: options.bpm})
-    , downloader = new Downloader(getInput);
+    , mix = new App.Models.Mix({context: ac})
+    , downloader = new Downloader(function(){
+        // drawMix();
+        // mix.play();
+      });
 
   // grab some JSON
   function fetchMixData(){
     $.getJSON(mixURL, function( data ){
-      createTracks(data);
+      mix.set({bpm: data.bpm});
+      createTracks(data.tracks);
     });
   }
 
@@ -21,6 +25,7 @@ App.on("start", function(options) {
         volume: trackData.volume,
         output: mix.get('input'),
         collection: mix.tracks,
+        pluginParams: trackData.pluginParams || {},
         mix: mix
       });
       mix.tracks.add(track);
@@ -39,6 +44,7 @@ App.on("start", function(options) {
         ac.decodeAudioData(xhr.response, function( buffer ){
           regionData.buffer = buffer;
           regionData.output = track.get('input');
+          regionData.track = track;
           regionData.mix = track.get('mix');
           track.regions.add(regionData);
           downloaderCallback();
@@ -78,18 +84,6 @@ App.on("start", function(options) {
     }
     $scrubber.css('left', left * pps);
     requestAnimationFrame(drawScrubber)
-  }
-
-  function getInput(){
-    navigator.webkitGetUserMedia({audio: true}, function(stream){
-      mix.set('recStream', stream);
-      setTimeout(function(){
-        //drawMix();
-        //mix.play();
-      }, 100);
-    }, function(){
-
-    });
   }
 
   mix.on('createTrack', drawMix);

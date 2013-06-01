@@ -35,22 +35,27 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     connect: function(){
       var ac = this.get('context')
-        , click = new Metronome(ac);
+        , click = new Metronome(ac)
+        , meter = new Meter(ac);
       this.set('click', click);
       this.set('input', ac.createGain());
+      this.set('meter', meter);
       this.get('input').connect(ac.destination);
+      this.get('input').connect(this.get('meter').input);
+      this.get('meter').ondBFS(function( dBFS ){
+        this.set('peak', dBFS);
+      }.bind(this));
       this.tracks.connectAll();
     },
 
     // begin playback of all tracks
     play: function(){
       var now = this.acTime()
-        , start = this.get('startTime')
         , clicking = this.get('clicking')
         , position = this.get('position');
       this.set('startTime', now - position);
       this.set('maxTime', this.tracks.maxTime());
-      this.tracks.play(now, position);
+      this.tracks.play();
       this.trigger('play');
       clicking && this.startClick();
       return this.set('playing', true);
@@ -193,6 +198,23 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     stopClick: function(){
       this.set('clicking', false);
       this.get('click').stop();
+    },
+
+    requestInput: function(){
+      navigator.webkitGetUserMedia({audio: true}, function(stream){
+        mix.set('inputEnabled', true);
+        mix.set('recStream', stream);
+      }.bind(this), function(){
+        console.log('couldn\'t get a stream');
+      });
+    },
+
+    toJSON: function(){
+      return {
+        bpm: this.get('bpm'),
+        tracks: this.tracks.toJSON()
+      }
     }
+
   });
 });
