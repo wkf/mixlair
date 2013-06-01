@@ -9,7 +9,8 @@ define(['app'], function(App){
         playing: false,
         maxTime: Infinity,
         inputEnabled: false,
-        dBFS: -192
+        dBFS: -192,
+        bpm: 120
       },
 
       // get things started
@@ -187,6 +188,17 @@ define(['app'], function(App){
       stopClick: function(){
         this.set('clicking', false);
         this.get('click').stop();
+      },
+
+      snapTime: function( seconds ){
+        var bpm = this.get('bpm')
+          , beatlength = 60 / bpm
+          , mod = seconds % beatlength
+          , down = seconds - mod
+          , up = seconds + ( beatlength - mod )
+          , downdiff = seconds - down
+          , updiff = up - seconds
+        return updiff < downdiff ? up : down;
       },
 
       requestInput: function(){
