@@ -21,26 +21,14 @@ block head
 
   script(src="js/views/trackCollectionView.js")
   script(src="js/views/trackView.js")
+  script(src="js/views/footerControlsView.js")
 
   script(src="js/timeline-grid.js")
   script(src="js/vendor/jquery-ui-slider.js")
   script(src="js/main.js")
   script(type="x-javascript", id="track-template")
     .foo this is a track
-
-block content
-
-  header
-    .fork-this Fork This
-    .base.cl
-      .label.left my tracks
-      .timeline.right
-      .cl
-    .cl
-  #mix
-    .effect-panel
-
-  footer
+  script(type="x-javascript", id="footer-template")
     .contain
 
       #time-tempo
@@ -60,4 +48,17 @@ block content
         .end
 
       #playback-volume
-        .alt
+
+block content
+
+  header
+    .fork-this Fork This
+    .base.cl
+      .label.left my tracks
+      .timeline.right
+      .cl
+    .cl
+  #mix
+    .effect-panel
+
+  footer#footer

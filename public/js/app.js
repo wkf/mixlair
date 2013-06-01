@@ -2,7 +2,8 @@ App = new Backbone.Marionette.Application();
 
 App.addRegions({
   tracks: '#mix',
-  effect: '.effect-panel'
+  effect: '.effect-panel',
+  footer: '#footer'
 });
 
 App.on("start", function(options) {
@@ -10,7 +11,11 @@ App.on("start", function(options) {
     , ac = new webkitAudioContext()
     , mix = new App.Models.Mix({context: ac});
 
+    new App.Views.FooterControls
+
     mix.fetch();
+
+    App.footer.show(new App.Views.FooterControls);
 
   // quick and dirty track layout so i can
   // see what the fuck i'm doing
