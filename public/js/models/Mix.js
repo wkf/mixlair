@@ -1,5 +1,6 @@
 App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
   Models.Mix = Backbone.Model.extend({
+    url: 'mix.json',
     // default params
     defaults: {
       position: 0,
@@ -23,6 +24,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // get things started
     initialize: function(){
       this.tracks = new App.Collections.Tracks;
+      this.downloader = new Downloader(function(){
+        this.trigger('ready');
+      }.bind(this));
       this.updatePosition();
       this.connect();
       this.on('change:position', function(){
@@ -214,6 +218,23 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         bpm: this.get('bpm'),
         tracks: this.tracks.toJSON()
       }
+    },
+
+    parse: function( data ){
+      var tracks = data.tracks;
+      if ( data.bpm ) this.set('bpm', data.bpm);
+      tracks.forEach(function( trackData ){
+        var track = new App.Models.Track({
+          name: trackData.name,
+          volume: trackData.volume,
+          output: this.get('input'),
+          collection: this.tracks,
+          pluginParams: trackData.pluginParams || {},
+          mix: mix,
+          regions: trackData.regions
+        });
+      this.tracks.add(track);
+      }.bind(this));
     }
 
   });

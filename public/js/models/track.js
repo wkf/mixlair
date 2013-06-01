@@ -60,7 +60,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // get things started
     initialize: function(){
-      var pluginParams = this.get('pluginParams')
+      var regions = this.get('regions')
+        , pluginParams = this.get('pluginParams')
         , defaults = $.extend(true, {}, this.defaults.pluginParams);
       pluginParams = $.extend(true, {}, defaults, pluginParams);
       this.set('pluginParams', pluginParams);
@@ -69,6 +70,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.plugins.params = this.get('pluginParams');
       this.createPlugins();
       this.connect();
+      this.parseRegions(regions);
       this.on('change:volume', function(){
         this.get('gain').gain.value = this.get('volume');
       });
@@ -333,6 +335,28 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         pluginParams: this.getAllPluginParams(),
         regions: this.regions.toJSON()
       }
+    },
+
+    parseRegions: function( regions ){
+      var downloader = this.get('mix').downloader
+        , ac = this.context()
+        , track = this;
+      regions.forEach(function( regionData ){
+         var callback, xhr = new XMLHttpRequest();
+          xhr.open('GET', regionData.url, true);
+          xhr.responseType = 'arraybuffer';
+          callback = function( downloaderCallback ){
+            ac.decodeAudioData(xhr.response, function( buffer ){
+              regionData.buffer = buffer;
+              regionData.output = track.get('input');
+              regionData.track = track;
+              regionData.mix = track.get('mix');
+              track.regions.add(regionData);
+              downloaderCallback();
+            });
+          }
+          downloader.add(xhr, callback, true);
+      }.bind(this));
     }
 
   });
