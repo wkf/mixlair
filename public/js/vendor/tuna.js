@@ -1752,9 +1752,4 @@
     } else {
         window.Tuna = Tuna;
     }
-
-    define('tuna', function(){
-        return Tuna;
-    })
-
 })(this);
