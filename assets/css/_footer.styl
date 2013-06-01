@@ -96,12 +96,15 @@ footer
     cursor: pointer
     margin: 22px 5px 0 5px
 
+    &:hover
+      background-image: url(s('%s%s', unquote(img-path), unquote('ui/play@2x.png'))), -webkit-linear-gradient(top, #ccc 0%, #9c9c9c 100%)
+
     &.playing
       background-image: url(s('%s%s', unquote(img-path), unquote('ui/pause@2x.png'))), -webkit-linear-gradient(top, #e9eaee 0%, #fefeff 100%), url("img")
       background-position: 50% 50%
 
-    &:hover
-      background-image: url(s('%s%s', unquote(img-path), unquote('ui/play@2x.png'))), -webkit-linear-gradient(top, #ccc 0%, #9c9c9c 100%)
+      &:hover
+        background-image: url(s('%s%s', unquote(img-path), unquote('ui/pause@2x.png'))), -webkit-linear-gradient(top, #ccc 0%, #9c9c9c 100%)
 
   .record
     background-image: url(s('%s%s', unquote(img-path), unquote('ui/record_led@2x.png'))) , -webkit-linear-gradient(top, #e9eaee 0%, #fefeff 100%), url("img")
