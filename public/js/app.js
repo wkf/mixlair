@@ -84,8 +84,8 @@ App.on("start", function(options) {
     navigator.webkitGetUserMedia({audio: true}, function(stream){
       mix.set('recStream', stream);
       setTimeout(function(){
-        drawMix();
-        mix.play();
+        //drawMix();
+        //mix.play();
       }, 100);
     }, function(){
 
