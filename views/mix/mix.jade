@@ -28,11 +28,24 @@ block head
   script(src="js/vendor/jquery.event.drag.js")
 
   script(src="js/main.js")
+
   script(type="x-javascript", id="track-template")
-    .foo this is a track
+    .info.left
+      .left
+        h5.track-title XX XXXXX XXXXX
+        .gain-control
+      .right
+        .btn.fx
+        .btn.mute
+        .btn.play
+    .waveform
+      .region
+        .title zapbar
+      .region
+        .title tapbar
+
   script(type="x-javascript", id="footer-template")
     .contain
-
       #time-tempo
         .time
           .label time
@@ -40,8 +53,6 @@ block head
         .tempo
           .label tempo
           .count 128
-          .slider
-
       #control-buttons
         .beginning
         .rewind
@@ -49,7 +60,6 @@ block head
         .record
         .ffwd
         .end
-
       #playback-volume
         .alt
 
