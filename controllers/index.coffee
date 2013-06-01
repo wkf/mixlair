@@ -6,5 +6,6 @@ module.exports = (app) ->
 
   app.Controllers.Home = require('./home_controller.coffee')(app)
   app.Controllers.Auth = require('./auth_controller.coffee')(app)
+  app.Controllers.User = require('./user_controller.coffee')(app)
 
   app
