@@ -108,6 +108,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         , recording = !!this.getRecordingTracks()
         , maxTime = this.get('maxTime');
       this.set('position', position, {silent: true});
+      this.trigger('timeUpdate');
       playing && !recording && position > maxTime && this.stop();
       setTimeout(this.updatePosition.bind(this), 16);
     },

@@ -11,11 +11,11 @@ App.on("start", function(options) {
     , ac = new webkitAudioContext()
     , mix = new App.Models.Mix({context: ac});
 
-    new App.Views.FooterControls
+  window.mix = mix;
 
-    mix.fetch();
+  mix.fetch();
 
-    App.footer.show(new App.Views.FooterControls);
+  App.footer.show(new App.Views.FooterControls);
 
   // quick and dirty track layout so i can
   // see what the fuck i'm doing
@@ -52,10 +52,6 @@ App.on("start", function(options) {
   mix.on('createTrack', drawMix);
   mix.on('recordStart', drawMix);
   mix.on('recordStop', drawMix);
-
-  // expose the mix Model so we can fuck with it in the console
-  window.mix = mix;
-  window.drawMix = drawMix;
 
   // "instructions"
   console.log('play: mix.play()');

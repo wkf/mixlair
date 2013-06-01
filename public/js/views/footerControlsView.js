@@ -8,7 +8,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'play': '.play',
       'record': '.record',
       'ffwd': '.ffwd',
-      'end': '.end'
+      'end': '.end',
+      'time': '.time .count'
     },
     events: {
       'click .beginning': 'beginning',
@@ -16,6 +17,9 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'click .play': 'playMix',
       'click .ffwd': 'ffwd',
       'click .end': 'end',
+    },
+    initialize: function(){
+      this.listenTo(mix, 'timeUpdate', this.timeupdate);
     },
     // jump to 0
     beginning: function(){
@@ -46,6 +50,20 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         mix.play();
         this.ui.play.addClass('playing');
       }
+    },
+    timeupdate: function(){
+      var pos = mix.get('position')
+        , ms = Math.floor( ( pos * 1000 ) % 1000 )
+        , s = Math.floor( pos % 60 )
+        , m = Math.floor( ( pos * 1000 / ( 1000 * 60 ) ) % 60 )
+        , strFormat = "MM:SS:XX";
+      if( s < 10 ) s = "0" + s;
+      if( m < 10 ) m = "0" + m;
+      if( ms < 10 ) ms = "0" + ms;
+      strFormat = strFormat.replace(/MM/, m);
+      strFormat = strFormat.replace(/SS/, s);
+      strFormat = strFormat.replace(/XX/, ms.toString().slice(0,2));
+      this.ui.time.text(strFormat);
     }
   });
 });
