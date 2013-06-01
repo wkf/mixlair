@@ -2,10 +2,10 @@ doctype 5
 html
   head
     title= title
+    != css('main')
   body(class= view_name || "" )
     block content
 
-  script(src='/js/require.js')
-  != css('main')
+  script(src='/js/require.js', data-main='/js/main')
   != js('main')
   != livereload
