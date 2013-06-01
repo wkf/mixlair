@@ -1,10 +1,13 @@
 $().ready(init);
 
 function init() {
+
+  // start audio portion
   App.start({
     mixURL: 'mix.json'
   });
 
+  // initialize timeline
   a = new timelineGrid({
     pps: 50,
     seconds: 100,
@@ -13,4 +16,8 @@ function init() {
     lineWidth: 2,
     appendTo: document.querySelector('header .timeline')
   });
+
+  // volume slider
+  $('#playback-volume').slider()
+
 }

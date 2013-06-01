@@ -50,7 +50,7 @@ footer
   size: 262px 82px
   group()
   float: left
-  margin: -10px 0 0 60px
+  margin: -10px 30px 0 60px
 
   & > div
     float: left
@@ -94,4 +94,20 @@ footer
     box-shadow: inset 0 -10px 5px rgba(#000,.23), 0 0 7px rgba(#000,.7)
     inline-block()
     cursor: pointer
-    margin: 10px 12px 0 4px
+    margin: 11px 12px 0 4px
+
+#playback-volume
+  float: left
+  size: 150 30
+  background: #131719
+  rounded()
+  position: relative
+
+  .ui-slider-handle
+    size: 30px
+    gradient: #fff #8d979f
+    display: block
+    position: absolute
+    margin-left: -15px
+    rounded()
+    box-shadow: 0 3px 5px rgba(#000,.5)
