@@ -1,10 +1,19 @@
 App = new Backbone.Marionette.Application();
 
+App.addRegions({
+  tracks: '#mix',
+  effect: '.effect-panel'
+});
+
 App.on("start", function(options) {
   var mixURL = options.mixURL
     , ac = new webkitAudioContext()
     , mix = new App.Models.Mix({context: ac})
     , downloader = new Downloader(function(){
+        App.tracks.show(new App.Views.TrackCollection({
+          collection: mix.tracks
+        }))
+
         // drawMix();
         // mix.play();
       });
