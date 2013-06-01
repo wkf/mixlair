@@ -1,4 +1,5 @@
 @import '_settings'
+@import '_login'
 @import '_mix'
 
 normalize()
@@ -7,42 +8,4 @@ base()
 html
   height: 100%
 
-body
-  height: 100%
-  padding-top: 10%
-  background-color: #aaa
-  background: #dcdcdc; /* Old browsers */
-  background: -moz-radial-gradient(center, ellipse cover, #dcdcdc 0%, #c8c8c8 40%, #b4b4b4 100%); /* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#dcdcdc), color-stop(40%,#c8c8c8), color-stop(100%,#b4b4b4)); /* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(center, ellipse cover, #dcdcdc 0%,#c8c8c8 40%,#b4b4b4 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover, #dcdcdc 0%,#c8c8c8 40%,#b4b4b4 100%); /* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover, #dcdcdc 0%,#c8c8c8 40%,#b4b4b4 100%); /* IE10+ */
-  background: radial-gradient(ellipse at center, #dcdcdc 0%,#c8c8c8 40%,#b4b4b4 100%); /* W3C */
 
-h1, p
-  text-align: center
-  margin: 0 auto
-
-.social
-  display: block
-  size: 209px 46px
-  background-size: 209px 46px
-  margin: 15px auto
-  cursor: pointer
-
-.twitter, .facebook
-  @extends .social
-
-.twitter
-  background-image: url('../img/sign-in-with-twitter.png')
-
-.facebook
-  background-image: url('../img/connect-with-facebook.png')
-
-
-@media (-webkit-min-device-pixel-ratio: 2)
-  .twitter
-    background-image: url('../img/sign-in-with-twitter@2x.png')
-
-  .facebook
-    background-image: url('../img/connect-with-facebook@2x.png')
