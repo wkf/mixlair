@@ -10,8 +10,6 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     trackClicked: function() {
-      console.log(this);
-      this.$el.addClass('active');
       this.trigger("trackClicked");
     }
 
