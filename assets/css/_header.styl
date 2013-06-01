@@ -1,9 +1,12 @@
 header
-  height: 85px;
+  min-height: 85px;
   background: #1c1f22;
   box-shadow inset 0 1px 0 rgba(255,255,255,.05)
   background linear-gradient(bottom, #15181b 0%, #1d1f23 100%)
   group()
+
+  .base
+    position: relative
 
   .fork-this
     float: right
@@ -11,22 +14,27 @@ header
     cursor: pointer
     margin-top: 15px
     margin-right: 15px
-    font-size: 12px
     border 1px solid #101215
     border-radius 2px
     background-clip padding-box
     background-color #111517
     box-shadow inset 0 1px 0 rgba(255,255,255,.03)
     background linear-gradient(bottom, #15181b 0%, #1d1f23 100%)
-    color: rgba(255, 255, 255, 0.2)
+    color: rgba(255, 255, 255, 0.41)
+    font-weight: 500
+    font-size: 11px
+    padding-left: 30px
 
   .label
     font-size: 12px
     font-weight: bold
     text-transform: uppercase
+    position: absolute
+    left: 15px
+    bottom: 15px
 
   .timeline
-    padding-top: 10px
+    padding-top: 4px
     border-radius 4px 4px 0 0
     background-clip padding-box
     background-color #1b1f21
@@ -35,3 +43,5 @@ header
     width: 80%
     overflow: hidden
     float: right
+    margin-top: 15px
+    margin-bottom: 1px
