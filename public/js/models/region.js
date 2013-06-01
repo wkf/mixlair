@@ -60,7 +60,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       // fadeIn duration
       fadeIn: 0,
       // fadeOut duration
-      fadeOut: 0
+      fadeOut: 0,
+      // duration (in seconds)
+      duration: 0
     },
 
     context: function(){
@@ -94,6 +96,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         channel = channel.subarray(from, to);
         ab.getChannelData(i++).set(this.applyFades(channel));
       }
+      this.set('duration', ab.duration);
       return this.set('activeBuffer', ab);
     },
 
