@@ -17,11 +17,12 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'click .rewind': 'rewind',
       'click .play': 'playMix',
       'click .ffwd': 'ffwd',
-      'click .end': 'end',
+      'click .end': 'end'
     },
     initialize: function(){
       this.listenTo(mix, 'timeUpdate', this.timeUpdate);
       this.listenTo(mix, 'bpmUpdate', this.bpmUpdate);
+      this.listenTo(mix, 'ready', this.bindSpace);
     },
     // jump to 0
     beginning: function(){
@@ -70,6 +71,30 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     bpmUpdate: function(){
       var bpm = mix.get('bpm');
       this.ui.tempo.text(bpm);
+    },
+    bindSpace: function(){
+      var self = this;
+      $(window).on('keydown', function(e){
+
+        if (e.keyCode === 32) {
+          self.playMix();
+          return false
+        }
+
+        if (e.keyCode === 82) {
+          console.log('trigger record');
+        }
+
+        if (e.keyCode === 37) {
+          console.log('trigger jump left');
+        }
+
+        if (e.keyCode === 39) {
+          console.log('trigger jump right');
+        }
+
+      });
+
     }
   });
 });
