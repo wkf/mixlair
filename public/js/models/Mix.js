@@ -5,7 +5,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       position: 0,
       startTime: 0,
       playing: false,
-      maxTime: Infinity
+      maxTime: Infinity,
+      volume: 1
     },
 
     snapTime: function( seconds ){
@@ -26,6 +27,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.connect();
       this.on('change:position', function(){
         this.get('playing') && this.play();
+      });
+      this.on('change:volume', function(){
+        this.get('input').gain.value = this.get('volume');
       });
     },
 
