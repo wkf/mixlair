@@ -21,10 +21,15 @@ function init() {
   $('#playback-volume').slider({
     slide: function(e, ui){
       $('#playback-volume .alt').css({ width: ui.value + "%" })
-      ui.value
     },
     value: 65
-  })
+  });
 
+  // tempo slider
+  $('.tempo').on('dragstart', function(){
+    $('body').css('cursor', 'ew-resize')
+  }).on('dragend', function(){
+    $('body').css('cursor', 'auto')
+  });
 
 }

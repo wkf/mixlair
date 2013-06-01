@@ -33,6 +33,10 @@ footer
 #time-tempo
   group()
   float: left
+  -webkit-user-select: none
+
+  &:active
+    cursor: ew-resize
 
   .time
     blue-bg()
@@ -41,6 +45,13 @@ footer
 
   .tempo
     blue-bg()
+    cursor: ew-resize
+
+    &:active
+      cursor: ew-resize
+
+    &:hover
+      background: linear-gradient(top, lighten(#0d2147, 2%), 51% lighten(#0d294e, 2%), 52% lighten(#0d2147, 2%), 100% lighten(#0d294e, 2%))
 
   .label
     color: #1b3f68

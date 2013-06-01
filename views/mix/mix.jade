@@ -25,6 +25,8 @@ block head
 
   script(src="js/timeline-grid.js")
   script(src="js/vendor/jquery-ui-slider.js")
+  script(src="js/vendor/jquery.event.drag.js")
+
   script(src="js/main.js")
   script(type="x-javascript", id="track-template")
     .foo this is a track
@@ -38,6 +40,7 @@ block head
         .tempo
           .label tempo
           .count 128
+          .slider
 
       #control-buttons
         .beginning
