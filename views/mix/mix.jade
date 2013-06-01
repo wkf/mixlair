@@ -18,15 +18,16 @@ block head
   | <script src="js/Meter.js"></script>
   | <script src="js/Archiver.js"></script>
   | <script src="js/Downloader.js"></script>
+  script(src="js/timeline-grid.js")
   script(src="js/main.js")
 block content
 
   header
     .fork-this Fork This
-    .base
-      .label my tracks
-      .timeline
-
+    .base.cl
+      .label.left my tracks
+      .timeline.right
+      .cl
   #mix
     .effect-panel
 
