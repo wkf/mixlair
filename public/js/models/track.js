@@ -188,14 +188,15 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       var ac = this.context()
         , mix = this.get('mix')
         , stream = mix.get('recStream')
-        , src , channels, pro;
+        , fakeBuffer
+        , src , channels, pro, region;
       // no mic input? ask nicely
       if ( !mix.get('inputEnabled') || !stream ) {
         return mix.requestInput();
       }
-      src = ac.createMediaStreamSource(stream)
-      channels = src.channelCount
-      pro = ac.createScriptProcessor(2048, channels, 1);
+      src = ac.createMediaStreamSource(stream);
+      pro = ac.createScriptProcessor(4096, 1, 1);
+      fakeBuffer = ac.createBuffer(1, 1, 44100);
       src.connect(pro);
       pro.connect(ac.destination);
       this.set({
@@ -205,6 +206,16 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         recording: true,
         recordStart: mix.getPosition()
       });
+      region = new Models.Region({
+        buffer: fakeBuffer,
+        start: this.get('recordStart'),
+        output: this.get('input'),
+        track: this,
+        mix: this.get('mix'),
+        recording: true
+      });
+      this.set('recRegion', region);
+      this.regions.add(region);
       pro.onaudioprocess = function( evt ){
         var inp = evt.inputBuffer
           , ac = this.context()
@@ -217,7 +228,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
           buffer.getChannelData(0).set(f32);
           this.get('recBuffers').push(f32);
           this.set('recLength', recLength + f32.length);
-          this.trigger('stream', buffer);
+          region.trigger('stream', buffer);
         } else {
           pro.onaudioprocess = null;
           pro = null;
@@ -233,11 +244,13 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         , arrBuffer = this.mergeRecBuffers()
         , audioBuffer = ac.createBuffer(1, arrBuffer.length, ac.sampleRate);
       audioBuffer.getChannelData(0).set(arrBuffer);
-      this.createRegion(audioBuffer);
       this.set('recBuffers', []);
       this.set('recLength', 0);
       this.set('recording', false);
       this.get('mix').trigger('recordStop');
+      this.get('recRegion').set('recording', false);
+      this.get('recRegion').setBuffer(audioBuffer);
+      this.get('recRegion').trigger('recordStop');
       return this.trigger('recordStop');
     },
 
