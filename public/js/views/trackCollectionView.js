@@ -2,10 +2,17 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
   Views.TrackCollection = Backbone.Marionette.CompositeView.extend({
     tagName: "ul",
     template: "#track-collection",
-
+    events: {
+      'click .add-track': 'addTrack'
+    },
+    firstRender: false,
     initialize: function() {
+      var self = this;
       this.on('itemview:trackClicked', this.setActiveTrack);
       this.on('itemview:effectsClicked', this.activateEffectsPanel);
+      this.on('render', function(){
+        self.firstRender = true;
+      });
       $(window).on('scroll', _.bind(this.scrollTracks, this));
     },
 
@@ -41,6 +48,15 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     getItemView: function() {
       return App.Views.TrackItem;
+    },
+
+    addTrack: function(){
+      mix.createTrack('Track');
+    },
+    onAfterItemAdded: function( itemView ){
+      if ( !this.firstRender ) return;
+      this.setActiveTrack(itemView);
+      mix.activateTrack(itemView.model);
     }
   });
 });
