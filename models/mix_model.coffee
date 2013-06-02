@@ -2,61 +2,59 @@ module.exports = (app) ->
   mongoose = require('mongoose')
   uuid     = require('node-uuid')
 
-  regionSchema =
-    url: String
-    start: Number
-    startOffset: Number
-    stopOffset: Number
-    fadeIn: Number
-    fadeOut: Number
-
-  trackSchema =
-    name: String
-    muted: Boolean
-    _muted: Boolean
-    soloed: Boolean
-    volume: Number
-    pluginParams:
-      compressor:
-        bypass: Number
-        threshold: Number
-        release: Number
-        makeupGain: Number
-        attack: Number
-        ratio: Number
-        knee: Number
-        automakeup: Boolean
-      chorus:
-        bypass: Number
-        feedback: Number
-        delay: Number
-        depth: Number
-        rate: Number
-      tremelo:
-        bypass: Number
-        intensity: Number
-        stereoPhase: Number
-        rate: Number
-      delay:
-        bypass: Number
-        delayTime: Number
-        feedback: Number
-        cutoff: Number
-        wetLevel: Number
-        dryLevel: Number
-      reverb:
-        bypass: Number
-        highCut: Number
-        lowCut: Number
-        dryLevel: Number
-        wetLevel: Number
-        impulse: String
-    regions: [regionSchema]
-
   schema = new mongoose.Schema
     bpm: Number
     user: mongoose.Schema.ObjectId
-    tracks: [trackSchema]
+    tracks: [
+      name: String
+      muted: Boolean
+      _muted: Boolean
+      soloed: Boolean
+      volume: Number
+      pluginParams:
+        compressor:
+          bypass: Number
+          threshold: Number
+          release: Number
+          makeupGain: Number
+          attack: Number
+          ratio: Number
+          knee: Number
+          automakeup: Boolean
+        chorus:
+          bypass: Number
+          feedback: Number
+          delay: Number
+          depth: Number
+          rate: Number
+        tremelo:
+          bypass: Number
+          intensity: Number
+          stereoPhase: Number
+          rate: Number
+        delay:
+          bypass: Number
+          delayTime: Number
+          feedback: Number
+          cutoff: Number
+          wetLevel: Number
+          dryLevel: Number
+        reverb:
+          bypass: Number
+          highCut: Number
+          lowCut: Number
+          dryLevel: Number
+          wetLevel: Number
+          impulse: String
+      regions: [
+        url: String
+        start: Number
+        startOffset: Number
+        stopOffset: Number
+        fadeIn: Number
+        fadeOut: Number
+      ]
+    ]
 
   schema.static 'findOrCreate', (attributes, callback) ->
     @findOneAndUpdate(attributes, attributes, upsert: true, callback)
@@ -81,13 +79,60 @@ module.exports = (app) ->
   schema.method 'updateTrack', (params, callback) ->
     track = @tracks[params.track]
     @tracks[params.track] =
-      name: params.name or track.name
-      muted: params.muted or track.muted
-      _muted: params._muted or track._muted
-      soloed: params.soloed or track.soled
-      volume: params.volume or track.volume
-      pluginParams: params.pluginParams or track.pluginParams
-    @save (error, mix) ->
+        name: params.name or track.name
+        muted: params.muted or track.muted
+        _muted: params._muted or track._muted
+        soloed: params.soloed or track.soled
+        volume: params.volume or track.volume
+        pluginParams: params.pluginParams or track.pluginParams
+      @sa    name: String
+      muted: Boolean
+      _muted: Boolean
+      soloed: Boolean
+      volume: Number
+      pluginParams:
+        compressor:
+          bypass: Number
+          threshold: Number
+          release: Number
+          makeupGain: Number
+          attack: Number
+          ratio: Number
+          knee: Number
+          automakeup: Boolean
+        chorus:
+          bypass: Number
+          feedback: Number
+          delay: Number
+          depth: Number
+          rate: Number
+        tremelo:
+          bypass: Number
+          intensity: Number
+          stereoPhase: Number
+          rate: Number
+        delay:
+          bypass: Number
+          delayTime: Number
+          feedback: Number
+          cutoff: Number
+          wetLevel: Number
+          dryLevel: Number
+        reverb:
+          bypass: Number
+          highCut: Number
+          lowCut: Number
+          dryLevel: Number
+          wetLevel: Number
+          impulse: String
+      regions: [
+        url: String
+        start: Number
+        startOffset: Number
+        stopOffset: Number
+        fadeIn: Number
+        fadeOut: Number
+      ]ve (error, mix) ->
       callback(error, mix.tracks[params.track])
 
   schema.method 'deleteTrack', (params, callback) ->
