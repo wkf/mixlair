@@ -3,6 +3,11 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     tagName: "ul",
     initialize: function() {
       this.on('itemview:trackClicked', this.setActiveTrack);
+
+      $(window).on('scroll', _.bind(this.scrollTracks, this));
+    },
+
+    scrollTracks: function() {
     },
 
     setActiveTrack: function(t) {
