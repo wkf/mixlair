@@ -227,6 +227,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         , pos = this.getPosition()
         , bpm = this.get('bpm');
       this.set('clicking', true);
+      this.trigger('clickStart');
       click.stop();
       click.setBpm(bpm);
       click.start(pos);
@@ -234,6 +235,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     stopClick: function(){
       this.set('clicking', false);
+      this.trigger('clickStop');
       this.get('click').stop();
     },
 

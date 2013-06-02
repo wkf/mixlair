@@ -14,6 +14,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'volume': '#playback-volume',
       'volume_alt': '#playback-volume .alt',
       'tempo': '.tempo',
+      'metronome': '.metronome',
       'body': 'body'
     },
     events: {
@@ -22,7 +23,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'click .play': 'playMix',
       'click .record': 'record',
       'click .ffwd': 'ffwd',
-      'click .end': 'end'
+      'click .end': 'end',
+      'click .metronome': 'metronome'
     },
     initialize: function(){
       this.listenTo(mix, 'timeUpdate', this.timeUpdate);
@@ -33,6 +35,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(mix, 'pause', this.swapPlayClass);
       this.listenTo(mix, 'recordStart', this.swapRecordClass);
       this.listenTo(mix, 'recordStop', this.swapRecordClass);
+      this.listenTo(mix, 'clickStart', this.swapClickClass);
+      this.listenTo(mix, 'clickStop', this.swapClickClass);
     },
     onShow: function(){
       var alt = this.ui.volume_alt
@@ -79,6 +83,14 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       var max = mix.get('maxTime');
       mix.pause().set('position', max);
     },
+    metronome: function(){
+      var clicking = mix.get('clicking');
+      if ( clicking ){
+        mix.stopClick();
+      } else {
+        mix.startClick();
+      }
+    },
     // play or pause
     playMix: function( e ){
       if ( mix.get('playing') ){
@@ -110,6 +122,14 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       } else {
         this.ui.record.removeClass('recording');
       } 
+    },
+    swapClickClass: function(){
+      var clicking = mix.get('clicking');
+      if ( clicking ){
+        this.ui.metronome.addClass('active');
+      } else {
+        this.ui.metronome.removeClass('active');
+      }
     },
     timeUpdate: function(){
       var pos = mix.get('position')
