@@ -6,7 +6,8 @@ App.addRegions({
   tracks: '#mix .stage',
   effect: '.effect-panel',
   footer: '#footer',
-  header: 'header'
+  header: 'header',
+  playhead: '#play-head'
 });
 
 App.on("start", function(options) {
@@ -19,6 +20,7 @@ App.on("start", function(options) {
   mix.fetch();
 
   App.footer.show(new App.Views.FooterControls);
+  App.playhead.show(new App.Views.PlayHead);
 
   mix.on('ready', function() {
     App.tracks.show(new App.Views.TrackCollection({

@@ -25,6 +25,7 @@ block head
   script(src="js/views/footerControlsView.js")
   script(src="js/views/regionCollectionView.js")
   script(src="js/views/regionView.js")
+  script(src="js/views/playHeadView.js")
 
   script(src="js/timeline-grid.js")
   script(src="js/wave-svg.js")
@@ -75,15 +76,17 @@ block head
       .timeline.right
       .cl
     .cl
+  script(type="x-javascript", id="playhead-template")
+   .play-head
+      .top
+      .line
+      .bottom
 
 block content
 
   header
   #mix
-    .play-head
-        .top
-        .line
-        .bottom
+    #play-head
     .stage
     .effect-panel
       .header
