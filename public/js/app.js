@@ -5,7 +5,8 @@ App.PPS = 20
 App.addRegions({
   tracks: '#mix',
   effect: '.effect-panel',
-  footer: '#footer'
+  footer: '#footer',
+  header: 'header'
 });
 
 App.on("start", function(options) {
@@ -23,6 +24,8 @@ App.on("start", function(options) {
     App.tracks.show(new App.Views.TrackCollection({
       collection: mix.tracks
     }));
+
+    App.header.show(new App.Views.HeaderView)
   });
 
   // expose the mix Model so we can fuck with it in the console

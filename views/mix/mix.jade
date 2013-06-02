@@ -21,6 +21,7 @@ block head
 
   script(src="js/views/trackCollectionView.js")
   script(src="js/views/trackView.js")
+  script(src="js/views/headerView.js")
   script(src="js/views/footerControlsView.js")
   script(src="js/views/regionCollectionView.js")
   script(src="js/views/regionView.js")
@@ -66,15 +67,17 @@ block head
       #playback-volume
         .alt
 
-block content
-
-  header
+  script(type="x-javascript", id="header-template")
     .fork-this Fork This
     .base.cl
       .label.left my tracks
       .timeline.right
       .cl
     .cl
+
+block content
+
+  header
   #mix
     .effect-panel
 
