@@ -9,7 +9,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
     events: {
       "click": "trackClicked",
-      "click .track-buttons > div": "toggleButton"
+      "click .track-buttons > div": "toggleButton",
+      "click .track-buttons .fx": "toggleEffectsPanel"
     },
 
     regions: {
@@ -53,7 +54,15 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     toggleButton: function(e){
-      $(e.currentTarget).toggleClass('active')
+      // $(e.currentTarget).toggleClass('active');
+    },
+
+    toggleEffectsPanel: function(){
+      this.trigger('effectsClicked');
+    },
+
+    renderEffects: function(){
+      console.log('rendering fx...')
     }
 
   });

@@ -3,7 +3,7 @@ App = new Backbone.Marionette.Application();
 App.PPS = 20
 
 App.addRegions({
-  tracks: '#mix',
+  tracks: '#mix .stage',
   effect: '.effect-panel',
   footer: '#footer',
   header: 'header'
