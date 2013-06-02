@@ -55,7 +55,7 @@
     streamSvg.prototype.getPeaks = function(buffer) {
       var channel, frame, i, j, peak, peaks, width, _i, _j, _ref, _ref1;
 
-      width = this.config.pixelsPerSecond * buffer.duration;
+      width = Math.ceil(this.config.pixelsPerSecond * buffer.duration);
       frame = buffer.getChannelData(0).length / width;
       peaks = [];
       for (i = _i = 0, _ref = width - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
