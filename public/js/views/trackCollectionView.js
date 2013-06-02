@@ -7,8 +7,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       $(window).on('scroll', _.bind(this.scrollTracks, this));
     },
 
-    scrollTracks: function() {
-
+    scrollTracks: function(e) {
+      $('.info').css('margin-top', $(window).scrollTop()*-1)
     },
 
     setActiveTrack: function(t) {
