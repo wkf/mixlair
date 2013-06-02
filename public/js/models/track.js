@@ -100,6 +100,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       }.bind(this));
       this.get('meter').ondBFS(function( dBFS ){
         this.set('dBFS', dBFS);
+        this.trigger('meter');
       }.bind(this));
       this.regions.forEach(function( region ){
         var src;
