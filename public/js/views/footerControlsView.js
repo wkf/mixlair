@@ -20,6 +20,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'click .beginning': 'beginning',
       'click .rewind': 'rewind',
       'click .play': 'playMix',
+      'click .record': 'record',
       'click .ffwd': 'ffwd',
       'click .end': 'end'
     },
@@ -30,6 +31,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(mix, 'meter', this.meter);
       this.listenTo(mix, 'play', this.swapPlayClass);
       this.listenTo(mix, 'pause', this.swapPlayClass);
+      this.listenTo(mix, 'recordStart', this.swapRecordClass);
+      this.listenTo(mix, 'recordStop', this.swapRecordClass);
     },
     onShow: function(){
       var alt = this.ui.volume_alt
@@ -84,12 +87,29 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         mix.play();
       }
     },
+    record: function(){
+      var active = mix.getActiveTrack()
+        , recording = mix.get('recording');
+      if ( !active ) return;
+      if ( recording ){
+        active.recordStop();
+      } else {
+        active.record();
+      }
+    },
     swapPlayClass: function(){
       if ( mix.get('playing') ){
         this.ui.play.addClass('playing');
       } else {
         this.ui.play.removeClass('playing');
       }
+    },
+    swapRecordClass: function(){
+      if ( mix.get('recording') ){
+        this.ui.record.addClass('recording');
+      } else {
+        this.ui.record.removeClass('recording');
+      } 
     },
     timeUpdate: function(){
       var pos = mix.get('position')

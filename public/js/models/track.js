@@ -218,6 +218,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         mix: this.get('mix'),
         recording: true
       });
+      this.get('mix').set('recording', true);
+      this.get('mix').trigger('recordStart');
       this.set('recRegion', region);
       this.regions.add(region);
       pro.onaudioprocess = function( evt ){
@@ -255,6 +257,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.get('recRegion').set('recording', false);
       this.get('recRegion').setBuffer(audioBuffer);
       this.get('recRegion').trigger('recordStop');
+      this.get('mix').set('recording', false);
+      this.get('mix').trigger('recordStop');
       return this.trigger('recordStop');
     },
 

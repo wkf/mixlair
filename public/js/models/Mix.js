@@ -165,6 +165,18 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       return this.trigger('createTrack');
     },
 
+    activateTrack: function( active ){
+      active.set('active', true);
+      this.tracks.forEach(function( track ){
+        if ( active === track ) return;
+        track.set('active', false);
+      });
+    },
+
+    getActiveTrack: function(){
+      return this.tracks.findWhere({active: true});
+    },
+
     // returns the number of currently recording tracks
     getRecordingTracks: function(){
       return this.tracks.where({recording: true}).length;

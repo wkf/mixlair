@@ -83,7 +83,7 @@
         y = ~~((_this.config.maxHeight - h) / 2);
         rect.setAttribute("x", _this.step++);
         rect.setAttribute("width", 1);
-        rect.setAttribute("height", h);
+        rect.setAttribute("height", Math.max(1, h));
         rect.setAttribute("y", y);
         return _this.svg.appendChild(rect);
       });
