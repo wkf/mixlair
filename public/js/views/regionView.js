@@ -7,6 +7,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       "drag": 'moveTrack',
       "draginit": 'dragInit',
       "dragstart": 'startMove',
+      "dragend": 'dragEnd',
+      "mouseup": 'dragEnd'
     },
 
     initialize: function(){
@@ -15,7 +17,12 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(mix, 'zoom', this.zoom);
     },
 
+    dragEnd: function() {
+      this.$el.removeClass('active');
+    },
+
     dragInit: function() {
+      this.$el.addClass('active');
       this.trigger("dragInit");
     },
 
