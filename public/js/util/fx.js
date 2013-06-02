@@ -64,8 +64,8 @@ App.module('util', function(util, App, Backbone, Marionette, $, _) {
       params: {
         bypass: {
           range: [0, 1],
-          value: 1,
-        }
+          value: 1
+        },
         intensity: {
           range: [0, 1],
           value: 0.3,
