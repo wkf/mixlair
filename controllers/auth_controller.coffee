@@ -26,9 +26,11 @@ module.exports = (app) ->
     )
 
     successfulAuth: (request, response) ->
-      Mix.create user: request.user._id, (error, mix) ->
+      Mix.findOrCreate user: request.user._id, (error, mix) ->
         return response.send 'failed', 500 if error
-        response.redirect "/user/#{request.user._id}/mix/#{mix._id}"
+        mix.populate (error) ->
+          return response.send 'failed', 500 if error
+          response.redirect "/user/#{request.user._id}/mix/#{mix._id}"
 
     initializeTwitterAuth = ->
       TwitterStrategy = require('passport-twitter').Strategy

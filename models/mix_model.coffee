@@ -58,7 +58,15 @@ module.exports = (app) ->
     user: mongoose.Schema.ObjectId
     tracks: [trackSchema]
 
-  schema.method 'createTrack', (params, callback) ->
+  schema.static 'findOrCreate', (attributes, callback) ->
+    @findOneAndUpdate(attributes, attributes, upsert: true, callback)
+
+  schema.method 'populate', (callback) ->
+    @createTrack {}, (error) =>
+      @createTrack {}, (error) =>
+        callback(error)
+
+  schema.method 'createTrack', (params = {}, callback) ->
     @tracks.push
       name: params.name
       muted: params.muted

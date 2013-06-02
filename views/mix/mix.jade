@@ -1,43 +1,43 @@
 extends ../layout
 
 block head
-  script(src="js/vendor/jquery-1.9.1.js")
-  script(src="js/vendor/underscore.js")
-  script(src="js/vendor/backbone.js")
-  script(src="js/vendor/marionette.1.0.3.js")
-  script(src="js/app.js")
-  script(src="js/models/mix.js")
-  script(src="js/models/region.js")
-  script(src="js/models/track.js")
-  script(src="js/models/plugin.js")
-  script(src="js/collections/regions.js")
-  script(src="js/collections/tracks.js")
-  script(src="js/collections/plugins.js")
-  script(src="js/vendor/tuna.js")
-  script(src="js/Metronome.js")
-  script(src="js/Meter.js")
-  script(src="js/Archiver.js")
-  script(src="js/Downloader.js")
+  script(src="/js/vendor/jquery-1.9.1.js")
+  script(src="/js/vendor/underscore.js")
+  script(src="/js/vendor/backbone.js")
+  script(src="/js/vendor/marionette.1.0.3.js")
+  script(src="/js/app.js")
+  script(src="/js/models/mix.js")
+  script(src="/js/models/region.js")
+  script(src="/js/models/track.js")
+  script(src="/js/models/plugin.js")
+  script(src="/js/collections/regions.js")
+  script(src="/js/collections/tracks.js")
+  script(src="/js/collections/plugins.js")
+  script(src="/js/vendor/tuna.js")
+  script(src="/js/Metronome.js")
+  script(src="/js/Meter.js")
+  script(src="/js/Archiver.js")
+  script(src="/js/Downloader.js")
 
-  script(src="js/util/fx.js")
+  script(src="/js/util/fx.js")
 
-  script(src="js/views/trackCollectionView.js")
-  script(src="js/views/trackView.js")
-  script(src="js/views/headerView.js")
-  script(src="js/views/footerControlsView.js")
-  script(src="js/views/regionCollectionView.js")
-  script(src="js/views/regionView.js")
-  script(src="js/views/playHeadView.js")
-  script(src="js/views/effectsCollectionView.js")
-  script(src="js/views/effectView.js")
+  script(src="/js/views/trackCollectionView.js")
+  script(src="/js/views/trackView.js")
+  script(src="/js/views/headerView.js")
+  script(src="/js/views/footerControlsView.js")
+  script(src="/js/views/regionCollectionView.js")
+  script(src="/js/views/regionView.js")
+  script(src="/js/views/playHeadView.js")
+  script(src="/js/views/effectsCollectionView.js")
+  script(src="/js/views/effectView.js")
 
-  script(src="js/timeline-grid.js")
-  script(src="js/wave-svg.js")
-  script(src="js/stream-svg.js")
-  script(src="js/vendor/jquery-ui-slider.js")
-  script(src="js/vendor/jquery.event.drag.js")
+  script(src="/js/timeline-grid.js")
+  script(src="/js/wave-svg.js")
+  script(src="/js/stream-svg.js")
+  script(src="/js/vendor/jquery-ui-slider.js")
+  script(src="/js/vendor/jquery.event.drag.js")
 
-  script(src="js/main.js")
+  script(src="/js/main.js")
 
   include _header_template
   include _footer_template
@@ -76,3 +76,5 @@ block content
             .slider
 
   footer#footer
+  script MIX = !{JSON.stringify(mix)})
+
