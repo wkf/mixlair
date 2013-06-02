@@ -263,7 +263,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         this.set('user', data.user);
       }
       this.set('id', data._id);
-      tracks.forEach(function( trackData ){
+      tracks.reverse().forEach(function( trackData ){
         var track = new App.Models.Track({
           id: trackData._id,
           name: trackData.name,
