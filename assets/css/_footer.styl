@@ -47,8 +47,26 @@ footer
   .tempo
     blue-bg()
     cursor: ew-resize
-    width: 80px
+    width: 105px
     box-sizing: border-box
+
+    .metronome
+      size: 17 23
+      bg: 'ui/metronome_holder@2x.png'
+      background-size: 17px 23px
+      float: right
+      margin-top: 8px
+
+      .ticker
+        bg: 'ui/metronome_ticker@2x.png'
+        size: 2px 25px
+        background-size: 2px 25px
+        margin-left: 7px
+        margin-top: -5px
+        transform-origin: 0 25px
+
+    .count
+      float: left
 
     &:active
       cursor: ew-resize
@@ -161,3 +179,11 @@ footer
     background: url('/img/ui/vol_color_row@2x.png') no-repeat
     background-size: 122px 25px
     absolute: top 3px left 14px
+
+@keyframes swang
+  25%
+    transform: rotate(25deg)
+  75%
+    transform: rotate(-25deg)
+  100%
+    transform: rotate(0deg)
