@@ -232,7 +232,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         startOffset: this.get('startOffset'),
         stopOffset: this.get('stopOffset'),
         fadeIn: this.get('fadeIn'),
-        fadeOut: this.get('fadeOut')
+        fadeOut: this.get('fadeOut'),
+        duration: this.get('duration')
       }
     }
 
