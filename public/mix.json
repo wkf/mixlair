@@ -126,7 +126,7 @@
       "muted": false,
       "_muted": false,
       "soloed": false,
-      "volume": 0.29,
+      "volume": 0.45,
       "pluginParams": {
         "compressor": {
           "bypass": 0,
@@ -186,7 +186,7 @@
       "muted": false,
       "_muted": false,
       "soloed": false,
-      "volume": 0.29,
+      "volume": 0.4,
       "pluginParams": {
         "compressor": {
           "bypass": 0,
@@ -354,9 +354,9 @@
           "url": "sound\/Ratatat_Lead_2.mp3",
           "start": 48.306666666667,
           "startOffset": 0,
-          "stopOffset": 66,
+          "stopOffset": 63,
           "fadeIn": 0,
-          "fadeOut": 1.5,
+          "fadeOut": 0,
           "duration": 14.065305709839
         }
       ]
