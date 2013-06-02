@@ -1,6 +1,6 @@
 App = new Backbone.Marionette.Application();
 
-App.PPS = 20
+App.PPS = 13
 
 App.addRegions({
   tracks: '#mix .stage',

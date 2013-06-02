@@ -32,7 +32,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     drawTimeline: function() {
       this.timelineInstance = new timelineGrid({
         pps: App.PPS,
-        seconds: 100,
+        seconds: 300,
         fillStyle: "rgb(112, 118, 128)",
         height: 6,
         fontSize: 10,

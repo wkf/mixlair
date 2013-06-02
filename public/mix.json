@@ -1,5 +1,5 @@
 {
-  "bpm": 85,
+  "bpm": 120,
   "tracks": [
     {
       "name": "Rhythm_1",
@@ -40,22 +40,24 @@
           "dryLevel": 1
         },
         "reverb": {
-          "bypass": 1,
+          "bypass": 0,
           "highCut": 22050,
           "lowCut": 20,
           "dryLevel": 1,
-          "wetLevel": 1,
+          "wetLevel": 0.1,
           "impulse": "impulses\/plate.wav"
         }
       },
       "regions": [
         {
-          "url": "sound\/rhythm_left.mp3",
+          "name": "Ratatat_Rhythm_1.mp3",
+          "url": "sound\/Ratatat_Rhythm_1.mp3",
           "start": 0,
           "startOffset": 0,
           "stopOffset": 0,
           "fadeIn": 0,
-          "fadeOut": 3
+          "fadeOut": 3,
+          "duration": 80.065307617188
         }
       ]
     },
@@ -98,27 +100,29 @@
           "dryLevel": 1
         },
         "reverb": {
-          "bypass": 1,
+          "bypass": 0,
           "highCut": 22050,
           "lowCut": 20,
           "dryLevel": 1,
-          "wetLevel": 1,
+          "wetLevel": 0.1,
           "impulse": "impulses\/plate.wav"
         }
       },
       "regions": [
         {
-          "url": "sound\/rhythm_right.mp3",
+          "name": "Ratatat_Rhythm_2.mp3",
+          "url": "sound\/Ratatat_Rhythm_2.mp3",
           "start": 0,
           "startOffset": 0,
           "stopOffset": 0,
-          "fadeIn": 1,
-          "fadeOut": 3
+          "fadeIn": 0,
+          "fadeOut": 3,
+          "duration": 80.065307617188
         }
       ]
     },
     {
-      "name": "Lead",
+      "name": "Riff_1",
       "muted": false,
       "_muted": false,
       "soloed": false,
@@ -148,7 +152,7 @@
           "rate": 5
         },
         "delay": {
-          "bypass": 0,
+          "bypass": 1,
           "delayTime": 150,
           "feedback": 0.45,
           "cutoff": 20000,
@@ -156,7 +160,7 @@
           "dryLevel": 1
         },
         "reverb": {
-          "bypass": 0,
+          "bypass": 1,
           "highCut": 22050,
           "lowCut": 20,
           "dryLevel": 1,
@@ -166,25 +170,139 @@
       },
       "regions": [
         {
-          "url": "sound\/lead_1.mp3",
-          "start": 13.95,
+          "name": "Ratatat_Riff_1.mp3",
+          "url": "sound\/Ratatat_Riff_1.mp3",
+          "start": 0,
           "startOffset": 0,
-          "stopOffset": 37,
+          "stopOffset": 8,
           "fadeIn": 0,
-          "fadeOut": 2
-        },
-        {
-          "url": "sound\/lead_2.mp3",
-          "start": 36.55,
-          "startOffset": 0,
-          "stopOffset": 39,
-          "fadeIn": 0,
-          "fadeOut": 2
+          "fadeOut": 2,
+          "duration": 72.065307617188
         }
       ]
     },
     {
-      "name": "Octaves_Left",
+      "name": "Riff_2",
+      "muted": false,
+      "_muted": false,
+      "soloed": false,
+      "volume": 0.29,
+      "pluginParams": {
+        "compressor": {
+          "bypass": 0,
+          "threshold": -12,
+          "release": 250,
+          "makeupGain": 4,
+          "attack": 1,
+          "ratio": 4,
+          "knee": 5,
+          "automakeup": false
+        },
+        "chorus": {
+          "bypass": 1,
+          "feedback": 0.4,
+          "delay": 0.0045,
+          "depth": 0.7,
+          "rate": 1.5
+        },
+        "tremolo": {
+          "bypass": 1,
+          "intensity": 0.3,
+          "stereoPhase": 0,
+          "rate": 5
+        },
+        "delay": {
+          "bypass": 1,
+          "delayTime": 150,
+          "feedback": 0.45,
+          "cutoff": 20000,
+          "wetLevel": 0.5,
+          "dryLevel": 1
+        },
+        "reverb": {
+          "bypass": 1,
+          "highCut": 22050,
+          "lowCut": 20,
+          "dryLevel": 1,
+          "wetLevel": 0.5,
+          "impulse": "impulses\/plate.wav"
+        }
+      },
+      "regions": [
+        {
+          "name": "Ratatat_Riff_2.mp3",
+          "url": "sound\/Ratatat_Riff_2.mp3",
+          "start": 8.2,
+          "startOffset": 0,
+          "stopOffset": 8,
+          "fadeIn": 0,
+          "fadeOut": 2,
+          "duration": 72.065307617188
+        }
+      ]
+    },
+    {
+      "name": "Lead_1",
+      "muted": false,
+      "_muted": false,
+      "soloed": false,
+      "volume": 0.45,
+      "pluginParams": {
+        "compressor": {
+          "bypass": 1,
+          "threshold": -20,
+          "release": 250,
+          "makeupGain": 1,
+          "attack": 1,
+          "ratio": 4,
+          "knee": 5,
+          "automakeup": false
+        },
+        "chorus": {
+          "bypass": 1,
+          "feedback": 0.4,
+          "delay": 0.0045,
+          "depth": 0.7,
+          "rate": 1.5
+        },
+        "tremolo": {
+          "bypass": 1,
+          "intensity": 0.3,
+          "stereoPhase": 0,
+          "rate": 5
+        },
+        "delay": {
+          "bypass": 1,
+          "delayTime": 100,
+          "feedback": 0.45,
+          "cutoff": 20000,
+          "wetLevel": 0.5,
+          "dryLevel": 1
+        },
+        "reverb": {
+          "bypass": 0,
+          "highCut": 22050,
+          "lowCut": 20,
+          "dryLevel": 1,
+          "wetLevel": 0.1,
+          "impulse": "impulses\/plate.wav"
+        }
+      },
+      "regions": [
+        {
+          "name": "Ratatat_Lead_1.mp3",
+          "url": "sound\/Ratatat_Lead_1.mp3",
+          "start": 32.981818181818,
+          "startOffset": 0,
+          "stopOffset": 42,
+          "fadeIn": 0,
+          "fadeOut": 1.5,
+          "duration": 38.065307617188
+        }
+      ]
+    },
+    {
+      "name": "Lead_2",
       "muted": false,
       "_muted": false,
       "soloed": false,
@@ -232,21 +350,23 @@
       },
       "regions": [
         {
-          "url": "sound\/octaves_left.mp3",
-          "start": 29.49,
+          "name": "Ratatat_Lead_2.mp3",
+          "url": "sound\/Ratatat_Lead_2.mp3",
+          "start": 48.306666666667,
           "startOffset": 0,
-          "stopOffset": 42,
+          "stopOffset": 66,
           "fadeIn": 0,
-          "fadeOut": 1.5
+          "fadeOut": 1.5,
+          "duration": 14.065305709839
         }
       ]
     },
     {
-      "name": "Octaves_Right",
+      "name": "Lead_3",
       "muted": false,
       "_muted": false,
       "soloed": false,
-      "volume": 0.45,
+      "volume": 0.39,
       "pluginParams": {
         "compressor": {
           "bypass": 1,
@@ -284,76 +404,20 @@
           "highCut": 22050,
           "lowCut": 20,
           "dryLevel": 1,
-          "wetLevel": 1,
-          "impulse": "impulses\/plate.wav"
-        }
-      },
-      "regions": [
-        {
-          "url": "sound\/octaves_right.mp3",
-          "start": 29.49,
-          "startOffset": 0,
-          "stopOffset": 42,
-          "fadeIn": 0,
-          "fadeOut": 1.5
-        }
-      ]
-    },
-    {
-      "name": "Handclaps",
-      "muted": false,
-      "_muted": false,
-      "soloed": false,
-      "volume": 0.73,
-      "pluginParams": {
-        "compressor": {
-          "bypass": 1,
-          "threshold": -20,
-          "release": 250,
-          "makeupGain": 1,
-          "attack": 1,
-          "ratio": 4,
-          "knee": 5,
-          "automakeup": false
-        },
-        "chorus": {
-          "bypass": 1,
-          "feedback": 0.4,
-          "delay": 0.0045,
-          "depth": 0.7,
-          "rate": 1.5
-        },
-        "tremolo": {
-          "bypass": 1,
-          "intensity": 0.3,
-          "stereoPhase": 0,
-          "rate": 5
-        },
-        "delay": {
-          "bypass": 1,
-          "delayTime": 100,
-          "feedback": 0.45,
-          "cutoff": 20000,
-          "wetLevel": 0.5,
-          "dryLevel": 1
-        },
-        "reverb": {
-          "bypass": 0,
-          "highCut": 22050,
-          "lowCut": 20,
-          "dryLevel": 1,
           "wetLevel": 0.5,
           "impulse": "impulses\/plate.wav"
         }
       },
       "regions": [
         {
-          "url": "sound\/handclaps.mp3",
-          "start": 14.09,
+          "name": "Ratatat_Lead_3.mp3",
+          "url": "sound\/Ratatat_Lead_3.mp3",
+          "start": 63.933333333333,
           "startOffset": 0,
-          "stopOffset": 17,
+          "stopOffset": 63,
           "fadeIn": 0,
-          "fadeOut": 1
+          "fadeOut": 1,
+          "duration": 17.065305709839
         }
       ]
     }
