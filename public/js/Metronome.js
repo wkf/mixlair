@@ -3,6 +3,30 @@
   var Metronome = function( ac, bpm ){
     this.ac = ac;
     this.setBpm( bpm );
+    this.download();
+  };
+
+  Metronome.prototype.download = function(){
+    var xhr = new XMLHttpRequest()
+      , self = this;
+    xhr.open('GET', '/sound/click-track.wav', true);
+    xhr.responseType = 'arraybuffer';
+    xhr.addEventListener('load', function(){
+      self.ac.decodeAudioData(xhr.response, function( buffer ){
+        buffer;
+        self.createBuffer = function(){
+          var i = 0
+            , sr = self.ac.sampleRate
+            , len = self.getBeatLength() * sr
+            , f32 = new Float32Array(len);
+          while ( i < 1000 && i < len ){
+            f32[i] = buffer.getChannelData(0)[i++];
+          }
+          return f32;
+        };
+      });
+    });
+    xhr.send();
   };
 
   Metronome.prototype.createBuffer = function(){
