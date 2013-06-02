@@ -27,13 +27,16 @@
     z-index: 200
 
   &.active .info
-    background: lighten(#23262a, 5%)
+    background: #1d2023
 
   .track-title
     font-size: 16px
     font-weight: 500
-    color: #a0a9b4
+    color: rgba(#a0a9b4, 0.4)
+    transition(200ms)
 
+  &.active .track-title
+    color: rgb(190, 190, 190)
   .waveform
     position: absolute
     left: 310px
@@ -49,6 +52,7 @@
     gradient: #4d5359 #373a41
     height: 100%
     position: absolute
+    transition(200ms)
 
   &.active .region
     gradient #e04737, #cb301f
@@ -70,7 +74,7 @@
     box-shadow: inset 0 2px 5px rgba(#000,.3)
     background-position: 0 -1px
     position: relative
-    margin-top: 27px
+    margin-top: 24px
     float: left
 
     .alt
@@ -92,14 +96,14 @@
       margin-left: -7px
 
   .track-buttons
-    box-shadow: 0 1px 2px rgba(#000,.2)
+    box-shadow: 0 0px 1px rgba(0, 0, 0, 0.08)
     group()
     float: right
-    margin-top: 40px
+    margin-top: 33px
 
     & > div
       border: 1px solid #1b1c1f
-      padding: 9px 15px
+      padding: 8px 15px
       float: left
       cursor: pointer
       background-position: center center
