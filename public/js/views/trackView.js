@@ -4,7 +4,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     tagName: "li",
     className: "track",
     ui: {
-      gain: '.gain-control'
+      gain: '.gain-control',
+      gain_alt: '.alt'
     },
     events: {
       "click": "trackClicked"
@@ -12,6 +13,10 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     regions: {
       'regions': ".waveform"
+    },
+
+    initialize: function(){
+      this.listenTo(this.model, 'meter', this.meter);
     },
 
     onShow: function() {
@@ -30,12 +35,19 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.activateGainSlider();
     },
 
+    meter: function(){
+      var db = mix.get('dBFS')
+        , percentage = 100 + (db * 1.92);
+      this.ui.gain_alt.css({ width: percentage + "%" });
+    },
+
     activateGainSlider: function(){
       var self = this;
       this.ui.gain.slider({
-        value: 90,
+        value: self.model.get('volume') * 100,
         slide: function(e, ui){
-          $(ui.handle).prev('.alt').css({ width: ui.value + "%" })
+          $(ui.handle).prev('.alt').css({ width: ui.value + "%" });
+          self.model.set('volume', ui.value / 100);
         }
       });
     }
