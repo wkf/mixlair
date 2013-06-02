@@ -13,7 +13,8 @@ module.exports = (app) ->
         response.render 'mix/mix', {mix: mix, view_name: 'mix'}
 
     updateMix: (request, response) ->
-      Mix.findOneAndUpdate $where: "this._id =='#{request.params.mix}'", request.params, (error, mix) ->
+      Mix.where('_id', request.param.mix).findOneAndUpdate request.body, (error, mix) ->
+        console.log mix
         return response.send 'failed', 500 if error
         response.json mix
 
