@@ -222,14 +222,11 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
           return false
         }
 
-        // bail for now - these can get annoying
-        return;
-
         if (e.keyCode === 13) {
           self.beginning();
         }
 
-        if (e.keyCode === 82) {
+        if (e.keyCode === 82 && !e.metaKey) {
           self.record();
         }
 
