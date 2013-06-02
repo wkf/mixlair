@@ -4,7 +4,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     className: "region",
     events: {
       "drag": 'moveTrack',
-      "draginit": 'dragInit'
+      "draginit": 'dragInit',
+      "dragstart": 'startMove'
     },
 
     initialize: function(){
@@ -24,7 +25,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         this.generateWaveSvg();
       } else {
         this.generateStreamSvg();
-      } 
+      }
     },
 
     generateWaveSvg: function() {
