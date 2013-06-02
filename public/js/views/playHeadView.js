@@ -1,12 +1,21 @@
 App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
   Views.PlayHead = Backbone.Marionette.ItemView.extend({
     template: "#playhead-template",
+    className: 'playhead-wrap',
+
     ui: {
       'playhead': '.play-head'
     },
+
     initialize: function(){
       this.listenTo(mix, 'timeUpdate', this.move);
+      $(window).on('scroll', _.bind(this.shiftPlayHead, this));
     },
+
+    shiftPlayHead: function() {
+      this.ui.playhead.css('-webkit-transform', 'translateX('+-window.scrollX+'px)');
+    },
+
     onShow: function(){
       var self = this, dragPos, left, max;
       this.ui.playhead.on('dragstart', function( e ){
