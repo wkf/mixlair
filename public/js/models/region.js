@@ -5,6 +5,12 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     initialize: function(){
       // clone the original buffer
       this.setBuffer();
+      // set a name
+      if ( !this.get('name') ){
+        if ( this.get('url') ){
+          this.set('name', this.get('url').split('/').pop());
+        }
+      }
       // update start time when startOffset changes
       // and slice up a new buffer
       this.on('change:startOffset', function( evt, val ){
@@ -49,6 +55,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // default values
     defaults: {
+      // region name
+      name: '',
       // start position of the region, relative to mix position 0
       start: 0,
       // compared to the original buffer, where does the region start?
@@ -218,6 +226,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     toJSON: function(){
       return {
+        name: this.get('name'),
         url: this.get('url'),
         start: this.get('start'),
         startOffset: this.get('startOffset'),
