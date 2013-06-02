@@ -18,7 +18,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'tempo': '.tempo',
       'metronome': '.metronome',
       'ticker': '.metronome .ticker',
-      'body': 'body'
+      'body': 'body',
       'zoom': '#zoom-slider'
     },
 
