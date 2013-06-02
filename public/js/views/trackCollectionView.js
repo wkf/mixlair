@@ -1,6 +1,8 @@
 App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
-  Views.TrackCollection = Backbone.Marionette.CollectionView.extend({
+  Views.TrackCollection = Backbone.Marionette.CompositeView.extend({
     tagName: "ul",
+    template: "#track-collection",
+
     initialize: function() {
       this.on('itemview:trackClicked', this.setActiveTrack);
       this.on('itemview:effectsClicked', this.activateEffectsPanel);
