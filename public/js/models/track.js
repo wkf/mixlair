@@ -145,6 +145,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.get('mute').gain.value = 0;
       this.set('muted', true);
       this.get('soloed') && this.unsolo();
+      this.trigger('mute');
       return this;
     },
 
@@ -152,6 +153,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     unmute: function(){
       this.get('mute').gain.value = 1;
       this.set('muted', false);
+      this.trigger('unmute');
       return this;
     },
 
@@ -173,6 +175,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this._unmute();
       this.set('soloed', true);
       this.get('mix').soloMute();
+      this.trigger('solo');
       return this;
     },
 
@@ -180,6 +183,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     unsolo: function(){
       this.set('soloed', false);
       this.get('mix').soloMute();
+      this.trigger('unsolo');
       return this;
     },
 

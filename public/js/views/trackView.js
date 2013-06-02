@@ -5,12 +5,16 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     className: "track",
     ui: {
       gain: '.gain-control',
-      gain_alt: '.alt'
+      gain_alt: '.alt',
+      mute: '.btn.mute',
+      solo: '.btn.solo'
     },
     events: {
       "click": "trackClicked",
       "click .track-buttons > div": "toggleButton",
-      "click .track-buttons .fx": "toggleEffectsPanel"
+      "click .track-buttons .fx": "toggleEffectsPanel",
+      "click .btn.mute": "mute",
+      "click .btn.solo": "solo"
     },
 
     regions: {
@@ -19,6 +23,10 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     initialize: function(){
       this.listenTo(this.model, 'meter', this.meter);
+      this.listenTo(this.model, 'mute', this.onmute);
+      this.listenTo(this.model, 'unmute', this.onunmute);
+      this.listenTo(this.model, 'solo', this.onsolo);
+      this.listenTo(this.model, 'unsolo', this.onunsolo);
     },
 
     onShow: function() {
@@ -63,6 +71,40 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     renderEffects: function(){
       console.log('rendering fx...')
+    },
+
+    mute: function(){
+      var muted = !!this.model.get('muted');
+      if ( !muted ){
+        this.model.mute();
+      } else {
+        this.model.unmute();
+      }
+    },
+
+    solo: function(){
+      var soloed = !!this.model.get('soloed');
+      if ( !soloed ){
+        this.model.solo();
+      } else {
+        this.model.unsolo();
+      }
+    },
+
+    onmute: function(){
+      this.ui.mute.addClass('active');
+    },
+
+    onunmute: function(){
+      this.ui.mute.removeClass('active');
+    },
+
+    onsolo: function(){
+      this.ui.solo.addClass('active');
+    },
+
+    onunsolo: function(){
+      this.ui.solo.removeClass('active');
     }
 
   });
