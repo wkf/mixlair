@@ -24,7 +24,9 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         seconds: 100,
         fillStyle: "rgb(112, 118, 128)",
         height: 6,
-        lineWidth: 2,
+        fontSize: 10,
+        lineWidth: 1,
+        stampEvery: 15,
         appendTo: this.ui.timeline[0]
       });
 

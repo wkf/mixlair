@@ -11,10 +11,13 @@
       this.retina = window.devicePixelRatio || 1;
       this.options.horzPadding = 20 * this.retina;
       this.options.vertPadding = 20 * this.retina;
+      this.options.fontSize = this.options.fontSize * this.retina || 15 * this.retina;
+      this.options.font = this.options.font || "Helvetica";
       this.options.appendTo = this.options.appendTo || document.body;
       this.options.pps = this.options.pps * this.retina;
-      this.options.lineWidth = this.options.lineWidth || 4;
-      this.options.fontStyle = this.options.fontStyle || '15px Helvetica';
+      this.options.stampEvery = this.options.stampEvery || 1;
+      this.options.lineWidth = this.options.lineWidth * this.retina || 4 * this.retina;
+      this.options.fontStyle = "" + this.options.fontSize + "px " + this.options.font;
       this.options.fillStyle = this.options.fillStyle || "black";
       this.options.fontFillStyle = this.options.fontFillStyle || this.options.fillStyle;
       this.options.height = (this.options.height * this.retina || 50 * this.retina) + this.options.vertPadding;
@@ -70,7 +73,9 @@
           if (o.fillStyle !== o.fontFillStyle) {
             this.ctx.fillStyle = o.fontFillStyle;
           }
-          this.ctx.fillText(this.formatTime(i + 1), x - metrics.width / 2 + o.lineWidth / 2, this.options.vertPadding / 2);
+          if (!(!i || (i + 1) % o.stampEvery)) {
+            this.ctx.fillText(this.formatTime(i + 1), x - metrics.width / 2 + o.lineWidth / 2, this.options.vertPadding / 2);
+          }
         }
         if (o.fillStyle !== o.fontFillStyle) {
           this.ctx.fillStyle = o.fillStyle;
