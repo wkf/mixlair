@@ -82,8 +82,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.tracks.play();
       clicking && this.startClick();
       this.set('playing', true);
-      // $('.ticker')[0].webkitAnimationName = 'swang';
-      // $('.ticker')[0].webkitAnimationDuration = 'infinite';
+      return this.trigger('play');
     },
 
     // pause all tracks

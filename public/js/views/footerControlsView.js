@@ -15,6 +15,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'volume_alt': '#playback-volume .alt',
       'tempo': '.tempo',
       'metronome': '.metronome',
+      'ticker': '.metronome .ticker',
       'body': 'body'
     },
     events: {
@@ -37,6 +38,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(mix, 'recordStop', this.swapRecordClass);
       this.listenTo(mix, 'clickStart', this.swapClickClass);
       this.listenTo(mix, 'clickStop', this.swapClickClass);
+      this.clickInterval = null;
+      this.tickerMoved = false;
     },
     onShow: function(){
       var alt = this.ui.volume_alt
@@ -89,6 +92,25 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         mix.stopClick();
       } else {
         mix.startClick();
+      }
+      this.animateMetronome();
+    },
+    animateMetronome: function(){
+      var clicking = mix.get('clicking')
+        , bpm = mix.get('bpm')
+        , dur = 60 / bpm * 1000
+        , self = this; 
+      clearInterval(this.clickInterval);
+      if ( clicking ){
+        this.clickInterval = setInterval(function(){
+          if ( self.tickerMoved ){
+            self.ui.ticker.removeClass('moved');
+            self.tickerMoved = false;
+          } else {
+            self.ui.ticker.addClass('moved');
+            self.tickerMoved = true;
+          }
+        }, dur);
       }
     },
     // play or pause
@@ -153,6 +175,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     bpmUpdate: function(){
       var bpm = mix.get('bpm');
       this.ui.tempo_count.text(bpm);
+      this.animateMetronome();
     },
     bindSpace: function(){
       var self = this;
