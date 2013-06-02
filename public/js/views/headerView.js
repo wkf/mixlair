@@ -3,7 +3,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     template: "#header-template",
     className: "header",
     ui: {
-      timeline: ".timeline",
+      timeline: ".timeline"
     },
 
     initialize: function() {
@@ -16,7 +16,9 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     clickJump: function(e) {
-      mix.set('position', e.offsetX / App.PPS);
+      // magic (timelineGrid horizontal padding)
+      var margin = -20;
+      mix.set('position', ( e.offsetX + margin ) / App.PPS);
     },
 
     onShow: function() {
