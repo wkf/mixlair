@@ -12,17 +12,18 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       volume: 1,
       dBFS: -192,
       regions: 0,
-      loaded: 0,
+      loaded: 0
     },
 
     snapTime: function( seconds ){
+      return seconds;
       var bpm = this.get('bpm')
         , beatlength = 60 / bpm
         , mod = seconds % beatlength
         , down = seconds - mod
         , up = seconds + ( beatlength - mod )
         , downdiff = seconds - down
-        , updiff = up - seconds
+        , updiff = up - seconds;
       return updiff < downdiff ? up : down;
     },
 

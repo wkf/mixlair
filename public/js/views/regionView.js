@@ -63,17 +63,18 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     startMove: function(e){
-      this.prevX = e.clientX;
+      var el = $(e.currentTarget);
+      this.prevX = e.pageX;
+      this.prevLeft = parseInt(el.css('left'), 10);
     },
 
     moveTrack: function(e){
       var el = $(e.currentTarget);
-      var delta = e.clientX - this.prevX;
-      var new_position = mix.snapTime(parseInt(el.css('left')) + delta);
+      var delta = e.pageX - this.prevX;
+      var new_position = mix.snapTime((this.prevLeft + delta) / App.PPS);
       if (new_position < 0) new_position = 0
-      el.css('left', new_position);
-      this.prevX = e.clientX;
-      this.model.set('start', new_position / App.PPS);
+      el.css('left', new_position * App.PPS);
+      this.model.set('start', new_position);
     },
 
     zoom: function(){
