@@ -1,5 +1,7 @@
 App = new Backbone.Marionette.Application();
 
+App.PPS = 20
+
 App.addRegions({
   tracks: '#mix',
   effect: '.effect-panel',
