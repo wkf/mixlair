@@ -24,13 +24,21 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     displayPanel: function(effect){
       effect = _.findWhere(App.util.fx, { name: effect });
+
       var effectViews = [];
       for (var key in effect.params){
-        effectViews.push({ name: key, value: effect.params[key], track: this.track });
+        effectViews.push({
+          name: key,
+          value: effect.params[key].value,
+          track: this.track,
+          range: effect.params[key].range
+        });
       }
+
       var effectDetailsCollectionView = new App.Views.effectDetailsCollectionView({
         collection: new Backbone.Collection(effectViews)
       });
+
       this.content.show(effectDetailsCollectionView);
     }
 
