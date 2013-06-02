@@ -2,6 +2,10 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
   Views.RegionView = Backbone.Marionette.ItemView.extend({
     template: "#region-template",
     className: "region",
+    events: {
+      "dragstart": 'startMove',
+      "drag": 'moveTrack'
+    },
     initialize: function(){
       this.listenTo(this.model, 'stream', this.onstream);
       this.listenTo(this.model, 'recordStop', this.switchToWave);
@@ -44,6 +48,17 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.streamSvg.svg.parentElement.removeChild(this.streamSvg.svg);
       this.generateWaveSvg();
       this.streamSvg = null;
+    },
+    startMove: function(e){
+      this.prevX = e.clientX;
+    },
+    moveTrack: function(e){
+      var el = $(e.currentTarget);
+      var delta = e.clientX - this.prevX;
+      var new_position = mix.snapTime(parseInt(el.css('left')) + delta)
+      el.css('left', new_position);
+      this.prevX = e.clientX;
+      this.model.set('start', new_position / App.PPS);
     }
   });
 });
