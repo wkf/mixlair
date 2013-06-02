@@ -1,7 +1,7 @@
 extends ../layout
 
 block head
-  script MIX = !{if mix then JSON.stringify(mix) else require('../../public/mix.json')}
+  script MIX = !{JSON.stringify(mix)}
   script(src="/js/vendor/jquery-1.9.1.js")
   script(src="/js/vendor/underscore.js")
   script(src="/js/vendor/backbone.js")
