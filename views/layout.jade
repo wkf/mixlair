@@ -3,8 +3,9 @@ html
   head
     title= title
     != css('main')
+    meta(name='description', content='Mixlair: Social audio editing')
     block head
-  body(class= view_name || "" )
+  body(class= view_name || "")
     block content
 
   != livereload
