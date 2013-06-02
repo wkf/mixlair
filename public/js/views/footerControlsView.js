@@ -215,6 +215,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       var self = this;
       $(window).on('keydown', function(e){
 
+        if ( App.blockKeyEvents ) return;
+
         if (e.keyCode === 32) {
           self.playMix();
           return false

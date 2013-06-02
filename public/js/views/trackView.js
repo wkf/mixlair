@@ -35,11 +35,13 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     titleEditOff: function() {
       this.model.set('name', this.ui.title.text());
+      App.blockKeyEvents = false;
     },
 
     setTitleEdit: function(e) {
       this.ui.title[0].contentEditable = true;
       this.ui.title[0].spellcheck = false;
+      App.blockKeyEvents = true;
     },
 
     addTrackRegions: function() {
