@@ -183,6 +183,18 @@ footer
     inline-block()
     cursor: pointer
     margin: 11px 12px 0 4px
+    position: relative
+
+    .pulse
+      size: 17px
+      rounded()
+      background: transparent
+      absolute: top 21px left 21px
+      box-shadow: 0 0 1px red
+
+    &.recording .pulse
+      animation: pulse infinite 1s
+
 
     &:hover
       background-image: url(s('%s%s', unquote(img-path), unquote('ui/record_led@2x.png'))), -webkit-linear-gradient(top, #ccc 0%, #9c9c9c 100%)
@@ -220,3 +232,11 @@ footer
     transform: rotate(-25deg)
   100%
     transform: rotate(0deg)
+
+@keyframes pulse
+  0%
+    box-shadow: 0 0 1px red
+  50%
+    box-shadow: 0 0 25px red
+  100%
+    box-shadow: 0 0 1px red
