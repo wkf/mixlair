@@ -12,7 +12,7 @@
     this.loaded = 0;
     this.loading = 0;
     this.queue = [];
-    this.simultaneous = max || 3;
+    this.simultaneous = max || 6;
     this.start = Date.now();
   };
 
