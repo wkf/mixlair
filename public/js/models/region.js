@@ -21,6 +21,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
           , playing = mix.get('playing');
         this.set('start', start - diff);
         this.sliceBuffer();
+        this.trigger('resize');
         playing && mix.play();
       });
       // slice up a new buffer when stopOffset changes
@@ -28,6 +29,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         var mix = this.get('mix')
           , playing = mix.get('playing');
         this.sliceBuffer();
+        this.trigger('resize');
         playing && mix.play();
       });
       // slice up a new buffer when fadeIn changes

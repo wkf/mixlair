@@ -14,6 +14,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     initialize: function(){
       this.listenTo(this.model, 'stream', this.onstream);
       this.listenTo(this.model, 'recordStop', this.switchToWave);
+      this.listenTo(this.model, 'resize', this.resize);
       this.listenTo(mix, 'zoom', this.zoom);
     },
 
@@ -90,6 +91,12 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       if ( !this.waveSvg ) return;
       this.$el.css('left', start * pps);
       this.waveSvg.updatePixelsPerSecond(pps);
+    },
+
+    resize: function(){
+       if ( !this.waveSvg ) return;
+      this.waveSvg.svg.parentElement.removeChild(this.waveSvg.svg);
+      this.generateWaveSvg();
     }
   });
 });
