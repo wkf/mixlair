@@ -22,6 +22,8 @@ block head
   script(src="js/views/trackCollectionView.js")
   script(src="js/views/trackView.js")
   script(src="js/views/footerControlsView.js")
+  script(src="js/views/regionCollectionView.js")
+  script(src="js/views/regionView.js")
 
   script(src="js/timeline-grid.js")
   script(src="js/vendor/jquery-ui-slider.js")
@@ -29,20 +31,19 @@ block head
 
   script(src="js/main.js")
 
+  script(type="x-javascript", id="region-template")
+    .title <%= url %>
+
   script(type="x-javascript", id="track-template")
     .info.left
       .left
-        h5.track-title XX XXXXX XXXXX
+        h5.track-title <%= name %>
         .gain-control
       .right
         .btn.fx
         .btn.mute
         .btn.play
     .waveform
-      .region
-        .title zapbar
-      .region
-        .title tapbar
 
   script(type="x-javascript", id="footer-template")
     .contain
