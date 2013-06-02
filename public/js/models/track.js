@@ -342,6 +342,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       var downloader = this.get('mix').downloader
         , ac = this.context()
         , track = this;
+      if ( !regions || !regions.length ) return;
       regions.forEach(function( regionData ){
          var callback, xhr = new XMLHttpRequest();
           xhr.open('GET', regionData.url, true);
