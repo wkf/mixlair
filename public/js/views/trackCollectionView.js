@@ -20,6 +20,10 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       $('.info').css('margin-top', $(window).scrollTop()*-1)
     },
 
+    appendHtml: function(collectionView, itemView, index) {
+      collectionView.$el.prepend(itemView.el);
+    },
+
     setActiveTrack: function(t) {
       this.children.each(function(view){
         view.$el.removeClass('active');
