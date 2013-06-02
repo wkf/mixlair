@@ -18,7 +18,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     clickJump: function(e) {
       // magic (timelineGrid horizontal padding)
       var margin = -20;
-      mix.set('position', ( e.offsetX + margin ) / App.PPS);
+      mix.set('position', Math.max(0, ( e.offsetX + margin ) / App.PPS));
     },
 
     onShow: function() {
