@@ -3,7 +3,7 @@ module.exports = (app) ->
     Auth = new app.Controllers.Auth(app)
 
     @get '/auth/twitter', @routeTo(Auth, 'twitterAuth')
-    @get '/auth/twitter/callback', @routeTo(Auth, 'twitterCallback')
+    @get '/auth/twitter/callback', @routeTo(Auth, 'twitterCallback'), @routeTo(Auth, 'successfulAuth')
 
     @get '/auth/facebook', @routeTo(Auth, 'facebookAuth')
-    @get '/auth/facebook/callback', @routeTo(Auth, 'facebookCallback')
+    @get '/auth/facebook/callback', @routeTo(Auth, 'facebookCallback'), @routeTo(Auth, 'successfulAuth')

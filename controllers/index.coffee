@@ -8,5 +8,6 @@ module.exports = (app) ->
   app.Controllers.Auth  = require('./auth_controller.coffee')(app)
   app.Controllers.User  = require('./user_controller.coffee')(app)
   app.Controllers.Audio = require('./audio_controller.coffee')(app)
+  app.Controllers.Mix   = require('./mix_controller.coffee')(app)
 
   app

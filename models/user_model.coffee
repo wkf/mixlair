@@ -1,37 +1,30 @@
 module.exports = (app) ->
-  class UserModel extends app.Model
-    # 'WIP'
+  mongoose = require('mongoose')
 
-    @collection 'users'
-    @schema
-      _id:
-        id: 'Number'
-        provider: 'String'
-      provider: 'String'
-      handle: 'String'
-      name:
-        first: 'String'
-        last: 'String'
-      location: 'String'
-      createdAt: 'Date'
-      updatedAt: 'Date'
+  schema = new mongoose.Schema
+    id: Number
+    provider: String
+    email: String
+    username: String
 
-    # create unique index!
+  schema.static 'findOrCreate', (attributes, callback) ->
+    @findOneAndUpdate(attributes, attributes, upsert: true, callback)
 
-    # @validate 'name.first', (firstName) -> firstName.match /name/
-    # @validate 'name.last', (lastName) -> lastName.match /name/
+  schema.static 'findOrCreateFromTwitterProfile', (profile, callback) ->
+    @findOrCreate {
+      id: profile.id
+      provider: profile.provider
+      username: profile.username
+    }, callback
 
-    @findOrCreateFromTwitterProfile: (profile) =>
-      @findOrCreate
-        _id:
-          id: profile.id
-          provider: profile.provider
-        handle: profile.username
+  schema.static 'findOrCreateFromFacebookProfile', (profile, callback) ->
+    @findOrCreate {
+      id: profile.id
+      provider: profile.provider
+      username: profile.username
+    }, callback
 
-    @findOrCreateFromFacebookProfile: (profile) =>
-      @findOrCreate
-        _id:
-          id: profile.id
-          provider: profile.provider
-        handle: profile.username
+  mongoose.model 'User', schema
 
+  # require('mongoose').connect('mongodb://localhost/mixlair_development')
+  # User = require('./models/user_model.coffee')()

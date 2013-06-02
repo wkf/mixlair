@@ -6,22 +6,26 @@ module.exports = (app) ->
 
     constructor: ->
       super
-      passport.serializeUser (user, done) -> done(null, user)
-      passport.deserializeUser (obj, done) -> done(null, obj)
+      passport.serializeUser (user, done) ->
+        done(null, user._id)
+      passport.deserializeUser (obj, done) ->
+        User.findOne _id: obj, done
+
       initializeTwitterAuth()
       initializeFacebookAuth()
 
     twitterAuth: passport.authenticate('twitter')
-    twitterCallback: passport.authenticate('twitter',
-      successRedirect: '/'
-      failureRedirect: '/login'
+    twitterCallback: passport.authenticate('twitter'
+      failureRedirect: '/'
     )
 
     facebookAuth: passport.authenticate('facebook')
     facebookCallback: passport.authenticate('facebook',
-      successRedirect: '/'
-      failureRedirect: '/login'
+      failureRedirect: '/'
     )
+
+    successfulAuth: (request, response) ->
+      response.redirect "/user/#{request.user._id}"
 
     initializeTwitterAuth = ->
       TwitterStrategy = require('passport-twitter').Strategy
@@ -31,7 +35,7 @@ module.exports = (app) ->
         consumerSecret: app.config.twitter.consumerSecret
         callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
       }, (token, tokenSecret, profile, done) ->
-        done null, User.findOrCreateFromTwitterProfile(profile)
+        User.findOrCreateFromTwitterProfile profile, done
       ))
 
     initializeFacebookAuth = ->
@@ -42,6 +46,6 @@ module.exports = (app) ->
         clientSecret: app.config.facebook.appSecret
         callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
       }, (accessToken, refreshToken, profile, done) ->
-        done null, User.findOrCreateFromFacebookProfile(profile)
+        User.findOrCreateFromFacebookProfile profile, done
       ))
 

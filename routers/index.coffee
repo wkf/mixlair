@@ -12,9 +12,10 @@ module.exports = (app) ->
 
     @routeTo: (controller, action) -> controller[action].bind(controller)
 
-  app.Routers.Home   = require('./home_router.coffee')(app)
-  app.Routers.Auth   = require('./auth_router.coffee')(app)
-  app.Routers.User   = require('./user_router.coffee')(app)
-  app.Routers.Audio  = require('./audio_router.coffee')(app)
+  app.Routers.Home  = require('./home_router.coffee')(app)
+  app.Routers.Auth  = require('./auth_router.coffee')(app)
+  app.Routers.User  = require('./user_router.coffee')(app)
+  app.Routers.Audio = require('./audio_router.coffee')(app)
+  app.Routers.Mix   = require('./mix_router.coffee')(app)
 
   app

@@ -1,4 +1,10 @@
 module.exports = (app) ->
   class UserRouter extends app.Router
-    @get '/user/:id', @routeTo(new app.Controllers.User(app), 'show')
-    # @get '/user/:id/mix/:id', @routeTo(new app.Controllers.Mix(app), 'show')
+    UserController   = new app.Controllers.User()
+
+    # implement so that subclasses have this prepended to their paths
+    # @resource '/user/:user'
+
+    @get '/user/:user', @routeTo(UserController, 'show')
+    @put '/user/:user', @routeTo(UserController, 'update')
+    @delete '/user/:user', @routeTo(UserController, 'delete')
