@@ -11,6 +11,11 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       });
       this.content.show(effectsCollectionView);
       effectsCollectionView.on('effectPicked', _.bind(this.displayPanel, this));
+
+      this.$el.find('.close').on('click', function(){
+        $(this).closest('.effect-panel').slideUp();
+        $('.fx').removeClass('active')
+      });
     },
 
     displayPanel: function(effect){

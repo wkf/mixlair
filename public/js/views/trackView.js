@@ -89,7 +89,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     renderEffects: function(){
-      console.log('rendering fx...')
+      App.effects.show(new App.Views.effectsLayoutView);
     },
 
     mute: function(){

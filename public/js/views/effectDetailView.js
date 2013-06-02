@@ -9,12 +9,17 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       "drag .slider": "paramChange"
     },
 
-    initialize: function(){
-      this.model && console.log(this.model.get('name'))
+    ui: {
+      "slider": ".slider"
+    },
+
+    onRender: function(){
+      var self = this;
+      this.ui.slider.slider({ value: self.model.get('value') });
     },
 
     paramChange: function(e) {
-      console.log(e)
+      console.log(e);
     }
   });
 });
