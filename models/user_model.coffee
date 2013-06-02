@@ -7,6 +7,8 @@ module.exports = (app) ->
     email: String
     username: String
 
+  schema.index {id: 1, provider: 1}, {unique: true}
+
   schema.static 'findOrCreate', (attributes, callback) ->
     @findOneAndUpdate(attributes, attributes, upsert: true, callback)
 
