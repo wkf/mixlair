@@ -55,7 +55,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     moveTrack: function(e){
       var el = $(e.currentTarget);
       var delta = e.clientX - this.prevX;
-      var new_position = mix.snapTime(parseInt(el.css('left')) + delta)
+      var new_position = mix.snapTime(parseInt(el.css('left')) + delta);
+      if (new_position < 0) new_position = 0
       el.css('left', new_position);
       this.prevX = e.clientX;
       this.model.set('start', new_position / App.PPS);
