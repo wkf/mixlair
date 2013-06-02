@@ -21,6 +21,7 @@
     "when": "latest",
     "deferrable": "git://github.com/wkf/deferrable.git#master",
     "underscore": "~1.4.4",
-    "mongoose": "~3.6.11"
+    "mongoose": "~3.6.11",
+    "node-uuid": "~1.4.0"
   }
 }
