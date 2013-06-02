@@ -10,6 +10,14 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       $(window).on('scroll', _.bind(this.shiftTimeline, this));
     },
 
+    events: {
+      "click canvas": "clickJump"
+    },
+
+    clickJump: function(e) {
+      mix.set('position', e.offsetX / App.PPS);
+    },
+
     onShow: function() {
       this.drawTimeline()
     },
@@ -31,6 +39,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       });
 
       this.timelineCanvas = this.ui.timeline.find('canvas');
+      this.delegateEvents();
     }
   });
 });
