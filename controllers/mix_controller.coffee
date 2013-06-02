@@ -10,7 +10,7 @@ module.exports = (app) ->
     showMix: (request, response) ->
       Mix.findOne _id: request.params.mix, (error, mix) ->
         return response.send 'failed', 404 if error
-        response.render 'mix_views/show', {mix}
+        response.render 'mix/mix', {mix: mix, view_mix: 'mix'}
 
     updateMix: (request, response) ->
       Mix.findOneAndUpdate _id: request.params.mix, request.params, (error, mix) ->

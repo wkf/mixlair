@@ -3,6 +3,7 @@ module.exports = (app) ->
     passport = require('passport')
 
     User     = app.Models.User
+    Mix      = app.Models.Mix
 
     constructor: ->
       super
@@ -25,7 +26,9 @@ module.exports = (app) ->
     )
 
     successfulAuth: (request, response) ->
-      response.redirect "/user/#{request.user._id}"
+      Mix.create user: request.user._id, (error, mix) ->
+        return response.send 'failed', 500 if error
+        response.redirect "/user/#{request.user._id}/mix/#{mix._id}"
 
     initializeTwitterAuth = ->
       TwitterStrategy = require('passport-twitter').Strategy
