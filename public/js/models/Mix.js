@@ -74,19 +74,19 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.set('startTime', now - position);
       this.set('maxTime', this.tracks.maxTime());
       this.tracks.play();
-      this.trigger('play');
       clicking && this.startClick();
-      return this.set('playing', true);
+      this.set('playing', true);
+      return this.trigger('play');
     },
 
     // pause all tracks
     pause: function(){
       var clicking = this.get('clicking');
       this.tracks.pause();
-      this.trigger('pause');
       this.stopClick();
       this.set('clicking', clicking);
-      return this.set('playing', false);
+      this.set('playing', false);
+      return this.trigger('pause');
     },
 
     // pause and set position back to 0

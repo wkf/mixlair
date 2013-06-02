@@ -28,6 +28,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(mix, 'bpmUpdate', this.bpmUpdate);
       this.listenTo(mix, 'ready', this.bindSpace);
       this.listenTo(mix, 'meter', this.meter);
+      this.listenTo(mix, 'play', this.swapPlayClass);
+      this.listenTo(mix, 'pause', this.swapPlayClass);
     },
     onShow: function(){
       var alt = this.ui.volume_alt
@@ -78,10 +80,15 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     playMix: function( e ){
       if ( mix.get('playing') ){
         mix.pause();
-        this.ui.play.removeClass('playing');
       } else {
         mix.play();
+      }
+    },
+    swapPlayClass: function(){
+      if ( mix.get('playing') ){
         this.ui.play.addClass('playing');
+      } else {
+        this.ui.play.removeClass('playing');
       }
     },
     timeUpdate: function(){
