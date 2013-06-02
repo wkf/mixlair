@@ -1,6 +1,6 @@
 App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
   Models.Mix = Backbone.Model.extend({
-    url: 'mix.json',
+    url: '/user/' + MIX.user + '/mix/' + MIX._id,
     // default params
     defaults: {
       bpm: 120,
@@ -251,13 +251,17 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     toJSON: function(){
       return {
         bpm: this.get('bpm'),
-        tracks: this.tracks.toJSON()
+        tracks: this.tracks.toJSON(),
+        user: this.get('user')
       }
     },
 
     parse: function( data ){
       var tracks = data.tracks, regions = 0;
       if ( data.bpm ) this.set('bpm', data.bpm);
+      if ( data.user ) {
+        this.set('user', data.user);
+      }
       tracks.forEach(function( trackData ){
         var track = new App.Models.Track({
           name: trackData.name,
@@ -272,6 +276,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         this.tracks.add(track);
       }.bind(this));
       this.set('regions', regions);
+      if ( regions == 0 ){
+        this.trigger('ready');
+      }
     },
 
     zoom: function( pps ){

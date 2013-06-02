@@ -17,8 +17,6 @@ App.on("start", function(options) {
 
   window.mix = mix;
 
-  mix.fetch();
-
   mix.on('regionLoaded', function(){
     var total = mix.get('regions')
       , loaded = mix.get('loaded');
@@ -45,6 +43,8 @@ App.on("start", function(options) {
     }));
 
   });
+
+  mix.parse(MIX);
 
   // expose the mix Model so we can fuck with it in the console
   window.mix = mix;

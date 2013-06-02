@@ -8,6 +8,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       recording: false,
       volume: 0.5,
       dBFS: -192,
+      name: 'Track',
       pluginTypes: {
         'compressor': 'Compressor',
         'chorus':     'Chorus',

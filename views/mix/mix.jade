@@ -1,6 +1,7 @@
 extends ../layout
 
 block head
+  script MIX = !{JSON.stringify(mix)}
   script(src="/js/vendor/jquery-1.9.1.js")
   script(src="/js/vendor/underscore.js")
   script(src="/js/vendor/backbone.js")
@@ -76,5 +77,4 @@ block content
             .slider
 
   footer#footer
-  script MIX = !{JSON.stringify(mix)}
 
