@@ -67,7 +67,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     meter: function(){
-      var db = mix.get('dBFS')
+      var db = this.model.get('dBFS')
         , percentage = 100 + (db * 1.92);
       this.ui.gain_alt.css({ width: percentage + "%" });
     },
