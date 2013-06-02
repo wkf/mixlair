@@ -73,7 +73,7 @@ App.module('util', function(util, App, Backbone, Marionette, $, _) {
         stereoPhase: {
           range: [0, 180],
           value: 0,
-        }
+        },
         rate: {
           range: [0.1, 11],
           value: 5
@@ -89,7 +89,7 @@ App.module('util', function(util, App, Backbone, Marionette, $, _) {
         delayTime: {
           range: [20, 1000],
           value: 100
-        }
+        },
         feedback: {
           range: [0, 0.9],
           value: 0.45
