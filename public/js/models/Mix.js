@@ -269,6 +269,11 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         this.tracks.add(track);
       }.bind(this));
       this.set('regions', regions);
+    },
+
+    zoom: function( pps ){
+      App.PPS = pps;
+      this.trigger('zoom');
     }
 
   });

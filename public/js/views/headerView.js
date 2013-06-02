@@ -8,6 +8,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     initialize: function() {
       $(window).on('scroll', _.bind(this.shiftTimeline, this));
+      this.listenTo(mix, 'zoom', this.zoom);
     },
 
     events: {
@@ -40,6 +41,11 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
       this.timelineCanvas = this.ui.timeline.find('canvas');
       this.delegateEvents();
+    },
+
+    zoom: function(){
+      var pps = App.PPS;
+      this.timelineInstance.changePps(pps);
     }
   });
 });

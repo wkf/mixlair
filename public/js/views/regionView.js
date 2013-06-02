@@ -10,6 +10,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     initialize: function(){
       this.listenTo(this.model, 'stream', this.onstream);
       this.listenTo(this.model, 'recordStop', this.switchToWave);
+      this.listenTo(mix, 'zoom', this.zoom);
     },
 
     dragInit: function() {
@@ -23,11 +24,11 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         this.generateWaveSvg();
       } else {
         this.generateStreamSvg();
-      }
+      } 
     },
 
     generateWaveSvg: function() {
-      new waveSvg({
+      this.waveSvg = new waveSvg({
         buffer: this.model.get('activeBuffer'),
         maxHeight: 70,
         pixelsPerSecond: App.PPS,
@@ -71,6 +72,14 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       el.css('left', new_position);
       this.prevX = e.clientX;
       this.model.set('start', new_position / App.PPS);
+    },
+
+    zoom: function(){
+      var pps = App.PPS
+        , start = this.model.get('start');
+      if ( !this.waveSvg ) return;
+      this.$el.css('left', start * pps);
+      this.waveSvg.updatePixelsPerSecond(pps);
     }
   });
 });

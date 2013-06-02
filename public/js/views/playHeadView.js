@@ -9,11 +9,6 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     initialize: function(){
       this.listenTo(mix, 'timeUpdate', this.move);
-      $(window).on('scroll', _.bind(this.shiftPlayHead, this));
-    },
-
-    shiftPlayHead: function() {
-      this.ui.playhead.css('-webkit-transform', 'translateX('+-window.scrollX+'px)');
     },
 
     onShow: function(){
@@ -35,7 +30,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
     move: function(){
       var pos = mix.get('position')
-        , left = pos * App.PPS;
+        , scrollX = window.scrollX
+        , left = ( pos * App.PPS ) - scrollX;
       this.ui.playhead.css({left: left});
     }
   });

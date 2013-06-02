@@ -50,6 +50,7 @@
       this.canvas.setAttribute('width', this.options.width);
       this.canvas.style.width = "" + (this.options.width / this.retina) + "px";
       this.ctx = this.canvas.getContext('2d');
+      this.ctx.fillStyle = this.options.fillStyle;
       return this.draw();
     };
 
