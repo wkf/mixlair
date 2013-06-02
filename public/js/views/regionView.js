@@ -10,8 +10,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     generateSvg: function() {
       new waveSvg({
-        buffer: this.model.get('buffer'),
-        maxHeight: 80,
+        buffer: this.model.get('activeBuffer'),
+        maxHeight: 70,
         pixelsPerSecond: App.PPS,
         appendTo: this.el,
         max: 2,
