@@ -27,6 +27,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(mix, 'timeUpdate', this.timeUpdate);
       this.listenTo(mix, 'bpmUpdate', this.bpmUpdate);
       this.listenTo(mix, 'ready', this.bindSpace);
+      this.listenTo(mix, 'meter', this.meter);
     },
     onShow: function(){
       var alt = this.ui.volume_alt
@@ -36,7 +37,6 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       // volume slider
       this.ui.volume.slider({
         slide: function(e, ui){
-          alt.css({ width: ui.value + "%" });
           mix.set('volume', ui.value / 100);
         },
         value: 65
@@ -97,6 +97,11 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       strFormat = strFormat.replace(/SS/, s);
       strFormat = strFormat.replace(/XX/, ms.toString().slice(0,2));
       this.ui.time_count.text(strFormat);
+    },
+    meter: function(){
+      var db = mix.get('dBFS')
+        , percentage = 100 + (db * 1.92);
+      this.ui.volume_alt.css({ width: percentage + "%" });
     },
     bpmUpdate: function(){
       var bpm = mix.get('bpm');

@@ -9,7 +9,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       playing: false,
       clicking: false,
       maxTime: Infinity,
-      volume: 1
+      volume: 1,
+      dBFS: -192
     },
 
     snapTime: function( seconds ){
@@ -59,7 +60,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.get('input').connect(ac.destination);
       this.get('input').connect(this.get('meter').input);
       this.get('meter').ondBFS(function( dBFS ){
-        this.set('peak', dBFS);
+        this.set('dBFS', dBFS);
+        this.trigger('meter');
       }.bind(this));
       this.tracks.connectAll();
     },

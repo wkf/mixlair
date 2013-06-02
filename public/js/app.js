@@ -17,10 +17,6 @@ App.on("start", function(options) {
 
   App.footer.show(new App.Views.FooterControls);
 
-
-  mix.fetch();
-
-
   mix.on('ready', function() {
     App.tracks.show(new App.Views.TrackCollection({
       collection: mix.tracks
