@@ -19,8 +19,9 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     paramChange: function(e) {
-      console.log(e); // drag event
+      console.log(this.model.get('name')) // name of the effect to apply
       console.log(this.model.get('track')) // track to apply the effect to
+      console.log(e); // drag event (value)
     }
   });
 });

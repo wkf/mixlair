@@ -9,6 +9,7 @@ header, #header-mask
   width: 300px
   height: 85px
   z-index: 500
+
   .label
     font-size: 12px;
     text-transform: uppercase;
@@ -16,6 +17,14 @@ header, #header-mask
     position: absolute;
     bottom: 15px;
     left: 15px;
+
+  h1
+    font-size: 1.2em
+    bold()
+    absolute: top 19px left 15px
+    color: #fff
+    opacity: .7
+
 header
   min-height: 85px;
   box-shadow inset 0 1px 0 rgba(255,255,255,.05)
@@ -25,13 +34,6 @@ header
   width 100%
   z-index: 150
   group()
-
-  h1
-    font-size: 1.2em
-    bold()
-    absolute: top 19px left 15px
-    color: #fff
-    opacity: .7
 
   .base
     position: relative
