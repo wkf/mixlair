@@ -21,6 +21,9 @@
     border-top: 1px solid #292c30
     box-shadow: 3px 0 3px rgba(#000,.2)
 
+  &.active .info
+    background: lighten(#23262a, 5%)
+
   .track-title
     font-size: 16px
     font-weight: 500
@@ -110,6 +113,10 @@
       &:hover
         background-image: url('/img/ui/fx@2x.png'), linear-gradient(top, lighten(#26292d, 3%), lighten(#222528, 3%))
 
+      &.active
+        background-image: url('/img/ui/fx@2x.png'), linear-gradient(top, #6bb4fc, #2984e1)
+        border-color: darken(#2984e1, 30%)
+
     .mute
       background-image: url('/img/ui/mute@2x.png'), linear-gradient(top, #26292d, #222528)
       background-size: 12px 13px, 100%
@@ -117,10 +124,18 @@
       &:hover
         background-image: url('/img/ui/mute@2x.png'), linear-gradient(top, lighten(#26292d, 3%), lighten(#222528, 3%))
 
+      &.active
+        background-image: url('/img/ui/mute@2x.png'), linear-gradient(top, #6bb4fc, #2984e1)
+        border-color: darken(#2984e1, 30%)
+
     .solo
       background-image: url('/img/ui/play_solo@2x.png'), linear-gradient(top, #26292d, #222528)
       background-size: 14px 12px, 100%
 
       &:hover
         background-image: url('/img/ui/play_solo@2x.png'), linear-gradient(top, lighten(#26292d, 3%), lighten(#222528, 3%))
+
+      &.active
+        background-image: url('/img/ui/play_solo@2x.png'), linear-gradient(top, #6bb4fc, #2984e1)
+        border-color: darken(#2984e1, 30%)
 

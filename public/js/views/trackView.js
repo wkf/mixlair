@@ -8,7 +8,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       gain_alt: '.alt'
     },
     events: {
-      "click": "trackClicked"
+      "click": "trackClicked",
+      "click .track-buttons > div": "toggleButton"
     },
 
     regions: {
@@ -46,10 +47,13 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.ui.gain.slider({
         value: self.model.get('volume') * 100,
         slide: function(e, ui){
-          $(ui.handle).prev('.alt').css({ width: ui.value + "%" });
           self.model.set('volume', ui.value / 100);
         }
       });
+    },
+
+    toggleButton: function(e){
+      $(e.currentTarget).toggleClass('active')
     }
 
   });
