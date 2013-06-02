@@ -85,54 +85,7 @@ module.exports = (app) ->
         soloed: params.soloed or track.soled
         volume: params.volume or track.volume
         pluginParams: params.pluginParams or track.pluginParams
-      @sa    name: String
-      muted: Boolean
-      _muted: Boolean
-      soloed: Boolean
-      volume: Number
-      pluginParams:
-        compressor:
-          bypass: Number
-          threshold: Number
-          release: Number
-          makeupGain: Number
-          attack: Number
-          ratio: Number
-          knee: Number
-          automakeup: Boolean
-        chorus:
-          bypass: Number
-          feedback: Number
-          delay: Number
-          depth: Number
-          rate: Number
-        tremelo:
-          bypass: Number
-          intensity: Number
-          stereoPhase: Number
-          rate: Number
-        delay:
-          bypass: Number
-          delayTime: Number
-          feedback: Number
-          cutoff: Number
-          wetLevel: Number
-          dryLevel: Number
-        reverb:
-          bypass: Number
-          highCut: Number
-          lowCut: Number
-          dryLevel: Number
-          wetLevel: Number
-          impulse: String
-      regions: [
-        url: String
-        start: Number
-        startOffset: Number
-        stopOffset: Number
-        fadeIn: Number
-        fadeOut: Number
-      ]ve (error, mix) ->
+      @save (error, mix) ->
       callback(error, mix.tracks[params.track])
 
   schema.method 'deleteTrack', (params, callback) ->
