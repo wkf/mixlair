@@ -29,8 +29,12 @@ block head
   script(src="/js/views/regionCollectionView.js")
   script(src="/js/views/regionView.js")
   script(src="/js/views/playHeadView.js")
+
   script(src="/js/views/effectsCollectionView.js")
+  script(src="/js/views/effectsLayoutView.js")
   script(src="/js/views/effectView.js")
+  script(src="/js/views/effectDetailView.js")
+  script(src="/js/views/effectDetailsCollectionView.js")
 
   script(src="/js/timeline-grid.js")
   script(src="/js/wave-svg.js")
@@ -47,6 +51,8 @@ block head
   include _effect_template
   include _playhead_template
   include _track_collection_template
+  include _effects_layout_template
+  include _effect_details_template
 
 block content
   #header-mask
@@ -58,22 +64,6 @@ block content
       .loader
         .bar
     .effect-panel
-      .header
-        h1 Effects Panel
-        .close ×
       .list
-        ul
-          li
-            label Delay
-            .slider
-          li
-            label Feedback
-            .slider
-          li
-            label Depth
-            .slider
-          li
-            label Rate
-            .slider
 
   footer#footer

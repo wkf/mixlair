@@ -3,7 +3,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
   Views.effectsCollectionView = Backbone.Marionette.CollectionView.extend({
     tagName: 'ul',
     initialize: function() {
-      this.on("itemview:effectPicked", this.effectPicked)
+      this.on("itemview:effectPicked", this.effectPicked);
     },
 
     effectPicked: function(t) {

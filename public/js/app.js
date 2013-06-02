@@ -38,9 +38,7 @@ App.on("start", function(options) {
 
     App.header.show(new App.Views.HeaderView);
 
-    App.effects.show(new App.Views.effectsCollectionView({
-      collection: new Backbone.Collection(App.util.fx)
-    }));
+    App.effects.show(new App.Views.effectsLayoutView);
 
   });
 
