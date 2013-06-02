@@ -357,6 +357,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     parseRegions: function( regions ){
       var downloader = this.get('mix').downloader
+        , mix = this.get('mix')
         , ac = this.context()
         , track = this;
       if ( !regions || !regions.length ) return;
@@ -366,11 +367,13 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
           xhr.responseType = 'arraybuffer';
           callback = function( downloaderCallback ){
             ac.decodeAudioData(xhr.response, function( buffer ){
+              var loaded = mix.get('loaded');
               regionData.buffer = buffer;
               regionData.output = track.get('input');
               regionData.track = track;
               regionData.mix = track.get('mix');
               track.regions.add(regionData);
+              mix.set('loaded', loaded + 1);
               downloaderCallback();
             });
           }

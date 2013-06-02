@@ -19,6 +19,12 @@ App.on("start", function(options) {
 
   mix.fetch();
 
+  mix.on('regionLoaded', function(){
+    var total = mix.get('regions')
+      , loaded = mix.get('loaded');
+    console.log('Loaded ' + loaded + ' of ' + total + ' assets');
+  });
+
   App.footer.show(new App.Views.FooterControls);
   App.playhead.show(new App.Views.PlayHead);
 

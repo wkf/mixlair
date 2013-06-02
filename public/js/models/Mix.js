@@ -10,7 +10,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       clicking: false,
       maxTime: Infinity,
       volume: 1,
-      dBFS: -192
+      dBFS: -192,
+      regions: 0,
+      loaded: 0,
     },
 
     snapTime: function( seconds ){
@@ -48,6 +50,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
           this.startClick();
         }
       }, 150));
+      this.on('change:loaded', function(){
+        this.trigger('regionLoaded');
+      });
     },
 
     connect: function(){
@@ -236,7 +241,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     },
 
     parse: function( data ){
-      var tracks = data.tracks;
+      var tracks = data.tracks, regions = 0;
       if ( data.bpm ) this.set('bpm', data.bpm);
       tracks.forEach(function( trackData ){
         var track = new App.Models.Track({
@@ -248,8 +253,10 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
           mix: mix,
           regions: trackData.regions
         });
-      this.tracks.add(track);
+        regions += ( trackData.regions ? trackData.regions.length : 0 );
+        this.tracks.add(track);
       }.bind(this));
+      this.set('regions', regions);
     }
 
   });
