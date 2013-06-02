@@ -2,10 +2,11 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
   Views.RegionView = Backbone.Marionette.ItemView.extend({
     template: "#region-template",
     className: "region",
+
     events: {
       "drag": 'moveTrack',
       "draginit": 'dragInit',
-      "dragstart": 'startMove'
+      "dragstart": 'startMove',
     },
 
     initialize: function(){

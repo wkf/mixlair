@@ -3,17 +3,22 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     template: "#track-template",
     tagName: "li",
     className: "track",
+
     ui: {
       gain: '.gain-control',
       gain_alt: '.alt',
       mute: '.btn.mute',
-      solo: '.btn.solo'
+      solo: '.btn.solo',
+      title: '.track-title'
     },
+
     events: {
       "click": "trackClicked",
       "click .track-buttons .fx": "toggleEffectsPanel",
       "click .btn.mute": "mute",
       "click .btn.solo": "solo",
+      "click .track-title": "setTitleEdit",
+      "blur .track-title": "titleEditOff"
     },
 
     regions: {
@@ -26,6 +31,15 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(this.model, 'unmute', this.onunmute);
       this.listenTo(this.model, 'solo', this.onsolo);
       this.listenTo(this.model, 'unsolo', this.onunsolo);
+    },
+
+    titleEditOff: function() {
+      this.model.set('name', this.ui.title.text());
+    },
+
+    setTitleEdit: function(e) {
+      this.ui.title[0].contentEditable = true;
+      this.ui.title[0].spellcheck = false;
     },
 
     addTrackRegions: function() {
