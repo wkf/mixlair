@@ -2,6 +2,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
   Views.FooterControls = Backbone.Marionette.ItemView.extend({
     template: "#footer-template",
     tagName: "div",
+    className: "contain",
+
     ui: {
       'beginning': '.beginning',
       'rewind': '.rewind',
@@ -17,7 +19,9 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'metronome': '.metronome',
       'ticker': '.metronome .ticker',
       'body': 'body'
+      'zoom': '#zoom-slider'
     },
+
     events: {
       'click .beginning': 'beginning',
       'click .rewind': 'rewind',
@@ -27,6 +31,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       'click .end': 'end',
       'click .metronome': 'metronome'
     },
+
     initialize: function(){
       this.listenTo(mix, 'timeUpdate', this.timeUpdate);
       this.listenTo(mix, 'bpmUpdate', this.bpmUpdate);
@@ -41,11 +46,25 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.clickInterval = null;
       this.tickerMoved = false;
     },
+
     onShow: function(){
       var alt = this.ui.volume_alt
         , body = this.ui.body
         , dragPos
         , bpm;
+
+      // zoom slider
+      this.ui.zoom.slider({
+        slide: function(e, ui){
+          mix.zoom(ui.value);
+        },
+        min: 5,
+        max: 155,
+        step: 10,
+        value: App.PPS
+      });
+
+
       // volume slider
       this.ui.volume.slider({
         slide: function(e, ui){
@@ -53,6 +72,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         },
         value: 65
       });
+
       // tempo slider
       this.ui.tempo.on('dragstart', function( e ){
         dragPos = e.pageX;
@@ -66,26 +86,31 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         mix.set('bpm', newBpm);
       });
     },
+
     // jump to 0
     beginning: function(){
       mix.set('position', 0);
     },
+
     // jump back 10s
     rewind: function(){
       var pos = mix.get('position');
       mix.set('position', Math.max(0, pos - 10));
     },
+
     // jump ahead 10s
     ffwd: function(){
       var pos = mix.get('position')
         , max = mix.get('maxTime');
       mix.set('position', Math.min(max, pos + 10));
     },
+
     // jump to the end
     end: function(){
       var max = mix.get('maxTime');
       mix.pause().set('position', max);
     },
+
     metronome: function(){
       var clicking = mix.get('clicking');
       if ( clicking ){
@@ -99,7 +124,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       var clicking = mix.get('clicking')
         , bpm = mix.get('bpm')
         , dur = 60 / bpm * 1000
-        , self = this; 
+        , self = this;
       clearInterval(this.clickInterval);
       if ( clicking ){
         this.clickInterval = setInterval(function(){
@@ -113,6 +138,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         }, dur);
       }
     },
+
     // play or pause
     playMix: function( e ){
       if ( mix.get('playing') ){
@@ -121,6 +147,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         mix.play();
       }
     },
+
     record: function(){
       var active = mix.getActiveTrack()
         , recording = mix.get('recording');
@@ -131,6 +158,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         active.record();
       }
     },
+
     swapPlayClass: function(){
       if ( mix.get('playing') ){
         this.ui.play.addClass('playing');
@@ -138,13 +166,15 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         this.ui.play.removeClass('playing');
       }
     },
+
     swapRecordClass: function(){
       if ( mix.get('recording') ){
         this.ui.record.addClass('recording');
       } else {
         this.ui.record.removeClass('recording');
-      } 
+      }
     },
+
     swapClickClass: function(){
       var clicking = mix.get('clicking');
       if ( clicking ){
@@ -153,6 +183,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         this.ui.metronome.removeClass('active');
       }
     },
+
     timeUpdate: function(){
       var pos = mix.get('position')
         , ms = Math.floor( ( pos * 1000 ) % 1000 )
@@ -167,16 +198,19 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       strFormat = strFormat.replace(/XX/, ms.toString().slice(0,2));
       this.ui.time_count.text(strFormat);
     },
+
     meter: function(){
       var db = mix.get('dBFS')
         , percentage = 100 + (db * 1.92);
       this.ui.volume_alt.css({ width: percentage + "%" });
     },
+
     bpmUpdate: function(){
       var bpm = mix.get('bpm');
       this.ui.tempo_count.text(bpm);
       this.animateMetronome();
     },
+
     bindSpace: function(){
       var self = this;
       $(window).on('keydown', function(e){
