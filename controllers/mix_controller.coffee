@@ -13,10 +13,17 @@ module.exports = (app) ->
         response.render 'mix/mix', {mix: mix, view_name: 'mix'}
 
     updateMix: (request, response) ->
-      Mix.where('_id', request.param.mix).findOneAndUpdate request.body, (error, mix) ->
-        console.log mix
+      Mix.where('_id', request.params.mix).findOne (error, mix) ->
         return response.send 'failed', 500 if error
-        response.json mix
+        console.log mix
+        if mix
+          mix.bpm    = request.body.bpm    or mix.bpm
+          mix.user   = request.body.user   or mix.user
+          mix.tracks = request.body.tracks or mix.tracks
+          mix.markModified('tracks')
+          mix.save (error, mix) ->
+            return response.send 'failed', 500 if error
+            response.json mix
 
     createMix: (request, response) ->
       Mix.create request.params, (error, mix) ->
