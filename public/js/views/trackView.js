@@ -3,7 +3,9 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     template: "#track-template",
     tagName: "li",
     className: "track",
-
+    ui: {
+      gain: '.gain-control'
+    },
     events: {
       "click": "trackClicked"
     },
@@ -22,6 +24,20 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     trackClicked: function() {
       this.trigger("trackClicked");
+    },
+
+    onRender: function(){
+      this.activateGainSlider();
+    },
+
+    activateGainSlider: function(){
+      var self = this;
+      this.ui.gain.slider({
+        value: 90,
+        slide: function(e, ui){
+          $(ui.handle).prev('.alt').css({ width: ui.value + "%" })
+        }
+      });
     }
 
   });
