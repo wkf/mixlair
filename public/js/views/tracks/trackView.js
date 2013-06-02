@@ -89,7 +89,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     renderEffects: function(){
-      App.effects.show(new App.Views.effectsLayoutView);
+      App.effects.show(new App.Views.effectsLayoutView({ track: this }));
     },
 
     mute: function(){

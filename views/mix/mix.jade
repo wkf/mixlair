@@ -1,46 +1,65 @@
 extends ../layout
 
 block head
+  
+  //- deps
+
   script MIX = !{JSON.stringify(mix)}
   script(src="/js/vendor/jquery-1.9.1.js")
   script(src="/js/vendor/underscore.js")
   script(src="/js/vendor/backbone.js")
   script(src="/js/vendor/marionette.1.0.3.js")
   script(src="/js/app.js")
+
+  //- models
+
   script(src="/js/models/mix.js")
   script(src="/js/models/region.js")
   script(src="/js/models/track.js")
   script(src="/js/models/plugin.js")
+
+  //- collections
+
   script(src="/js/collections/regions.js")
   script(src="/js/collections/tracks.js")
   script(src="/js/collections/plugins.js")
+
+  //- utilities
+
   script(src="/js/vendor/tuna.js")
   script(src="/js/Metronome.js")
   script(src="/js/Meter.js")
   script(src="/js/Archiver.js")
   script(src="/js/Downloader.js")
-
   script(src="/js/util/fx.js")
 
-  script(src="/js/views/trackCollectionView.js")
-  script(src="/js/views/trackView.js")
+  //- views
+
   script(src="/js/views/headerView.js")
   script(src="/js/views/footerControlsView.js")
-  script(src="/js/views/regionCollectionView.js")
-  script(src="/js/views/regionView.js")
   script(src="/js/views/playHeadView.js")
 
-  script(src="/js/views/effectsCollectionView.js")
-  script(src="/js/views/effectsLayoutView.js")
-  script(src="/js/views/effectView.js")
-  script(src="/js/views/effectDetailView.js")
-  script(src="/js/views/effectDetailsCollectionView.js")
+  script(src="/js/views/tracks/trackCollectionView.js")
+  script(src="/js/views/tracks/trackView.js")
+
+  script(src="/js/views/regions/regionCollectionView.js")
+  script(src="/js/views/regions/regionView.js")
+
+  script(src="/js/views/effects/effectsCollectionView.js")
+  script(src="/js/views/effects/effectsLayoutView.js")
+  script(src="/js/views/effects/effectView.js")
+  script(src="/js/views/effects/effectDetailView.js")
+  script(src="/js/views/effects/effectDetailsCollectionView.js")
+
+  //- helpers
 
   script(src="/js/timeline-grid.js")
   script(src="/js/wave-svg.js")
   script(src="/js/stream-svg.js")
   script(src="/js/vendor/jquery-ui-slider.js")
   script(src="/js/vendor/jquery.event.drag.js")
+
+  //- initialize
 
   script(src="/js/main.js")
 

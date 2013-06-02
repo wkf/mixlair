@@ -5,6 +5,10 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     template: '#effects-layout-template',
     regions: { content: '.list' },
 
+    initialize: function(options){
+      this.track = options.track;
+    },
+
     onRender: function(){
       var effectsCollectionView = new App.Views.effectsCollectionView({
         collection: new Backbone.Collection(App.util.fx)
@@ -22,7 +26,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       effect = _.findWhere(App.util.fx, { name: effect });
       var effectViews = [];
       for (var key in effect.params){
-        effectViews.push({ name: key, value: effect.params[key] });
+        effectViews.push({ name: key, value: effect.params[key], track: this.track });
       }
       var effectDetailsCollectionView = new App.Views.effectDetailsCollectionView({
         collection: new Backbone.Collection(effectViews)

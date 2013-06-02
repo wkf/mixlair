@@ -19,7 +19,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     paramChange: function(e) {
-      console.log(e);
+      console.log(e); // drag event
+      console.log(this.model.get('track')) // track to apply the effect to
     }
   });
 });
