@@ -26,6 +26,8 @@ block head
   script(src="js/views/regionCollectionView.js")
   script(src="js/views/regionView.js")
   script(src="js/views/playHeadView.js")
+  script(src="js/views/effectsCollectionView.js")
+  script(src="js/views/effectView.js")
 
   script(src="js/timeline-grid.js")
   script(src="js/wave-svg.js")
@@ -35,52 +37,12 @@ block head
 
   script(src="js/main.js")
 
-  script(type="x-javascript", id="region-template")
-    .title <%= url %>
-
-  script(type="x-javascript", id="track-template")
-    .info.left
-      .left
-        h5.track-title <%= name %>
-        .gain-control
-          .alt
-      .track-buttons
-        .btn.fx
-        .btn.mute
-        .btn.solo
-    .waveform
-
-  script(type="x-javascript", id="footer-template")
-    .contain
-      #time-tempo
-        .time
-          .label time
-          .count 00:45:23
-        .tempo
-          .label tempo
-          .count 128
-      #control-buttons
-        .beginning
-        .rewind
-        .play
-        .record
-        .ffwd
-        .end
-      #playback-volume
-        .alt
-
-  script(type="x-javascript", id="header-template")
-    .fork-this Fork This
-    .base.cl
-      .label.left my tracks
-      .timeline.right
-      .cl
-    .cl
-  script(type="x-javascript", id="playhead-template")
-   .play-head
-      .top
-      .line
-      .bottom
+  include _header_template
+  include _footer_template
+  include _region_template
+  include _track_template
+  include _effect_template
+  include _playhead_template
 
 block content
 
@@ -92,18 +54,19 @@ block content
       .header
         h1 Effects Panel
         .close ×
-      ul
-        li
-          label Delay
-          .slider
-        li
-          label Feedback
-          .slider
-        li
-          label Depth
-          .slider
-        li
-          label Rate
-          .slider
+      .list
+        ul
+          li
+            label Delay
+            .slider
+          li
+            label Feedback
+            .slider
+          li
+            label Depth
+            .slider
+          li
+            label Rate
+            .slider
 
   footer#footer

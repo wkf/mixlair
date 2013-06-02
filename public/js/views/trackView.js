@@ -73,7 +73,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     toggleEffectsPanel: function(){
-      this.trigger('effectsClicked');
+      // this.trigger('effectsClicked');
+      App.Views.effectView.show()
     },
 
     renderEffects: function(){

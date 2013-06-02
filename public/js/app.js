@@ -4,11 +4,64 @@ App.PPS = 20
 
 App.addRegions({
   tracks: '#mix .stage',
-  effect: '.effect-panel',
+  effects: '.effect-panel .list',
   footer: '#footer',
   header: 'header',
   playhead: '#play-head'
 });
+
+// yes, this is terrible. but the track model is fucked
+var fx = [
+  { name: 'compressor',
+    params: {
+      bypass: 1,
+      threshold: -20,
+      release: 250,
+      makeupGain: 1,
+      attack: 1,
+      ratio: 4,
+      knee: 5,
+      automakeup: false
+    }
+  },
+  { name: 'chorus',
+    params: {
+      bypass: 1,
+      feedback: 0.4,
+      delay: 0.0045,
+      depth: 0.7,
+      rate: 1.5
+    }
+  },
+  { name: 'tremolo',
+    params: {
+      bypass: 1,
+      intensity: 0.3,
+      stereoPhase: 0,
+      rate: 5
+    }
+  },
+  { name: 'delay',
+    params: {
+      bypass: 1,
+      delayTime: 100,
+      feedback: 0.45,
+      cutoff: 20000,
+      wetLevel: 0.5,
+      dryLevel: 1
+    }
+  },
+  { name: 'reverb',
+    params: {
+      bypass: 1,
+      highCut: 22050,
+      lowCut: 20,
+      dryLevel: 1,
+      wetLevel: 1,
+      impulse: 'impulses/plate.wav',
+    }
+  }
+]
 
 App.on("start", function(options) {
   var mixURL = options.mixURL
@@ -33,7 +86,12 @@ App.on("start", function(options) {
       collection: mix.tracks
     }));
 
-    App.header.show(new App.Views.HeaderView)
+    App.header.show(new App.Views.HeaderView);
+
+    App.effects.show(new App.Views.effectsCollectionView({
+      collection: new Backbone.Collection(fx)
+    }));
+
   });
 
   // expose the mix Model so we can fuck with it in the console
