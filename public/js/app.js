@@ -75,13 +75,18 @@ App.on("start", function(options) {
   mix.on('regionLoaded', function(){
     var total = mix.get('regions')
       , loaded = mix.get('loaded');
-    console.log('Loaded ' + loaded + ' of ' + total + ' assets');
+
+    $('.loader .bar').css('width', loaded/total*100 + '%');
   });
 
   App.footer.show(new App.Views.FooterControls);
   App.playhead.show(new App.Views.PlayHead);
 
   mix.on('ready', function() {
+
+    $('.loader').fadeOut();
+    $('#play-head').fadeIn();
+
     App.tracks.show(new App.Views.TrackCollection({
       collection: mix.tracks
     }));
