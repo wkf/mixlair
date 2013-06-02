@@ -74,6 +74,9 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       var el = $(e.currentTarget);
       this.prevX = e.pageX;
       this.prevLeft = parseInt(el.css('left'), 10);
+      this.prevStart = this.model.get('start');
+      this.prevSnap = mix.snapTime(this.prevStart);
+      this.snapDelta = this.prevSnap - this.prevStart;
     },
 
     moveTrack: function(e){
@@ -82,7 +85,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       var new_position = mix.snapTime((this.prevLeft + delta) / App.PPS);
       if (new_position < 0) new_position = 0
       el.css('left', new_position * App.PPS);
-      this.model.set('start', new_position);
+      this.model.set('start', new_position + this.snapDelta);
     },
 
     zoom: function(){

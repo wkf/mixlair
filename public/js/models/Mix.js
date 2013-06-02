@@ -16,7 +16,6 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     },
 
     snapTime: function( seconds ){
-      return seconds;
       var bpm = this.get('bpm')
         , beatlength = 60 / bpm
         , mod = seconds % beatlength
