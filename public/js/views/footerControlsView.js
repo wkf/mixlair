@@ -163,16 +163,23 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
           return false
         }
 
+        // bail for now - these can get annoying
+        return;
+
+        if (e.keyCode === 13) {
+          self.beginning();
+        }
+
         if (e.keyCode === 82) {
-          console.log('trigger record');
+          self.record();
         }
 
         if (e.keyCode === 37) {
-          console.log('trigger jump left');
+          self.rewind();
         }
 
         if (e.keyCode === 39) {
-          console.log('trigger jump right');
+          self.ffwd();
         }
 
       });
