@@ -14,7 +14,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       "click .track-buttons > div": "toggleButton",
       "click .track-buttons .fx": "toggleEffectsPanel",
       "click .btn.mute": "mute",
-      "click .btn.solo": "solo"
+      "click .btn.solo": "solo",
     },
 
     regions: {
@@ -29,11 +29,18 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(this.model, 'unsolo', this.onunsolo);
     },
 
-    onShow: function() {
-      this.regions.show(new App.Views.RegionCollection({
+    addTrackRegions: function() {
+      var regions = new App.Views.RegionCollection({
         collection: this.model.regions
-      }));
+      });
 
+      this.regions.show(regions);
+
+      regions.on("dragInit", _.bind(this.trackClicked, this));
+    },
+
+    onShow: function() {
+      this.addTrackRegions();
       return this;
     },
 

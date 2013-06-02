@@ -2,6 +2,7 @@ App.module("Collections", function(Collections, App, Backbone, Marionette, $, _)
   Collections.Regions = Backbone.Collection.extend({
 
     model: App.Models.Region,
+
     // begin playback of all regions
     play: function(){
       this.forEach(function( region ){

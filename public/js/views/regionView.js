@@ -3,13 +3,19 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     template: "#region-template",
     className: "region",
     events: {
-      "dragstart": 'startMove',
-      "drag": 'moveTrack'
+      "drag": 'moveTrack',
+      "draginit": 'dragInit'
     },
+
     initialize: function(){
       this.listenTo(this.model, 'stream', this.onstream);
       this.listenTo(this.model, 'recordStop', this.switchToWave);
     },
+
+    dragInit: function() {
+      this.trigger("dragInit");
+    },
+
     onShow: function() {
       var _s = this.model.get("start")
       this.$el.css('left', _s * App.PPS);
@@ -31,6 +37,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         downSample: 16
       });
     },
+
     generateStreamSvg: function() {
       this.streamSvg = new streamSvg({
         maxHeight: 70,
@@ -39,19 +46,23 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         max: 2
       });
     },
+
     onstream: function( buffer ){
       if ( !this.streamSvg ) return;
       this.streamSvg.onstream(buffer);
     },
+
     switchToWave: function(){
       if ( !this.streamSvg ) return;
       this.streamSvg.svg.parentElement.removeChild(this.streamSvg.svg);
       this.generateWaveSvg();
       this.streamSvg = null;
     },
+
     startMove: function(e){
       this.prevX = e.clientX;
     },
+
     moveTrack: function(e){
       var el = $(e.currentTarget);
       var delta = e.clientX - this.prevX;
