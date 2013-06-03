@@ -111,6 +111,11 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       mix.pause().set('position', max);
     },
 
+    // jump to the last position we played from
+    toLastStartTime: function(){
+      mix.toLastStartTime();
+    },
+
     metronome: function(){
       var clicking = mix.get('clicking');
       if ( clicking ){
@@ -223,7 +228,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
         }
 
         if (e.keyCode === 13) {
-          self.beginning();
+          self.toLastStartTime();
         }
 
         if (e.keyCode === 82 && !e.metaKey) {

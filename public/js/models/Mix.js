@@ -79,6 +79,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         , position = this.get('position');
       this.set('startTime', now - position);
       this.set('maxTime', this.tracks.maxTime());
+      this.set('lastStartTime', position);
       this.tracks.play();
       clicking && this.startClick();
       this.set('playing', true);
@@ -103,6 +104,14 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // rewind to 0 and play
     rewind: function(){
       return this.stop().play();
+    },
+
+    // rewind to the last position we played from
+    toLastStartTime: function(){
+      var lastStartTime = this.get('lastStartTime')
+        , playing = !!this.get('playing');
+      this.set('position', lastStartTime);
+      playing && this.play();
     },
 
     // AudioContext.currentTime
