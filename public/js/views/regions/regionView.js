@@ -97,9 +97,12 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     resize: function(){
-       if ( !this.waveSvg ) return;
+     var pps = App.PPS
+       , start = this.model.get('start');
+      if ( !this.waveSvg ) return;
       this.waveSvg.svg.parentElement.removeChild(this.waveSvg.svg);
       this.generateWaveSvg();
+      this.$el.css('left', start * pps);
     }
   });
 });
