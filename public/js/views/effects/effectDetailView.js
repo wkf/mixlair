@@ -10,26 +10,35 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     onRender: function(){
-      var self = this;
+      var self = this
+        , name = this.model.get('name')
+        , param = this.model.get('param')
+        , track = this.model.get('track').model
+        , min = this.model.get('range')[0]
+        , max = this.model.get('range')[1]
+        , val = track.getPluginParam(name, param);
+      val = this.scale(val, min, max, 0, 100);
       this.ui.slider.slider({
-        value: self.model.get('value'),
+        value: val,
         slide: _.bind(self.paramChange, this)
-        // min: self.model.get('range')[0],
-        // max: self.model.get('range')[1],
       });
-
-      var val = self.model.get('value');
-      if (val > 100) val = 100;
-
       this.ui.slider.find('.alt').css('width', val + '%')
     },
 
     paramChange: function(e, ui) {
-      console.log(ui)
+      var name = this.model.get('name')
+        , param = this.model.get('param')
+        , track = this.model.get('track').model
+        , min = this.model.get('range')[0]
+        , max = this.model.get('range')[1]
+        , val = this.scale(ui.value, 0, 100, min, max);
       this.ui.slider.find('.alt').css('width', ui.value + '%')
-      console.log(this.model.get('name')) // name of the effect to apply
-      console.log(this.model.get('track')) // track to apply the effect to
-      console.log(ui.value); // drag event (value)
+      track.setPluginParam(name, param, val);
+    },
+
+    scale: function( val, f0, f1, t0, t1 ){
+      return (val - f0) * (t1 - t0) / (f1 - f0) + t0;
     }
+
   });
 });

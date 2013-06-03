@@ -28,7 +28,8 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       var effectViews = [];
       for (var key in effect.params){
         effectViews.push({
-          name: key,
+          name: effect.name,
+          param: key,
           value: effect.params[key].value,
           track: this.track,
           range: effect.params[key].range
