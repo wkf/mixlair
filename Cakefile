@@ -20,6 +20,7 @@ restart = (callback) ->
 
 deploy = (branch) ->
   branch = branch or 'master'
+
   run('git fetch')
   .then ->
     run('git rebase origin/`git rev-parse --abbrev-ref HEAD`')
