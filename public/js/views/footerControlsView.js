@@ -227,6 +227,10 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
           return false
         }
 
+        if (e.keyCode === 87) {
+          self.beginning();
+        }
+
         if (e.keyCode === 13) {
           self.toLastStartTime();
         }
