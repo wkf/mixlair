@@ -31,4 +31,6 @@ deploy = (branch) ->
 task 'start', -> start()
 task 'stop', -> stop()
 task 'restart', -> restart()
+
+option '', '--branch [BRANCH]', 'Branch to deploy'
 task 'deploy', (options) -> deploy(options['branch'])
