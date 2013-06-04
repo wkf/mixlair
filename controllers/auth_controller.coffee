@@ -41,7 +41,7 @@ module.exports = (app) ->
       passport.use(new TwitterStrategy({
         consumerKey: app.config.twitter.consumerId
         consumerSecret: app.config.twitter.consumerSecret
-        callbackURL: "http://127.0.0.1:3000/auth/twitter/callback"
+        callbackURL: app.config.twitter.callbackUrl
       }, (token, tokenSecret, profile, done) ->
         User.findOrCreateFromTwitterProfile profile, done
       ))
@@ -52,7 +52,7 @@ module.exports = (app) ->
       passport.use(new FacebookStrategy({
         clientID: app.config.facebook.appId
         clientSecret: app.config.facebook.appSecret
-        callbackURL: "http://127.0.0.1:3000/auth/facebook/callback"
+        callbackURL: app.config.facebook.callbackUrl
       }, (accessToken, refreshToken, profile, done) ->
         User.findOrCreateFromFacebookProfile profile, done
       ))
