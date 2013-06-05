@@ -15,7 +15,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(this.model, 'stream', this.onstream);
       this.listenTo(this.model, 'recordStop', this.switchToWave);
       this.listenTo(this.model, 'resize', this.resize);
-      this.listenTo(mix, 'zoom', this.zoom);
+      this.listenTo(App.mix, 'zoom', this.zoom);
     },
 
     dragEnd: function() {
@@ -75,14 +75,14 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.prevX = e.pageX;
       this.prevLeft = parseInt(el.css('left'), 10);
       this.prevStart = this.model.get('start');
-      this.prevSnap = mix.snapTime(this.prevStart);
+      this.prevSnap = App.mix.snapTime(this.prevStart);
       this.snapDelta = this.prevSnap - this.prevStart;
     },
 
     moveTrack: function(e){
       var el = $(e.currentTarget);
       var delta = e.pageX - this.prevX;
-      var new_position = mix.snapTime((this.prevLeft + delta) / App.PPS);
+      var new_position = App.mix.snapTime((this.prevLeft + delta) / App.PPS);
       if (new_position < 0) new_position = 0
       el.css('left', new_position * App.PPS);
       this.model.set('start', new_position + this.snapDelta);

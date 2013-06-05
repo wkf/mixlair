@@ -8,7 +8,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     initialize: function(){
-      this.listenTo(mix, 'timeUpdate', this.move);
+      this.listenTo(App.mix, 'timeUpdate', this.move);
     },
 
     onShow: function(){
@@ -16,7 +16,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.ui.playhead.on('dragstart', function( e ){
         dragPos = e.pageX;
         left = parseInt(self.ui.playhead.css('left'), 10);
-        max = mix.get('maxTime');
+        max = App.mix.get('maxTime');
       }).on('dragend', function( e ){
 
       }).on('drag', function( e ){
@@ -25,11 +25,11 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
           , pos = newLeft / App.PPS;
         if ( newLeft <= 0 ) return;
         if ( pos >= max ) return;
-        mix.set('position', pos);
+        App.mix.set('position', pos);
       });
     },
     move: function(){
-      var pos = mix.get('position')
+      var pos = App.mix.get('position')
         , scrollX = window.scrollX
         , left = ( pos * App.PPS ) - scrollX;
       this.ui.playhead.css({left: left});

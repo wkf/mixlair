@@ -11,15 +11,14 @@ App.addRegions({
 });
 
 App.on("start", function(options) {
-  var mixURL = options.mixURL
-    , ac = new webkitAudioContext()
-    , mix = new App.Models.Mix({context: ac});
+  var mixURL = options.mixURL;
+  var ac = new webkitAudioContext();
 
-  window.mix = mix;
+  App.mix = new App.Models.Mix({context: ac}); //expose mix on the root of the app
 
-  mix.on('regionLoaded', function(){
-    var total = mix.get('regions')
-      , loaded = mix.get('loaded');
+  App.mix.on('regionLoaded', function(){
+    var total = App.mix.get('regions')
+      , loaded = App.mix.get('loaded');
 
     $('.loader .bar').css('width', loaded/total*100 + '%');
   });
@@ -27,23 +26,18 @@ App.on("start", function(options) {
   App.footer.show(new App.Views.FooterControls);
   App.playhead.show(new App.Views.PlayHead);
 
-  mix.on('ready', function() {
+  App.mix.on('ready', function() {
 
     $('.loader').fadeOut();
     $('#play-head').fadeIn();
 
     App.tracks.show(new App.Views.TrackCollection({
-      collection: mix.tracks
+      collection: App.mix.tracks
     }));
 
     App.header.show(new App.Views.HeaderView);
-
     App.effects.show(new App.Views.effectsLayoutView);
-
   });
 
-  mix.parse(MIX);
-
-  // expose the mix Model so we can fuck with it in the console
-  window.mix = mix;
+  App.mix.parse(MIX);
 });
