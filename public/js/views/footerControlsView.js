@@ -35,7 +35,6 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     initialize: function() {
       this.listenTo(App.mix, 'timeUpdate', this.timeUpdate);
       this.listenTo(App.mix, 'bpmUpdate', this.bpmUpdate);
-      this.listenTo(App.mix, 'ready', this.bindSpace);
       this.listenTo(App.mix, 'meter', this.meter);
       this.listenTo(App.mix, 'play', this.swapPlayClass);
       this.listenTo(App.mix, 'pause', this.swapPlayClass);
@@ -43,6 +42,12 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(App.mix, 'recordStop', this.swapRecordClass);
       this.listenTo(App.mix, 'clickStart', this.swapClickClass);
       this.listenTo(App.mix, 'clickStop', this.swapClickClass);
+      this.listenTo(App.vent, 'keydown:space', this.playMix);
+      this.listenTo(App.vent, 'keydown:enter', this.toLastStartTime);
+      this.listenTo(App.vent, 'keydown:r', this.record);
+      this.listenTo(App.vent, 'keydown:left-arrow', this.rewind);
+      this.listenTo(App.vent, 'keydown:right-arrow', this.ffwd);
+
       this.clickInterval = null;
       this.tickerMoved = false;
     },
@@ -214,41 +219,6 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       var bpm = App.mix.get('bpm');
       this.ui.tempo_count.text(bpm);
       this.animateMetronome();
-    },
-
-    bindSpace: function(){
-      var self = this;
-      $(window).on('keydown', function(e){
-
-        if ( App.blockKeyEvents ) return;
-
-        if (e.keyCode === 32) {
-          self.playMix();
-          return false
-        }
-
-        if (e.keyCode === 87) {
-          self.beginning();
-        }
-
-        if (e.keyCode === 13) {
-          self.toLastStartTime();
-        }
-
-        if (e.keyCode === 82 && !e.metaKey) {
-          self.record();
-        }
-
-        if (e.keyCode === 37) {
-          self.rewind();
-        }
-
-        if (e.keyCode === 39) {
-          self.ffwd();
-        }
-
-      });
-
     }
   });
 });
