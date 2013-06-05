@@ -61,7 +61,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     trackClicked: function() {
       this.trigger("trackClicked");
-      mix.activateTrack(this.model);
+      App.mix.activateTrack(this.model);
     },
 
     onRender: function(){
