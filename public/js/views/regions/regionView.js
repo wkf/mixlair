@@ -11,11 +11,18 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       "mouseup": 'dragEnd'
     },
 
-    initialize: function(){
+    initialize: function() {
       this.listenTo(this.model, 'stream', this.onstream);
       this.listenTo(this.model, 'recordStop', this.switchToWave);
       this.listenTo(this.model, 'resize', this.resize);
       this.listenTo(App.mix, 'zoom', this.zoom);
+      this.listenTo(App.vent, 'keydown:delete', this.deleteRegion);
+    },
+
+    deleteRegion: function() {
+      if (this.$el.hasClass('active')) {
+        this.model.destroy();
+      }
     },
 
     dragEnd: function() {
