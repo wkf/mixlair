@@ -1,0 +1,20 @@
+- content_for :head do
+  = javascript_include_tag "mix"
+  = render partial: "./mix/templates/templates"
+
+#header-mask
+  %h1 mixlair.
+  .label.left my tracks
+%header
+#mix
+  #play-head
+  .stage
+    .loader
+      .bar
+    #chrome-warning
+      mixlair is a chrome experiment. please open in
+      %a{href: 'http://www.google.com/chrome'} google chrome
+      to try it out!
+  .effect-panel
+    .list
+  %footer#footer

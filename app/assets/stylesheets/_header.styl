@@ -1,0 +1,87 @@
+header, #header-mask
+  background: #1c1f22;
+  background linear-gradient(bottom, #15181b 0%, #1d1f23 100%)
+
+#header-mask
+  position: fixed
+  left: 0px
+  top: 0px
+  width: 300px
+  height: 85px
+  z-index: 500
+
+  .label
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+
+  h1
+    font-size: 1.2em
+    bold()
+    absolute: top 19px left 15px
+    color: #fff
+    opacity: .7
+
+header
+  min-height: 85px;
+  box-shadow inset 0 1px 0 rgba(255,255,255,.05)
+  position: fixed
+  top 0px
+  left 0px
+  width 100%
+  z-index: 150
+  group()
+
+  .base
+    position: relative
+
+  .fork-this
+    float: right
+    padding: 7px 15px
+    cursor: pointer
+    margin-top: 15px
+    margin-right: 15px
+    border 1px solid #101215
+    border-radius 2px
+    background-clip padding-box
+    background-color #111517
+    box-shadow inset 0 1px 0 rgba(255,255,255,.03)
+    background-image: url('ui/fork-this.png'), linear-gradient(bottom, #15181b 0%, #1d1f23 100%)
+    background-repeat: no-repeat
+    background-size: 14px 16px, 100%
+    background-position: 8% 50%, 0
+    color: rgba(255, 255, 255, 0.41)
+    font-weight: 500
+    font-size: 11px
+    padding-left: 30px
+
+    &:hover
+      background-image: url('ui/fork-this.png'), linear-gradient(bottom, lighten(#15181b,2%) 0%
+        , lighten(#1d1f23,2%) 100%)
+
+    &:active
+      box-shadow: inset 0 1px 4px rgba(#000,.4)
+
+  .timeline
+    padding-top: 4px
+    border-radius 4px 4px 0 0
+    background-clip padding-box
+    background-color #1b1f21
+    box-shadow 0 1px 0 rgba(10,12,13,.59), inset 0 2px 2px rgba(0,0,0,.6)
+    background linear-gradient(bottom, #15181b 0%, #111417 100%)
+    margin-top: 15px
+    margin-bottom: 1px
+    top: -5px
+    left: 300px
+    top: -5px
+    position: absolute
+    overflow: hidden
+    width: 100%
+    height: 28px
+    canvas
+      position: absolute
+      left 0px
+      margin-left: -10px
