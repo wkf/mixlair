@@ -80,7 +80,6 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // connect all of our nodes
     connect: function(){
       var ac = this.context()
-        , mix = this.get('mix')
         , meter = new Meter(ac);
       this.set({
         input: ac.createGain(),
@@ -96,7 +95,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.get('_mute').connect(this.get('gain'));
       this.get('gain').connect(this.get('meter').input);
       this.get('gain').connect(this.get('output'));
-      this.get('mix').on('pause', function(){
+      App.mix.on('pause', function(){
         this.get('recording') && this.recordStop();
       }.bind(this));
       this.get('meter').ondBFS(function( dBFS ){
@@ -120,7 +119,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     },
 
     context: function(){
-      return this.get('mix').get('context');
+      return App.mix.get('context');
     },
 
     // begin playback of all regions
@@ -175,7 +174,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.unmute();
       this._unmute();
       this.set('soloed', true);
-      this.get('mix').soloMute();
+      App.mix.soloMute();
       this.trigger('solo');
       return this;
     },
@@ -183,7 +182,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // unsolo the track
     unsolo: function(){
       this.set('soloed', false);
-      this.get('mix').soloMute();
+      App.mix.soloMute();
       this.trigger('unsolo');
       return this;
     },
@@ -191,13 +190,12 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // start recording
     record: function(){
       var ac = this.context()
-        , mix = this.get('mix')
-        , stream = mix.get('recStream')
+        , stream = App.mix.get('recStream')
         , fakeBuffer
         , src , channels, pro, region;
       // no mic input? ask nicely
-      if ( !mix.get('inputEnabled') || !stream ) {
-        return mix.requestInput();
+      if ( !App.mix.get('inputEnabled') || !stream ) {
+        return App.mix.requestInput();
       }
       src = ac.createMediaStreamSource(stream);
       pro = ac.createScriptProcessor(4096, 1, 1);
@@ -209,18 +207,17 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         recBuffers: [],
         recLength: 0,
         recording: true,
-        recordStart: mix.getPosition()
+        recordStart: App.mix.getPosition()
       });
       region = new Models.Region({
         buffer: fakeBuffer,
         start: this.get('recordStart'),
         output: this.get('input'),
         track: this,
-        mix: this.get('mix'),
         recording: true
       });
-      this.get('mix').set('recording', true);
-      this.get('mix').trigger('recordStart');
+      App.mix.set('recording', true);
+      App.mix.trigger('recordStart');
       this.set('recRegion', region);
       this.regions.add(region);
       pro.onaudioprocess = function( evt ){
@@ -241,8 +238,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
           pro = null;
         }
       }.bind(this);
-      !mix.get('playing') && mix.play();
-      mix.trigger('recordStart');
+      !App.mix.get('playing') && App.mix.play();
+      App.mix.trigger('recordStart');
       return this.trigger('recordStart');
     },
 
@@ -254,12 +251,12 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.set('recBuffers', []);
       this.set('recLength', 0);
       this.set('recording', false);
-      this.get('mix').trigger('recordStop');
+      App.mix.trigger('recordStop');
       this.get('recRegion').set('recording', false);
       this.get('recRegion').setBuffer(audioBuffer);
       this.get('recRegion').trigger('recordStop');
-      this.get('mix').set('recording', false);
-      this.get('mix').trigger('recordStop');
+      App.mix.set('recording', false);
+      App.mix.trigger('recordStop');
       return this.trigger('recordStop');
     },
 
@@ -280,8 +277,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         buffer: audioBuffer,
         start: this.get('recordStart'),
         output: this.get('input'),
-        track: this,
-        mix: this.get('mix')
+        track: this
       });
     },
 
@@ -361,8 +357,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     },
 
     parseRegions: function( regions ){
-      var downloader = this.get('mix').downloader
-        , mix = this.get('mix')
+      var downloader = App.mix.downloader
         , ac = this.context()
         , track = this;
       if ( !regions || !regions.length ) return;
@@ -372,13 +367,13 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
           xhr.responseType = 'arraybuffer';
           callback = function( downloaderCallback ){
             ac.decodeAudioData(xhr.response, function( buffer ){
-              var loaded = mix.get('loaded');
+              var loaded = App.mix.get('loaded');
               regionData.buffer = buffer;
               regionData.output = track.get('input');
               regionData.track = track;
-              regionData.mix = track.get('mix');
+              regionData.mix = App.mix;
               track.regions.add(regionData);
-              mix.set('loaded', loaded + 1);
+              App.mix.set('loaded', loaded + 1);
               downloaderCallback();
             });
           }

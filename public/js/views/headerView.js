@@ -8,7 +8,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     initialize: function() {
       $(window).on('scroll', _.bind(this.shiftTimeline, this));
-      this.listenTo(mix, 'zoom', this.zoom);
+      this.listenTo(App.mix, 'zoom', this.zoom);
     },
 
     events: {
@@ -18,7 +18,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     clickJump: function(e) {
       // magic (timelineGrid horizontal padding)
       var margin = -20;
-      mix.set('position', Math.max(0, ( e.offsetX + margin ) / App.PPS));
+      App.mix.set('position', Math.max(0, ( e.offsetX + margin ) / App.PPS));
     },
 
     onShow: function() {
