@@ -1,0 +1,5 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: mixlair_dev

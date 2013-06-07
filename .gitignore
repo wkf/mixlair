@@ -8,12 +8,12 @@ lib-cov
 *.out
 *.pid
 *.gz
+*.rvmrc
 
 pids
 logs
 results
 
-npm-debug.log
-node_modules
-config.json
-test.coffee
+tmp/
+log/
+config/database.yml
