@@ -13,7 +13,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     events: {
-      "click": "trackClicked",
+      "click .info": "trackClicked",
       "click .track-buttons .fx": "toggleEffectsPanel",
       "click .btn.mute": "mute",
       "click .btn.solo": "solo",
@@ -51,7 +51,13 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
       this.regions.show(regions);
 
+
       regions.on("dragInit", _.bind(this.trackClicked, this));
+      regions.on("dragRegion", _.bind(this.regionDragged, this));
+    },
+
+    regionDragged: function(e) {
+      this.trigger("dragRegion", e);
     },
 
     onShow: function() {
@@ -59,8 +65,19 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       return this;
     },
 
-    trackClicked: function() {
-      this.trigger("trackClicked");
+    deFocus: function() {
+      this.model.unset('focused');
+      this.$el.removeClass('active');
+      this.regions.currentView.children.each(function(view) {
+        view.deFocus();
+      });
+    },
+
+    trackClicked: function(e) {
+      this.model.set("focused", "focused");
+      this.$el.addClass('active')
+      this.trigger('trackClicked');
+
       App.mix.activateTrack(this.model);
     },
 
