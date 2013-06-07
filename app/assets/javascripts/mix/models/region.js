@@ -3,8 +3,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // get things started
     initialize: function(){
-      // clone the original buffer
-      this.setBuffer();
+      // clone the original buffer if an activeBuffer wasn't passed
+      if ( !this.get('activeBuffer') ) this.setBuffer();
       // set a name
       if ( !this.get('name') ){
         if ( this.get('url') ){
