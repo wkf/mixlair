@@ -3,7 +3,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     tagName: "ul",
     template: "#track-collection",
     events: {
-      'click .add-track': 'addTrack'
+      'click .track .add-track': 'addTrack'
     },
     firstRender: false,
     initialize: function() {
