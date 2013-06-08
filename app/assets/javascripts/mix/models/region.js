@@ -17,7 +17,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         var prev = this.previous('startOffset')
           , diff = prev - val
           , start = this.get('start')
-          , mix = this.get('mix')
+          , mix = App.mix
           , playing = mix.get('playing');
         this.set('start', start - diff);
         this.sliceBuffer();
@@ -26,7 +26,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       });
       // slice up a new buffer when stopOffset changes
       this.on('change:stopOffset', function( evt, val ){
-        var mix = this.get('mix')
+        var mix = App.mix
           , playing = mix.get('playing');
         this.sliceBuffer();
         this.trigger('resize');
@@ -34,14 +34,14 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       });
       // slice up a new buffer when fadeIn changes
       this.on('change:fadeIn', function( evt, val ){
-        var mix = this.get('mix')
+        var mix = App.mix
           , playing = mix.get('playing');
         this.sliceBuffer();
         playing && mix.play();
       });
       // slice up a new buffer when fadeOut changes
       this.on('change:fadeOut', function( evt, val ){
-        var mix = this.get('mix')
+        var mix = App.mix
           , playing = mix.get('playing');
         this.sliceBuffer();
         playing && mix.play();
@@ -49,7 +49,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       // call mix.play() after changing start time so that
       // everything important gets recalculated
       this.on('change:start', function( evt, val ){
-        var mix = this.get('mix')
+        var mix = App.mix
           , playing = mix.get('playing');
         playing && mix.play();
       });
@@ -76,7 +76,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     },
 
     context: function(){
-      return this.get('mix').get('context');
+      return App.mix.get('context');
     },
 
     // convert samples to seconds
@@ -148,7 +148,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       // create a new bufferSource
       this.createBufferSource();
       // get timing info
-      mix = this.get('mix');
+      mix = App.mix;
       now = mix.acTime();
       mixOffset = mix.getPosition();
       // calculate start time, offset, and duration

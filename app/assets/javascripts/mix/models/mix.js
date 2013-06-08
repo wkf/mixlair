@@ -226,7 +226,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         Archiver.save(ev.renderedBuffer, 'mix.wav');
         this.goOnline();
       }.bind(this);
-      mix.play();
+      this.play();
       ac.startRendering();
       return this;
     },
@@ -250,8 +250,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     requestInput: function(){
       navigator.webkitGetUserMedia({audio: true}, function(stream){
-        mix.set('inputEnabled', true);
-        mix.set('recStream', stream);
+        this.set('inputEnabled', true);
+        this.set('recStream', stream);
       }.bind(this), function(){
         console.log('couldn\'t get a stream');
       });
