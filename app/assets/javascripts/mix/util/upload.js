@@ -15,6 +15,12 @@ App.module('util', function(util, App, Backbone, Marionette, $, _) {
     // className we need to add/remove to/from $target
     dragClass: 'dragover',
 
+    // files queued for decoding
+    decodeQueue: [],
+
+    // decoding flag
+    decoding: false,
+
     // bind drag events
     setDragBindings: function() {
       $(window).on(upload.events, upload.evtHandler);
@@ -58,13 +64,22 @@ App.module('util', function(util, App, Backbone, Marionette, $, _) {
       });
     },
 
-    // read a file and pass in on to decoding
+    // read a file and queue it for decoding
     readFile: function( file ){
       var reader = new FileReader();
       reader.readAsArrayBuffer(file);
       reader.addEventListener('load', function( ev ){
-        upload.decode(ev.target.result, file.name);
+        upload.decodeQueue.push({file: ev.target.result, name: file.name});
+        upload.attemptDecode();
       }, false);
+    },
+
+    // try to decode the next file in queue if we're not busy
+    attemptDecode: function(){
+      var fileObj;
+      if ( upload.decoding || !upload.decodeQueue.length ) return;
+      fileObj = upload.decodeQueue.shift();
+      upload.decode(fileObj.file, fileObj.name);
     },
 
     // decode audio data, then send it along to splitChannels
@@ -72,8 +87,11 @@ App.module('util', function(util, App, Backbone, Marionette, $, _) {
       var ac = App.mix.get('context')
         // remove file extension
         , name = filename.replace(/\.(wav|mp3)/i, '');
+      upload.decoding = true;
       ac.decodeAudioData(arrayBuffer, function( buffer ){
         upload.splitChannels(buffer, name);
+        upload.decoding = false;
+        upload.attemptDecode();
       });
     },
 
