@@ -1,10 +1,23 @@
 App.module('util', function(util, App, Backbone, Marionette, $, _) {
+  util.keyBoardDown = {}
+
   util.keyBoard = (function() {
     App.on("start", setKeyBindings);
 
     function setKeyBindings() {
+
+      $(window).on("keyup", function(e) {
+        if ( App.blockKeyEvents ) return;
+
+        if (util.keyBoardDown.shift && e.keyCode == 16) {
+          util.keyBoardDown.shift = false;
+        }
+      });
+
       $(window).on("keydown", function(e) {
         if ( App.blockKeyEvents ) return;
+
+        util.keyBoardDown.shift = event.shiftKey;
 
         switch (e.keyCode) {
           case 8: //delete key
