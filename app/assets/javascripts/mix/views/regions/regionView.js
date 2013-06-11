@@ -4,11 +4,10 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     className: "region",
 
     events: {
-      "drag": 'moveTrack',
+      "drag": 'dragRegion',
       "draginit": 'dragInit',
       "dragstart": 'startMove',
-      "dragend": 'dragEnd',
-      "mouseup": 'dragEnd'
+      "dblclick": 'deFocus'
     },
 
     initialize: function() {
@@ -19,19 +18,27 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.listenTo(App.vent, 'keydown:delete', this.deleteRegion);
     },
 
+    deFocus: function() {
+      this.model.unset('selected');
+      this.$el.removeClass('selected');
+    },
+
     deleteRegion: function() {
-      if (this.$el.hasClass('active')) {
+      if (this.model.get('selected')) {
         this.model.destroy();
       }
     },
 
-    dragEnd: function() {
-      this.$el.removeClass('active');
+    clearPrevLeft: function() {
+      delete this.prevLeft;
     },
 
     dragInit: function() {
-      this.$el.addClass('active');
-      this.trigger("dragInit");
+      if (!this.model.get('selected')) { //if already active no need to rethow
+        this.model.set('selected', 'selected');
+        this.$el.addClass('selected');
+        this.trigger("dragInit", this);
+      }
     },
 
     onShow: function() {
@@ -77,21 +84,32 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
       this.streamSvg = null;
     },
 
-    startMove: function(e){
-      var el = $(e.currentTarget);
+    startMove: function(e) {
       this.prevX = e.pageX;
-      this.prevLeft = parseInt(el.css('left'), 10);
+      this.prevLeft = parseInt(this.$el.css('left'), 10);
       this.prevStart = this.model.get('start');
       this.prevSnap = App.mix.snapTime(this.prevStart);
       this.snapDelta = this.prevSnap - this.prevStart;
     },
 
-    moveTrack: function(e){
-      var el = $(e.currentTarget);
+    dragRegion: function(e){
       var delta = e.pageX - this.prevX;
-      var new_position = App.mix.snapTime((this.prevLeft + delta) / App.PPS);
+      this.trigger("dragRegion", {delta: delta});
+    },
+
+    canShiftBy: function(amount) {
+      this.prevLeft     = this.prevLeft || parseInt(this.$el.css('left'), 10);
+      var new_position  = App.mix.snapTime((this.prevLeft + amount) / App.PPS);
+
+      return new_position > 0;
+    },
+
+    shiftRegionByAmount: function(amount) {
+      this.prevLeft = this.prevLeft || parseInt(this.$el.css('left'), 10);
+
+      var new_position = App.mix.snapTime((this.prevLeft + amount) / App.PPS);
       if (new_position < 0) new_position = 0
-      el.css('left', new_position * App.PPS);
+      this.$el.css('left', new_position * App.PPS);
       this.model.set('start', new_position + this.snapDelta);
     },
 

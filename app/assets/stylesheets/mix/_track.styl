@@ -76,6 +76,7 @@
     gradient: #4d5359 #373a41
     height: 100%
     position: absolute
+    border: solid 1px transparent
 
   &.active .region
     gradient #e04737, #cb301f
@@ -83,6 +84,8 @@
   &.active .region.active
     gradient lighten(#e04737, 20%), lighten(#cb301f, 20%)
 
+  .region.selected
+    border: solid 1px white
   .title
     border-radius 8px
     position: absolute
