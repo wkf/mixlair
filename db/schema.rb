@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130612012415) do
+ActiveRecord::Schema.define(:version => 20130612013228) do
 
   create_table "mixes", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(:version => 20130612012415) do
     t.decimal  "tempo"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "regions", :force => true do |t|
+    t.string   "name"
+    t.boolean  "fade_in"
+    t.boolean  "fade_out"
+    t.float    "start"
+    t.float    "start_offset"
+    t.float    "stop_offset"
+    t.float    "duration"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "tracks", :force => true do |t|
