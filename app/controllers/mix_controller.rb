@@ -1,5 +1,6 @@
 class MixController < ApplicationController
+  before_filter :authenticate_user!
+
   def show
-    @body_class = "mix"
   end
 end
