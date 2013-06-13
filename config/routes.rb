@@ -4,6 +4,8 @@ Mixlair::Application.routes.draw do
   get "home/index"
   get "mix/show"
 
+  resources :mix
+
   root to: "mix#show"
 
   # The priority is based upon order of creation:
