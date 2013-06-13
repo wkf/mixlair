@@ -1,0 +1,2 @@
+class Compressor < Effect
+end
