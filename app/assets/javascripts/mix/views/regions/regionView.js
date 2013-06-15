@@ -13,6 +13,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     initialize: function() {
       this.listenTo(this.model, 'stream', this.onstream);
       this.listenTo(this.model, 'recordStop', this.switchToWave);
+      this.listenTo(this.model, 'change:activeBuffer', this.generateWaveSvg);
       this.listenTo(this.model, 'resize', this.resize);
       this.listenTo(App.mix, 'zoom', this.zoom);
       this.listenTo(App.vent, 'keydown:delete', this.deleteRegion);
@@ -52,6 +53,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     generateWaveSvg: function() {
+      if ( !this.model.get('activeBuffer') ) return;
       this.waveSvg = new waveSvg({
         buffer: this.model.get('activeBuffer'),
         maxHeight: 70,

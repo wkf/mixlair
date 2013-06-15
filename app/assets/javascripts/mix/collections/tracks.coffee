@@ -15,7 +15,7 @@ App.module "Collections", (Collections, App, Backbone, Marionette, $, _) ->
 
     connectAll: ->
       @forEach  (track) ->
-        track.set('output', track.get('mix').get('input'))
+        track.set('output', App.mix.get('input'))
         track.connect()
 
     toJSON: ->

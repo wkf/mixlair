@@ -12,11 +12,11 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       // update start time when startOffset changes
       // and slice up a new buffer
       this.on('change:startOffset', function( evt, val ){
-        var prev = this.previous('startOffset')
+        var prev = this.previous('startOffset') || 0
           , diff = prev - val
           , start = this.get('start')
           , mix = App.mix
-          , playing = mix.get('playing');
+          , playing = mix && mix.get('playing');
         this.set('start', start - diff);
         this.sliceBuffer();
         this.trigger('resize');
@@ -25,7 +25,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       // slice up a new buffer when stopOffset changes
       this.on('change:stopOffset', function( evt, val ){
         var mix = App.mix
-          , playing = mix.get('playing');
+          , playing = mix && mix.get('playing');
         this.sliceBuffer();
         this.trigger('resize');
         playing && mix.play();
@@ -33,14 +33,14 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       // slice up a new buffer when fadeIn changes
       this.on('change:fadeIn', function( evt, val ){
         var mix = App.mix
-          , playing = mix.get('playing');
+          , playing = mix && mix.get('playing');
         this.sliceBuffer();
         playing && mix.play();
       });
       // slice up a new buffer when fadeOut changes
       this.on('change:fadeOut', function( evt, val ){
         var mix = App.mix
-          , playing = mix.get('playing');
+          , playing = mix && mix.get('playing');
         this.sliceBuffer();
         playing && mix.play();
       });
@@ -48,13 +48,15 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       // everything important gets recalculated
       this.on('change:start', function( evt, val ){
         var mix = App.mix
-          , playing = mix.get('playing');
+          , playing = mix && mix.get('playing');
         playing && mix.play();
       });
       // clone buffer
       this.on('change:buffer', function(){
         this.setBuffer();
       });
+      // download the audio asset
+      this.download();
     },
 
     // default values
@@ -78,7 +80,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     },
 
     context: function(){
-      return App.mix.get('context');
+      return App.ac;
     },
 
     // convert samples to seconds
@@ -137,7 +139,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     createBufferSource: function(){
       var src = this.context().createBufferSource();
       if ( !this.get('activeBuffer') ) this.sliceBuffer();
-      src.buffer = this.get('activeBuffer');
+      if ( this.get('activeBuffer') ){
+        src.buffer = this.get('activeBuffer');
+      }
       src.connect(this.get('output'));
       this.set('src', src);
       return this;
@@ -177,6 +181,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // offset (in seconds) of the last playable audio, in relation
     // to mix position 0
     maxTime: function(){
+      if ( !this.get('activeBuffer') ) return 0;
       return this.get('start') + this.get('activeBuffer').duration;
     },
 
@@ -230,6 +235,21 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       });
       this.get('track').paste(clone);
 
+    },
+
+    // download an audio asset (when applicable)
+    download: function(){
+      if ( !this.get('source_url') ) return;
+      var xhr = new XMLHttpRequest()
+        , ac = this.context();
+      xhr.open('GET', this.get('source_url'), true);
+      xhr.responseType = 'arraybuffer';
+      xhr.addEventListener('load', function(){
+        ac.decodeAudioData(xhr.response, function( buffer ){
+          this.set({buffer: buffer});
+        }.bind(this));
+      }.bind(this), false);
+      xhr.send();
     },
 
     toJSON: function(){

@@ -46,7 +46,7 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
 
     addTrackRegions: function() {
       var regions = new App.Views.RegionCollection({
-        collection: this.model.regions
+        collection: this.model.get('regions')
       });
 
       this.regions.show(regions);

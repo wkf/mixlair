@@ -17,9 +17,9 @@ App.addRegions({
 });
 
 App.on("start", function(options) {
-  var ac = new webkitAudioContext();
+  App.ac = new webkitAudioContext();
 
-  App.mix = new App.Models.Mix({context: ac}); //expose mix on the root of the app
+  App.mix = new App.Models.Mix(MIX); //expose mix on the root of the app
 
   App.mix.on('regionLoaded', function(){
     var total = App.mix.get('regions')
@@ -37,12 +37,12 @@ App.on("start", function(options) {
     $('#play-head').fadeIn();
 
     App.tracks.show(new App.Views.TrackCollection({
-      collection: App.mix.tracks
+      collection: App.mix.get('tracks')
     }));
 
     App.header.show(new App.Views.HeaderView);
     App.effects.show(new App.Views.effectsLayoutView);
   });
 
-  App.mix.parse(MIX);
+  //App.mix.parse(MIX);
 });
