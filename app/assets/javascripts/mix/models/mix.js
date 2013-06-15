@@ -68,7 +68,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     connect: function(){
       var ac = this.get('context')
-        , click = new Metronome(ac)
+        , click = new App.Util.Metronome(ac)
         , meter = new App.Util.Meter(ac);
       this.set('click', click);
       this.set('input', ac.createGain());
