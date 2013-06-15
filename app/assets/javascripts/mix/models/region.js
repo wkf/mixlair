@@ -3,8 +3,6 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // get things started
     initialize: function(){
-      // clone the original buffer
-      this.setBuffer();
       // set a name
       if ( !this.get('name') ){
         if ( this.get('url') ){
@@ -53,6 +51,10 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
           , playing = mix.get('playing');
         playing && mix.play();
       });
+      // clone buffer
+      this.on('change:buffer', function(){
+        this.setBuffer();
+      });
     },
 
     // default values
@@ -92,6 +94,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // clone the original buffer, but taking startOffset and
     // stopOffset into account - then set it as `activeBuffer`
     sliceBuffer: function(){
+      if ( !this.get('buffer') ) return;
       var buffer = this.get('buffer')
         , channels = buffer.numberOfChannels
         , sampleRate = buffer.sampleRate
