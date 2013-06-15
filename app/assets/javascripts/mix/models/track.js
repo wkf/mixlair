@@ -393,17 +393,19 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       if ( !regions || !regions.length ) return;
       regions.forEach(function( regionData ){
          var callback, xhr = new XMLHttpRequest();
-          xhr.open('GET', regionData.url, true);
+          xhr.open('GET', regionData.get('source_url'), true);
           xhr.responseType = 'arraybuffer';
           callback = function( downloaderCallback ){
             ac.decodeAudioData(xhr.response, function( buffer ){
-              var loaded = App.mix.get('loaded');
-              regionData.buffer = buffer;
-              regionData.output = track.get('input');
-              regionData.track = track;
-              regionData.mix = App.mix;
+              regionData.set({
+                buffer: buffer,
+                output: track.get('input'),
+                track: track,
+                mix: App.mix
+              });
+
               track.regions.add(regionData);
-              App.mix.set('loaded', loaded + 1);
+              App.mix.set('loaded', App.mix.get('loaded') + 1);
               downloaderCallback();
             });
           }

@@ -5,8 +5,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     initialize: function(){
       // set a name
       if ( !this.get('name') ){
-        if ( this.get('url') ){
-          this.set('name', this.get('url').split('/').pop());
+        if ( this.get('source_url') ){
+          this.set('name', this.get('source_url').split('/').pop());
         }
       }
       // update start time when startOffset changes
@@ -235,7 +235,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     toJSON: function(){
       return {
         name: this.get('name'),
-        url: this.get('url'),
+        source_url: this.get('source_url'),
         start: this.get('start'),
         startOffset: this.get('startOffset'),
         stopOffset: this.get('stopOffset'),
