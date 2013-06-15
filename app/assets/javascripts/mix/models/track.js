@@ -95,7 +95,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // connect all of our nodes
     connect: function(){
       var ac = this.context()
-        , meter = new Meter(ac);
+        , meter = new App.Util.Meter(ac);
       this.set({
         input: ac.createGain(),
         mute: ac.createGain(),
