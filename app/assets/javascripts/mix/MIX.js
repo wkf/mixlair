@@ -6,7 +6,8 @@ window.MIX = {
       "muted": false,
       "_muted": false,
       "soloed": false,
-      "volume": 0.39,
+      "volume": 0.56,
+      "pan": 0,
       "pluginParams": {
         "compressor": {
           "bypass": 1,
@@ -66,7 +67,8 @@ window.MIX = {
       "muted": false,
       "_muted": false,
       "soloed": false,
-      "volume": 0.45,
+      "volume": 0.63,
+      "pan": -0.2,
       "pluginParams": {
         "compressor": {
           "bypass": 1,
@@ -126,7 +128,8 @@ window.MIX = {
       "muted": false,
       "_muted": false,
       "soloed": false,
-      "volume": 0.45,
+      "volume": 0.63,
+      "pan": 0.2,
       "pluginParams": {
         "compressor": {
           "bypass": 1,
@@ -187,6 +190,7 @@ window.MIX = {
       "_muted": false,
       "soloed": false,
       "volume": 0.4,
+      "pan": -0.2,
       "pluginParams": {
         "compressor": {
           "bypass": 0,
@@ -257,6 +261,7 @@ window.MIX = {
       "_muted": false,
       "soloed": false,
       "volume": 0.45,
+      "pan": 0.2,
       "pluginParams": {
         "compressor": {
           "bypass": 0,
@@ -327,6 +332,7 @@ window.MIX = {
       "_muted": false,
       "soloed": false,
       "volume": 0.65,
+      "pan": 0.8,
       "pluginParams": {
         "compressor": {
           "bypass": 0,
@@ -387,6 +393,7 @@ window.MIX = {
       "_muted": false,
       "soloed": false,
       "volume": 0.75,
+      "pan": -0.8,
       "pluginParams": {
         "compressor": {
           "bypass": 0,
