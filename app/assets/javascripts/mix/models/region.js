@@ -1,5 +1,5 @@
 App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
-  Models.Region = Backbone.Model.extend({
+  Models.Region = Backbone.RelationalModel.extend({
 
     // get things started
     initialize: function(){
@@ -209,7 +209,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // modifies the original region's stopOffset and the cloned
     // region's startOffset. also remove fades along the
     // split edge
-    // 
+    //
     // seconds param is relative to the region's start attribute
     slice: function( seconds ){
       var clone = this.copy()

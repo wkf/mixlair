@@ -1,5 +1,16 @@
 App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
-  Models.Track = Backbone.Model.extend({
+  Models.Track = Backbone.RelationalModel.extend({
+
+    relations: [{
+      type: Backbone.HasMany,
+      key: 'regions',
+      relatedModel: 'App.Models.Region',
+      collectionType: 'App.Collections.Regions',
+      reverseRelation: {
+        key: 'track_id'
+      }
+    }],
+
     // default params
     defaults: {
       muted: false,

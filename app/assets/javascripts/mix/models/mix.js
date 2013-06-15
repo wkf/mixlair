@@ -1,6 +1,16 @@
 App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
-  Models.Mix = Backbone.Model.extend({
+  Models.Mix = Backbone.RelationalModel.extend({
     url: '/user/' + MIX.user + '/mix/' + MIX._id,
+
+    relations: [{
+      type: Backbone.HasMany,
+      key: 'tracks',
+      relatedModel: 'App.Models.Track',
+      reverseRelation: {
+        key: 'mix_id'
+      }
+    }],
+
     // default params
     defaults: {
       bpm: 120,
