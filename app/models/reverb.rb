@@ -1,0 +1,2 @@
+class Reverb < Effect
+end

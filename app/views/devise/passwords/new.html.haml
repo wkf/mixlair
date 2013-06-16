@@ -1,0 +1,10 @@
+.wrapper
+  .logo
+    %h1 forgot password
+  =form_for resource, as: resource_name, url: password_path(resource_name), :html => { :method => :post } do |f|
+    .highlight
+      .tag.user_icon
+      = f.email_field :email, :autofocus => true, placeholder: "email", class: "username"
+    =f.submit "Send me reset password instructions"
+
+= render "devise/shared/links"

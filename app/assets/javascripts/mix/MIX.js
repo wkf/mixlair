@@ -46,13 +46,13 @@ window.MIX = {
           "lowCut": 20,
           "dryLevel": 1,
           "wetLevel": 0.5,
-          "impulse": "impulses\/plate.wav"
+          "impulse": "/mix/impulses\/plate.wav"
         }
       },
       "regions": [
         {
           "name": "Ratatat_Lead_3.mp3",
-          "source_url": "sound\/Ratatat_Lead_3.mp3",
+          "source_url": "/mix/sound\/Ratatat_Lead_3.mp3",
           "start": 63.933333333333,
           "startOffset": 0,
           "stopOffset": 63,
@@ -107,13 +107,13 @@ window.MIX = {
           "lowCut": 20,
           "dryLevel": 1,
           "wetLevel": 1,
-          "impulse": "impulses\/plate.wav"
+          "impulse": "/mix/impulses\/plate.wav"
         }
       },
       "regions": [
         {
           "name": "Ratatat_Lead_2.mp3",
-          "source_url": "sound\/Ratatat_Lead_2.mp3",
+          "source_url": "/mix/sound\/Ratatat_Lead_2.mp3",
           "start": 48.306666666667,
           "startOffset": 0,
           "stopOffset": 63,
@@ -168,13 +168,13 @@ window.MIX = {
           "lowCut": 20,
           "dryLevel": 1,
           "wetLevel": 0.1,
-          "impulse": "impulses\/plate.wav"
+          "impulse": "/mix/impulses\/plate.wav"
         }
       },
       "regions": [
         {
           "name": "Ratatat_Lead_1.mp3",
-          "source_url": "sound\/Ratatat_Lead_1.mp3",
+          "source_url": "/mix/sound\/Ratatat_Lead_1.mp3",
           "start": 32.981818181818,
           "startOffset": 0,
           "stopOffset": 46,
@@ -229,13 +229,13 @@ window.MIX = {
           "lowCut": 20,
           "dryLevel": 1,
           "wetLevel": 0.5,
-          "impulse": "impulses\/plate.wav"
+          "impulse": "/mix/impulses\/plate.wav"
         }
       },
       "regions": [
         {
           "name": "Ratatat_Riff_2.mp3",
-          "source_url": "sound\/Ratatat_Riff_2.mp3",
+          "source_url": "/mix/sound\/Ratatat_Riff_2.mp3",
           "start": 8.2,
           "startOffset": 0,
           "stopOffset": 55,
@@ -245,7 +245,7 @@ window.MIX = {
         },
         {
           "name": "Ratatat_Riff_2.mp3",
-          "source_url": "sound\/Ratatat_Riff_2.mp3",
+          "source_url": "/mix/sound\/Ratatat_Riff_2.mp3",
           "start": 63.2,
           "startOffset": 55,
           "stopOffset": 8,
@@ -300,13 +300,13 @@ window.MIX = {
           "lowCut": 20,
           "dryLevel": 1,
           "wetLevel": 0.5,
-          "impulse": "impulses\/plate.wav"
+          "impulse": "/mix/impulses\/plate.wav"
         }
       },
       "regions": [
         {
           "name": "Ratatat_Riff_1.mp3",
-          "source_url": "sound\/Ratatat_Riff_1.mp3",
+          "source_url": "/mix/sound\/Ratatat_Riff_1.mp3",
           "start": 0,
           "startOffset": 0,
           "stopOffset": 47,
@@ -316,7 +316,7 @@ window.MIX = {
         },
         {
           "name": "Ratatat_Riff_1.mp3",
-          "source_url": "sound\/Ratatat_Riff_1.mp3",
+          "source_url": "/mix/sound\/Ratatat_Riff_1.mp3",
           "start": 63,
           "startOffset": 63,
           "stopOffset": 0,
@@ -371,13 +371,13 @@ window.MIX = {
           "lowCut": 20,
           "dryLevel": 1,
           "wetLevel": 0.1,
-          "impulse": "impulses\/plate.wav"
+          "impulse": "/mix/impulses\/plate.wav"
         }
       },
       "regions": [
         {
           "name": "Ratatat_Rhythm_2.mp3",
-          "source_url": "sound\/Ratatat_Rhythm_2.mp3",
+          "source_url": "/mix/sound\/Ratatat_Rhythm_2.mp3",
           "start": 0,
           "startOffset": 0,
           "stopOffset": 0,
@@ -432,13 +432,13 @@ window.MIX = {
           "lowCut": 20,
           "dryLevel": 1,
           "wetLevel": 0.1,
-          "impulse": "impulses\/plate.wav"
+          "impulse": "/mix/impulses\/plate.wav"
         }
       },
       "regions": [
         {
           "name": "Ratatat_Rhythm_1.mp3",
-          "source_url": "sound\/Ratatat_Rhythm_1.mp3",
+          "source_url": "/mix/sound\/Ratatat_Rhythm_1.mp3",
           "start": 0,
           "startOffset": 0,
           "stopOffset": 0,

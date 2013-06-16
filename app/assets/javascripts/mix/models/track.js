@@ -66,7 +66,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
           lowCut: 20,
           dryLevel: 1,
           wetLevel: 1,
-          impulse: 'impulses/plate.wav',
+          impulse: '/mix/impulses/plate.wav',
         }
       }
     },
