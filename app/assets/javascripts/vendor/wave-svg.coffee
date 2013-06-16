@@ -69,7 +69,6 @@ class @waveSvg
     svg.setAttribute 'width', @config.width
     if @svg then @config.appendTo.replaceChild svg, @svg else @config.appendTo.appendChild svg
     @svg = svg
-    console?.warn? "drawn in #{(new Date().getTime() - @startTime)/1000} sec"
 
   draw: ->
     @startTime = new Date().getTime()

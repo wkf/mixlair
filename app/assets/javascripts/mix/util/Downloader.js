@@ -2,7 +2,7 @@
 
   // Rate-limit xhr so that there are no more than
   // {Mix.simultaneous} happening at a time
-  
+
 
   // @param {Function} callback [function to fire when all xhrs have been completed]
   // @param {Number} max [maximum number of simultaneous xhrs]
@@ -17,7 +17,7 @@
   };
 
   // add an xhr to the queue
-  // 
+  //
   // @param {XMLHTTPRequest} xhr [the ajax object]
   // @param {Function} callback [function to call on xhr complete]
   // @param {Boolean} async [is the provided callback asynchronous?]
@@ -34,7 +34,7 @@
       // decoding audio data before it's truly "done", we need to
       // pass it a callback function so we know when it's done
       if ( async ){
-        // release cnotrol of the UI thread in case 
+        // release cnotrol of the UI thread in case
         // there's anything else waiting to get done
         setTimeout(function(){
           callback(asyncCallback);

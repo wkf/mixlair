@@ -1,6 +1,17 @@
 App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
-  Models.Mix = Backbone.Model.extend({
+  Models.Mix = Backbone.RelationalModel.extend({
     url: '/user/' + MIX.user + '/mix/' + MIX._id,
+
+    relations: [{
+      type: Backbone.HasMany,
+      key: 'tracks',
+      relatedModel: 'App.Models.Track',
+      collectionType: 'App.Collections.Tracks',
+      reverseRelation: {
+        key: 'mix_id'
+      }
+    }],
+
     // default params
     defaults: {
       bpm: 120,
@@ -29,16 +40,16 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // get things started
     initialize: function(){
-      this.tracks = new App.Collections.Tracks;
       this.downloader = new Downloader(function(){
         this.trigger('ready');
       }.bind(this));
       this.updatePosition();
-      this.connect();
+      //this.connect();
       this.on('change:position', function(){
         this.get('playing') && this.play();
       });
       this.on('change:volume', function(){
+        if ( !this.get('input') ) return;
         this.get('input').gain.value = this.get('volume');
       });
       this.on('change:bpm', function(){
@@ -54,12 +65,19 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.on('change:loaded', function(){
         this.trigger('regionLoaded');
       });
+      this.on('ready', function(){
+        this.connect();
+      });
+      // Hack until i put real download progress stuff back in
+      setTimeout(function(){
+        this.trigger('ready');
+      }.bind(this), 100);
     },
 
     connect: function(){
-      var ac = this.get('context')
-        , click = new Metronome(ac)
-        , meter = new Meter(ac);
+      var ac = App.ac
+        , click = new App.Util.Metronome(ac)
+        , meter = new App.Util.Meter(ac);
       this.set('click', click);
       this.set('input', ac.createGain());
       this.set('meter', meter);
@@ -69,7 +87,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         this.set('dBFS', dBFS);
         this.trigger('meter');
       }.bind(this));
-      this.tracks.connectAll();
+      this.get('tracks').connectAll();
     },
 
     // begin playback of all tracks
@@ -78,9 +96,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         , clicking = this.get('clicking')
         , position = this.get('position');
       this.set('startTime', now - position);
-      this.set('maxTime', this.tracks.maxTime());
+      this.set('maxTime', this.get('tracks').maxTime());
       this.set('lastStartTime', position);
-      this.tracks.play();
+      this.get('tracks').play();
       clicking && this.startClick();
       this.set('playing', true);
       return this.trigger('play');
@@ -89,7 +107,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // pause all tracks
     pause: function(){
       var clicking = this.get('clicking');
-      this.tracks.pause();
+      this.get('tracks').pause();
       this.stopClick();
       this.set('clicking', clicking);
       this.set('playing', false);
@@ -116,7 +134,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // AudioContext.currentTime
     acTime: function(){
-      return this.get('context').currentTime;
+      return App.ac.currentTime;
     },
 
     // get the exact playback position of the mix (in seconds)
@@ -145,10 +163,10 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // selectively apply/remove mutes depending on which tracks
     // are soloed and unsoloed
     soloMute: function(){
-      var unsoloed = this.tracks.where({soloed: false})
-        , soloed = this.tracks.where({soloed: true})
-        , _muted = this.tracks.where({_muted: true})
-        , muted = this.tracks.where({muted: true});
+      var unsoloed = this.get('tracks').where({soloed: false})
+        , soloed = this.get('tracks').where({soloed: true})
+        , _muted = this.get('tracks').where({_muted: true})
+        , muted = this.get('tracks').where({muted: true});
       // apply _mute to non-soloed tracks
       if ( soloed.length ){
         unsoloed.forEach(function( track ){
@@ -165,11 +183,11 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // create a new track and add it to the tracks collection
     createTrack: function(name){
-      this.tracks.add({
+      this.get('tracks').add({
         name: name,
-        context: this.get('context'),
+        context: App.ac,
         output: this.get('input'),
-        collection: this.tracks,
+        collection: this.get('tracks'),
         mix: this
       });
       return this.trigger('createTrack');
@@ -177,23 +195,23 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     activateTrack: function( active ){
       active.set('active', true);
-      this.tracks.forEach(function( track ){
+      this.get('tracks').forEach(function( track ){
         if ( active === track ) return;
         track.set('active', false);
       });
     },
 
     getActiveTrack: function(){
-      return this.tracks.findWhere({active: true});
+      return this.get('tracks').findWhere({active: true});
     },
 
     // returns the number of currently recording tracks
     getRecordingTracks: function(){
-      return this.tracks.where({recording: true}).length;
+      return this.get('tracks').where({recording: true}).length;
     },
 
     switchContext: function( ac ){
-      this.set('context', ac);
+      App.ac = ac;
       this.connect();
       return this;
     },
@@ -202,7 +220,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       var ac, maxtime, sr;
       this.stop();
       maxtime = this.get('maxTime');
-      sr = this.get('context').sampleRate;
+      sr = App.ac.sampleRate;
       ac = new webkitOfflineAudioContext(2, maxtime * sr, sr);
       return this.switchContext(ac);
     },
@@ -214,12 +232,12 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     },
 
     bounce: function(){
-      var count = this.tracks.length
+      var count = this.get('tracks').length
         , start = Date.now()
         , tape
         , ac;
       this.goOffline();
-      ac = this.get('context');
+      ac = App.ac;
       console.log('rendering ' + count + ' tracks.');
       ac.oncomplete = function( ev ){
         console.log('render time: ' + ( Date.now() - start ) + ' ms.');
@@ -260,40 +278,12 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     toJSON: function(){
       return {
         bpm: this.get('bpm'),
-        tracks: this.tracks.toJSON(),
+        tracks: this.get('tracks').toJSON(),
         user: this.get('user')
       }
     },
 
-    parse: function( data ){
-      var tracks = data.tracks, regions = 0;
-      if ( data.bpm ) this.set('bpm', data.bpm);
-      if ( data.user ) {
-        this.set('user', data.user);
-      }
-      this.set('id', data._id);
-      tracks.forEach(function( trackData ){
-        var track = new App.Models.Track({
-          id: trackData._id,
-          name: trackData.name,
-          volume: trackData.volume,
-          pan: trackData.pan,
-          output: this.get('input'),
-          collection: this.tracks,
-          pluginParams: trackData.pluginParams || {},
-          mix: mix,
-          regions: trackData.regions
-        });
-        regions += ( trackData.regions ? trackData.regions.length : 0 );
-        this.tracks.add(track);
-      }.bind(this));
-      this.set('regions', regions);
-      if ( regions == 0 ){
-        this.trigger('ready');
-      }
-    },
-
-    zoom: function( pps ){
+  zoom: function( pps ){
       App.PPS = pps;
       this.trigger('zoom');
     }
