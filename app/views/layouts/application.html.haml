@@ -7,7 +7,12 @@
     = csrf_meta_tags
     %meta{name: 'description', content: 'Mixlair: Social audio editing'}
     = yield :head
-  %body{class: @body_class}
+  %body{class: params[:controller]}
+    #flash-messages
+      - if !notice.nil?
+        .notice= notice
+      - if !alert.nil?
+        .alert= alert
     = yield
 
   :javascript

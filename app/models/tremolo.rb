@@ -1,0 +1,2 @@
+class Tremolo < Effect
+end

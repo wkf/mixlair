@@ -1,0 +1,14 @@
+.wrapper
+  .logo
+    %h1 sign in - mixlair.
+  =form_for resource, as: resource_name, url: session_path(resource_name) do |f|
+    .highlight
+      .tag.user_icon
+      = f.email_field :email, :autofocus => true, placeholder: "email", class: "username"
+    .highlight
+      .tag.pass_icon
+      = f.password_field :password, class: "password", placeholder: "enter password"
+    = f.check_box :remember_me
+    = f.submit "Sign In"
+
+= render "devise/shared/links"

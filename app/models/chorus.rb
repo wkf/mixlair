@@ -1,0 +1,2 @@
+class Chorus < Effect
+end
