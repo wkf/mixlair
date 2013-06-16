@@ -7,6 +7,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       soloed: false,
       recording: false,
       volume: 0.5,
+      pan: 0,
       dBFS: -192,
       name: 'Track',
       pluginTypes: {
@@ -75,6 +76,9 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.on('change:volume', function(){
         this.get('gain').gain.value = this.get('volume');
       });
+      this.on('change:pan', function(){
+        this.applyPanning();
+      }); 
     },
 
     // connect all of our nodes
@@ -86,9 +90,16 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         mute: ac.createGain(),
         _mute: ac.createGain(),
         gain: ac.createGain(),
+        gainL: ac.createGain(),
+        gainR: ac.createGain(),
+        merger: ac.createChannelMerger(2),
         meter: meter
       });
-      this.plugins.input = this.get('input');
+      this.get('input').connect(this.get('gainL'));
+      this.get('input').connect(this.get('gainR'));
+      this.get('gainL').connect(this.get('merger'), 0, 0);
+      this.get('gainR').connect(this.get('merger'), 0, 1);
+      this.plugins.input = this.get('merger');
       this.plugins.connect( ac );
       this.plugins.output.connect(this.get('mute'));
       this.get('mute').connect(this.get('_mute'));
@@ -113,6 +124,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       if ( this.get('muted') ) this.mute();
       if ( this.get('_muted') ) this._mute();
       if ( this.get('soloed') ) this.solo();
+      this.applyPanning();
       this.get('gain').gain.value = this.get('volume');
       this.setAllPluginParams();
       return this;
@@ -120,6 +132,13 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     context: function(){
       return App.mix.get('context');
+    },
+
+    // apply panning changes
+    applyPanning: function(){
+      if ( !this.get('gainL') || !this.get('gainR') ) return;
+      this.get('gainL').gain.value = ( this.get('pan') * -0.5 ) + 0.5;
+      this.get('gainR').gain.value = ( this.get('pan') * 0.5 ) + 0.5;
     },
 
     // begin playback of all regions

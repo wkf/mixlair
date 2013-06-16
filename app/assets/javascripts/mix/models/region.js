@@ -177,21 +177,24 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       return this.get('start') + this.get('activeBuffer').duration;
     },
 
-    // clone the Model's buffer on init
+    // clone the Model's buffer on init (and mix to mono, just in case)
     setBuffer: function( buffer ){
       var buffer = buffer || this.get('buffer')
         , channels = buffer.numberOfChannels
         , sampleRate = buffer.sampleRate
-        , from = 0
-        , to = buffer.length
-        , len = to - from
-        , ab = this.context().createBuffer(channels, len, sampleRate)
+        , len = buffer.length
+        , ab = this.context().createBuffer(1, len, sampleRate)
         , channel
-        , i = 0;
-      while ( i < channels ){
-        channel = buffer.getChannelData(i);
-        channel = channel.subarray(from, to);
-        ab.getChannelData(i++).set(channel);
+        , sample
+        , i = j = 0;
+      // mix to mono and populate `ab` channelData
+      for ( ; i < len; ++i ){
+        sample = 0;
+        for ( j = 0; j < channels; ++j ){
+          channel = buffer.getChannelData(j);
+          sample += channel[i];
+        }
+        ab.getChannelData(0)[i] = sample / channels;
       }
       this.set('buffer', ab);
       return this.sliceBuffer();

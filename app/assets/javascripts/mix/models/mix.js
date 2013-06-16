@@ -277,6 +277,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
           id: trackData._id,
           name: trackData.name,
           volume: trackData.volume,
+          pan: trackData.pan,
           output: this.get('input'),
           collection: this.tracks,
           pluginParams: trackData.pluginParams || {},
