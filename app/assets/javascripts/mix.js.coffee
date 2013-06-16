@@ -5,6 +5,8 @@
 //= require ./backbone_vendor/underscore
 //= require ./backbone_vendor/backbone
 //= require ./backbone_vendor/marionette.1.0.3
+//= require ./backbone_vendor/backbone-relational-0.8.5.js
+
 //= require_tree ./vendor
 //= require ./mix/MIX
 //= require ./mix/app

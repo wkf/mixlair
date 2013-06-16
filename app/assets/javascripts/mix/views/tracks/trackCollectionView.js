@@ -101,13 +101,13 @@ App.module('Views', function(Views, App, Backbone, Marionette, $, _) {
     },
 
     addTrack: function(){
-      mix.createTrack('Track');
+      App.mix.createTrack('Track');
     },
 
     onAfterItemAdded: function( itemView ){
       if ( !this.firstRender ) return;
       this.setActiveTrack(itemView);
-      mix.activateTrack(itemView.model);
+      App.mix.activateTrack(itemView.model);
     }
   });
 });

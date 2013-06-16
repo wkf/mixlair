@@ -1,5 +1,16 @@
 App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
-  Models.Track = Backbone.Model.extend({
+  Models.Track = Backbone.RelationalModel.extend({
+
+    relations: [{
+      type: Backbone.HasMany,
+      key: 'regions',
+      relatedModel: 'App.Models.Region',
+      collectionType: 'App.Collections.Regions',
+      reverseRelation: {
+        key: 'track_id'
+      }
+    }],
+
     // default params
     defaults: {
       muted: false,
@@ -67,13 +78,11 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         , defaults = $.extend(true, {}, this.defaults.pluginParams);
       pluginParams = $.extend(true, {}, defaults, pluginParams);
       this.set('pluginParams', pluginParams);
-      this.regions = new App.Collections.Regions;
       this.plugins = new App.Collections.Plugins;
       this.plugins.params = this.get('pluginParams');
       this.createPlugins();
-      this.connect();
-      this.parseRegions(regions);
       this.on('change:volume', function(){
+        if ( !this.get('gain') ) return;
         this.get('gain').gain.value = this.get('volume');
       });
       this.on('change:pan', function(){
@@ -84,7 +93,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // connect all of our nodes
     connect: function(){
       var ac = this.context()
-        , meter = new Meter(ac);
+        , meter = new App.Util.Meter(ac);
       this.set({
         input: ac.createGain(),
         mute: ac.createGain(),
@@ -113,7 +122,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         this.set('dBFS', dBFS);
         this.trigger('meter');
       }.bind(this));
-      this.regions.forEach(function( region ){
+      this.get('regions').forEach(function( region ){
         var src;
         region.set('output', this.get('input'));
         region.sliceBuffer();
@@ -131,7 +140,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     },
 
     context: function(){
-      return App.mix.get('context');
+      return App.ac;
     },
 
     // apply panning changes
@@ -143,20 +152,20 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // begin playback of all regions
     play: function(){
-      this.regions.play();
+      this.get('regions').play();
       return this;
     },
 
     // pause all regions
     pause: function(){
-      this.regions.pause();
+      this.get('regions').pause();
       return this;
     },
 
     // offset (in seconds) of the last playable audio, in relation
     // to mix position 0
     maxTime: function(){
-      return this.regions.maxTime();
+      return this.get('regions').maxTime();
     },
 
     // mute the track (user-initiated)
@@ -216,6 +225,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       if ( !App.mix.get('inputEnabled') || !stream ) {
         return App.mix.requestInput();
       }
+      this.connect();
       src = ac.createMediaStreamSource(stream);
       pro = ac.createScriptProcessor(4096, 1, 1);
       fakeBuffer = ac.createBuffer(1, 1, 44100);
@@ -238,7 +248,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       App.mix.set('recording', true);
       App.mix.trigger('recordStart');
       this.set('recRegion', region);
-      this.regions.add(region);
+      this.get('regions').add(region);
       pro.onaudioprocess = function( evt ){
         var inp = evt.inputBuffer
           , ac = this.context()
@@ -292,7 +302,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     },
 
     createRegion: function( audioBuffer ){
-      this.regions.add({
+      this.get('regions').add({
         buffer: audioBuffer,
         start: this.get('recordStart'),
         output: this.get('input'),
@@ -302,7 +312,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // add a new region instance to the track
     paste: function( region ){
-      this.regions.add(region);
+      this.get('regions').add(region);
     },
 
     // set an individual plugin param
@@ -371,33 +381,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         soloed: this.get('soloed'),
         volume: this.get('volume'),
         pluginParams: this.getAllPluginParams(),
-        regions: this.regions.toJSON()
+        regions: this.get('regions').toJSON()
       }
-    },
-
-    parseRegions: function( regions ){
-      var downloader = App.mix.downloader
-        , ac = this.context()
-        , track = this;
-      if ( !regions || !regions.length ) return;
-      regions.forEach(function( regionData ){
-         var callback, xhr = new XMLHttpRequest();
-          xhr.open('GET', regionData.url, true);
-          xhr.responseType = 'arraybuffer';
-          callback = function( downloaderCallback ){
-            ac.decodeAudioData(xhr.response, function( buffer ){
-              var loaded = App.mix.get('loaded');
-              regionData.buffer = buffer;
-              regionData.output = track.get('input');
-              regionData.track = track;
-              regionData.mix = App.mix;
-              track.regions.add(regionData);
-              App.mix.set('loaded', loaded + 1);
-              downloaderCallback();
-            });
-          }
-          downloader.add(xhr, callback, true);
-      }.bind(this));
     }
 
   });
