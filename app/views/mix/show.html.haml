@@ -1,7 +1,8 @@
 - content_for :head do
   = javascript_include_tag "mix"
   = render partial: "./mix/templates/templates"
-
+  %script
+    window.MIX= #{raw(@mix.to_json)}
 #header-mask
   %h1 mixlair.
   .label.left my tracks
