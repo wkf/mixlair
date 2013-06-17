@@ -9,6 +9,15 @@ class MixController < ApplicationController
     render json: mix
   end
 
+  def show
+    if @mix = current_user.mixes.find_by_id(params[:id])
+      @mix
+    else
+      flash[:notice] = "no mix found with an id of #{params[:id]}"
+      redirect_to mix_index_path
+    end
+  end
+
   def new
     mix = Mix.new
     mix.user_id = current_user.id
