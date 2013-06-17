@@ -1,0 +1,8 @@
+%h2 your tracks
+=link_to("Create A Mix", new_mix_path)
+- unless @mixes.empty?
+  %ul
+    - @mixes.each do |mix|
+      %li= link_to(mix.name.blank? ? "untitled mix #{mix.id}" : mix.name, mix)
+- else
+  %h3 you have no mixes

@@ -6,7 +6,7 @@ Mixlair::Application.routes.draw do
 
   resources :mix
 
-  root to: "mix#show"
+  root to: "mix#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

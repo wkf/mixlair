@@ -7,7 +7,7 @@
     = csrf_meta_tags
     %meta{name: 'description', content: 'Mixlair: Social audio editing'}
     = yield :head
-  %body{class: params[:controller]}
+  %body{class: controller.controller_name.to_s + " " + controller.action_name.to_s}
     #flash-messages
       - if !notice.nil?
         .notice= notice
