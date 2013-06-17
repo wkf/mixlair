@@ -1,6 +1,8 @@
 App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
   Models.Mix = Backbone.RelationalModel.extend({
-    url: '/user/' + MIX.user + '/mix/' + MIX._id,
+    url: function() {
+      return '/mix/' + MIX.id
+    },
 
     relations: [{
       type: Backbone.HasMany,

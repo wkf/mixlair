@@ -8,7 +8,6 @@
 //= require ./backbone_vendor/backbone-relational-0.8.5.js
 
 //= require_tree ./vendor
-//= require ./mix/MIX
 //= require ./mix/app
 //= require_tree ./mix/models
 //= require_tree ./mix/collections
